@@ -144,7 +144,7 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
             const projectData: IProject = {
                 name: formData.get("name") as string,
                 description: formData.get("description") as string,
-                cost: formData.get("cost") as string,
+                cost: formData.get("cost") as number,
                 status: formData.get("status") as ProjectStatus,
                 userRole: formData.get("userRole") as UserRole,
                 finishDate: new Date (formData.get("finishDate") as string),
