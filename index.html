@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index3</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round">    
+    <link rel="stylesheet" href="./styles.css" />
+    
+</head>
+<body>
+    <main id="content">
+        <section class="section" id="section1">
+            <aside id="sidebar">
+                <img id="company-logo" src="./Assets/company-logo.svg" alt="Construction Company"></img>
+                <div id="nav-buttons">
+                    <li><span class="material-icons-round">apartment</span>Projects</li>
+                    <li><span class="material-icons-round">account_circle</span>Users</li>
+                    <li><a href="#"><span class="material-icons-round">account_circle</span>Section 1</a></li>
+                    <li><a href="#section2"></a><span class="material-icons-round">account_circle</span>Section 2<a></li>
+                </div>
+            </aside>
+            <!-- ---------------   PROJECTS PAGE   -------------------------->
+
+            <div class="page" id="projects-page">
+
+                <!-- dialog --------------------------------------------------------->
+
+                <dialog id="new-project-modal">
+                    <form id="new-project-form">
+                        <h2>New Project</h2>
+                        <div class="input-list">
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    apartment
+                                    </span>Name</label>
+                                <input name="name" type="string" placeholder="Enter your project name">
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    notes
+                                    </span>Description</label>
+                                <textarea name="description" cols="30" rows="5" placeholder="Give your description here"></textarea>
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    euro
+                                    </span>Cost</label>
+                                <input name="cost" type="number" placeholder="Give the project cost here">
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    account_circle
+                                    </span>Role</label>
+                                <select name="userRole">
+                                    <option>Architect</option>
+                                    <option>Engineer</option>
+                                    <option>Developer</option>
+                                </select>
+
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    not_listed_location
+                                    </span>Status</label>
+                                <select name="status">
+                                    <option>Pending</option>
+                                    <option>Active</option>
+                                    <option>Finished</option>
+                                </select>
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    calendar_month
+                                    </span>Finish Date</label>
+                                <input name="finishDate" type="date">
+                            </div>
+                        </div>
+
+                        <div class="submit-buttons">
+                            <button id="new-project-form-cancel-btn" type="cancel">Cancel</button>
+                            <button id="new-project-form-submit-btn" type="submit" style="background-color: green">Accept</button>
+                        </div>
+                    </form>
+                </dialog>
+
+                <!-- header --------------------------------------------------------->
+
+                <header class="page-header" id="projects-page-header">
+                    <h2>Projects</h2>
+                    <div class="page-header-buttons">    
+                        <button><span class="material-icons-round">
+                        file_download
+                        </span>Download</button>
+                    
+                        <button id="new-project-btn"><span class="material-icons-round">
+                        add_circle_outline
+                        </span>New Project</button>
+                    </div>
+                </header>
+
+                <!-- project list --------------------------------------------------------->
+                
+                <div id="projects-list">
+                </div>
+            </div>
+
+    <!-- ---------------   PROJECT DETAILS  ------------------------->
+
+            <div class="page" id="project-details" style="display:none">
+                <header class="page-header" id="project-details-page-header">
+                    <div id="page-title">
+                        <h2>Hospital Center</h2>
+                        <h5 style="color:#969696">Community hospital located at downtown</h5>
+                    </div>
+                    <div class="page-header-buttons">
+                        <button><span class="material-icons-round">
+                        file_download
+                        </span>Download</button>
+                    
+                        <button id="new-project-btn"><span class="material-icons-round">
+                        add_circle_outline
+                        </span>New Project</button>
+                    </div>
+
+                </header>
+                <div class="main-page-content">
+                    <div style="display:flex; flex-direction:column; row-gap:10px">
+
+                        <!-- dashboard card 1 ----------------------->
+
+                        <div class="dashboard-card" id="Project Information">
+                            <div style="display: flex; justify-content: space-between; align-content: center; height: 30px;">
+                                <p style="font-size: 12px; background-color: #969696; width: 30px; height: 30px; border-radius: 15px; padding: 7px;">HC</p>
+                                <button class="btn-secondary" style="height: 30px;"><p style="width: 40px; font-size: small">Edit</p></button>
+                            </div>
+                            <div style="padding: 30 0px;">
+                                <div style="left:0">
+                                    <h5>Hospital Center</h5>
+                                    <p style="font-size:small; font-weight: lighter;">Community hospital located at downtown</p>
+                                </div>
+                                <div style="display: flex; column-gap: 30px; justify-content:space-between; padding: 10px 0; font-size: smaller">
+                                    <div>
+                                        <h5 style="color: #969696;">Status</h5>
+                                        <h5>Active</h5>
+                                    </div>
+                                    <div>
+                                        <h5 style="color: #969696;">Cost</h5>
+                                        <h5 style="color:white;">€2.400.000</h5>
+                                    </div>
+                                    <div>
+                                        <h5 style="color: #969696;">Role</h5>
+                                        <h5 style="color:white;">Engineer</h5>
+                                    </div>
+                                    <div>
+                                        <h5 style="color: #969696;">Finish Date</h5>
+                                        <h5 style="color:white;">2025-05-01</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-done" style="width:80%;"><h5>80%</h5></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- dashboard card 2 ------------------------->
+
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <h4>To-do</h4>
+                                <div class="dashboard-card-buttons">
+                                    <span class="material-icons-round">search</span>
+                                    <input class="search-box" type="text" placeholder="Search by name">
+                                    <span class="material-icons-round">add</span>
+                                </div>
+                            </div>
+                            <div class="todo-list">
+
+                                <!-- todo card -->
+
+                                <div class="todo-card">
+                                    <span class="material-icons-round" style="width:30px; height:30px; display:flex; justify-content:center; align-items:center">check_circle_outline</span>
+                                    <!-- <div style="width:30px; height:30px; background-color: green;"></div> -->
+                                    <div class="todo-description"><p>Pending to finish the todo list dashboard, giving format and check buttons.</p></h5></div>
+                                    <div class="todo-deadline">25-2-2024</div>
+                                </div>
+
+                                <!-- todo card -->
+
+                                <div class="todo-card">
+                                    <span class="material-icons-round" style="width:30px; height:30px; display:flex; justify-content:center; align-items:center">check_circle_outline</span>
+                                    <div class="todo-description"><p>DM Juan attaching my solution!</p></h5></div>
+                                    <div class="todo-deadline">25-2-2024</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div id="viewer container" class="dashboard-card"></div>
+                </div>
+            </div>
+
+    <!-- ---------------   USERS LIST  ------------------------------>
+
+            <div class="page" id="users-page" style="display:none"> 
+                <!-- dialog --------------------------------------------------------->
+                <dialog id="new-user-modal">
+                    <form>
+                        <h2>New User</h2>
+                        <div class="input-list">
+
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">contact_page</span>Name</label>
+                                <input type="name" placeholder="Enter your name">
+                            </div>
+
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">psychology</span>Role</label>
+                                <input type="text" placeholder="Enter your role">
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">store</span>Company</label>
+                                <input type="text" placeholder="Enter your company name">
+                            </div>
+
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">add_a_photo</span>Photo</label>
+                                <div 
+                                    id="drop_zone" 
+                                    ondrop="dropHandler(event);"
+                                    ondragover="dragOverHandler(event);">
+                                    <p>Drag your photo <i>here</i>.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="submit-buttons">
+                            <button>Cancel</button>
+                            <button style="background-color: green">Accept</button>
+                        </div>
+                    </form>
+                </dialog>
+                <!-- page header ---------------------------------------------------->
+                <header id="users-page-header" class="page-header">
+                        <h2>Users</h2>
+                        <div style="display:flex; flex-direction:row; column-gap:10px">
+                            <button><span class="material-icons-round">file_download</span></button>
+                            <button><span class="material-icons-round">person_add</span></span>New User</button>
+                        </div>
+                </header>
+                <!-- users list ----------------------------------------------------->
+                <div id="users-list" class="users-list">
+                    <header class="users-list-header">
+                        <div id="user-card-content" class="user-card-content">
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round"></span>
+                                    <p style="color: #969696;"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="user-card-content" class="user-card-content">
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">contact_page</span>
+                                    <p style="color: #969696;">Name</p>
+                                </div>
+                            </div>
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">
+                                        psychology
+                                        </span>
+                                    <p style="color: #969696;">Role</p>
+                                </div>
+                            </div>    
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">
+                                        store</span> 
+                                    <p style="color: #969696;">Company</p>
+                                </div>
+                            </div>
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">phone_iphone</span>
+                                    <p style="color: #969696;">Phone</p>
+                                </div>
+                            </div>
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">email</span>
+                                    <p style="color: #969696;">mail</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><p>...</p></div>
+                    </header>
+                    <!-- ---------------------------------------------------------------------------- -->
+                    <div id="user-card" class="user-card">
+                        <div class="user-card-image">
+                            <img src="./Assets/alex03bn 2.jpg" alt="face" style="border-radius: 20px; height:34px;">
+                        </div>
+                        <div id="user-card-content" class="user-card-content">
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">contact_page</span>
+                                    <p style="color: #969696;">Alex Inglés Ausejo</p>
+                                </div>
+                            </div>
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">
+                                        psychology
+                                        </span>
+                                    <p style="color: #969696;">BIM Software Developer</p>
+                                </div>
+                            </div>    
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">
+                                        store</span> 
+                                    <p style="color: #969696;">alexingles.es</p>
+                                </div>
+                            </div>
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">phone_iphone</span>
+                                    <p style="color: #969696;">616020370</p>
+                                </div>
+                            </div>
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">email</span>
+                                    <p style="color: #969696;">alex_ingles@icloud.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button style="display:flex; flex-direction:row; column-gap:5px;"><span class="material-icons-round" style="font-size: var(--font-base);">edit</span>Edit</button>
+                    </div>
+                    <!-- ----------------------------------------------------------------------------------- -->
+                    <div id="user-card" class="user-card">
+                        <div class="user-card-image">
+                            <img src="./Assets/luke 2.jpeg" alt="face" style="border-radius: 20px; height:34px;">
+                        </div>
+                        <div id="user-card-content" class="user-card-content">
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">contact_page</span>
+                                    <p style="color: #969696;">Luke Skywalker</p>
+                                </div>
+                            </div>
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">
+                                        psychology
+                                        </span>
+                                    <p style="color: #969696;">Jedi Padawan</p>
+                                </div>
+                            </div>    
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">store</span> 
+                                    <p style="color: #969696;">Light Side, Ltd</p>
+                                </div>
+                            </div>
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">phone_iphone</span>
+                                    <p style="color: #969696;">telekinetic</p>
+                                </div>
+                            </div>
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">email</span>
+                                    <p style="color: #969696;">luke-skywalker@tatooine.org</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button style="display:flex; flex-direction:row; column-gap:5px;"><span class="material-icons-round" style="font-size: var(--font-base);">edit</span>Edit</button>
+                    </div>
+                    <!-- --------------------------------------------------------------------- -->
+                    <div id="user-card" class="user-card">
+                        <div class="user-card-image">
+                            <img src="./Assets/dustin 2.jpeg" alt="face" style="border-radius: 20px; height:34px;">
+                        </div>
+                        <div id="user-card-content" class="user-card-content">
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">contact_page</span>
+                                    <p style="color: #969696;">Dustin</p>
+                                </div>
+                            </div>
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">
+                                        psychology
+                                        </span>
+                                    <p style="color: #969696;">Demogorgon whisperer</p>
+                                </div>
+                            </div>    
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">store</span> 
+                                    <p style="color: #969696;">Hellfire Club</p>
+                                </div>
+                            </div>
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">phone_iphone</span>
+                                    <p style="color: #969696;">555555555</p>
+                                </div>
+                            </div>
+                            <div class="user-card-property">
+                                <div class="user-property-group">
+                                    <span class="material-icons-round">email</span>
+                                    <p style="color: #969696;">dustin@hellfireclub.org</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button style="display:flex; flex-direction:row; column-gap:5px;"><span class="material-icons-round" style="font-size: var(--font-base);">edit</span>Edit</button>
+                    </div>
+                    <!-- --------------------------------------------------------------------- -->
+                </div>
+            </div>
+        </section>
+
+    <!-- ---------------   USERS LIST  ------------------------------>
+
+
+        <section class="section" id="section2">
+            <div class="bento" id="section2-bento"></div>
+                <div class="bento-part">Currículum</div>
+                <div class="bento-part">Contact</div>
+                <div class="bento-part">Mail</div>
+                <div class="bento-part">Projects</div>
+                <div class="bento-part">LinkedIn</div>
+                <div class="bento-part">Pinterest</div>
+                <div class="bento-part">GitHub</div>
+        </section>
+    </main>
+    <script type="module" src="./src/index.ts"></script>
+</body>
+</html>
