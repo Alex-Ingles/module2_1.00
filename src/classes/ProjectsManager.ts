@@ -130,11 +130,14 @@ totalCost() {
         const projectCost = project.cost
         totalCost.push(projectCost)
         return totalCost
+        
     })
     const costNumber = totalCost.map(Number)
     const sumOfCost = costNumber.reduce((total, initialValue) => {
         return total + initialValue
+        console.log(sumOfCost)
     })
+    // return sumOfCost
     // console.log(costNumber)
     // console.log(sumOfCost)
 }
