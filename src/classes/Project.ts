@@ -1,5 +1,5 @@
 
-// import { v4 as uuidv4 } from "uuid"
+import { v4 as uuidv4 } from "uuid"
 
 export type ProjectStatus = "pending" | "active" | "finished"
 export type UserRole = "architect" | "engineer" | "developer"
@@ -36,7 +36,7 @@ export class Project implements IProject {
         this.userRole = data.userRole
         this.finishDate = data.finishDate
         this.cost = data.cost
-        // this.id = uuidv4()
+        this.id = uuidv4()
         this.setUI()    
 
         // Project card UI

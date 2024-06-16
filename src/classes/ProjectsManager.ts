@@ -116,7 +116,9 @@ getProjectbyName(name: string) {
 
 deleteProject(id: string) {
     const project = this.getProject(id)
-    if (!project) { return }
+    if (!project) { 
+        console.log("Id provided does'nt match with any id of projectsList")
+        return }
     project.ui.remove()
     const remaining = this.list.filter((project) => {
         return project.id !== id
@@ -124,19 +126,38 @@ deleteProject(id: string) {
     this.list = remaining
 }
 
+// TOTAL COST CONVERTING FOR EACH IN A MAP METHOD
+
+
+
+
+
+// TOTAL COST TUNED AFTER JUAN 1ST COMMENT
+
 totalCost() {
     const totalCost: number[] = []
     const costArray = this.list.forEach((project) => {
         const projectCost = project.cost
         totalCost.push(projectCost)
-        return totalCost
+        console.log(projectCost)
+        // return totalCost -------- ForEach is not expected to return nothing!!
         
     })
     const costNumber = totalCost.map(Number)
-    const sumOfCost = costNumber.reduce((total, initialValue) => {
-        return total + initialValue
-        console.log(sumOfCost)
-    })
+    const sumOfCost = costNumber.reduce((total, initialValue) =>  total + initialValue
+    )
+
+    console.log(sumOfCost)
+
+
+// TOTAL COST ORIGINAL
+
+    // const costNumber = totalCost.map(Number)
+    // const sumOfCost = costNumber.reduce((total, initialValue) => {
+    //     console.log(sumOfCost)
+    //     return total + initialValue
+    // })
+
     // return sumOfCost
     // console.log(costNumber)
     // console.log(sumOfCost)
