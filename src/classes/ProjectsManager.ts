@@ -23,7 +23,7 @@ export class ProjectsManager {
             cost: 0 as number,
             status: "Default status" as ProjectStatus,
             userRole: "Default userRole" as UserRole,
-            finishDate: new Date ("finishDate" as string)
+            finishDate: new Date ("finishDate" as string),
         }
         const defaultProject = new Project(defaultData)
         this.ui.append(defaultProject.ui)
@@ -126,32 +126,69 @@ deleteProject(id: string) {
     this.list = remaining
 }
 
-// TOTAL COST CONVERTING FOR EACH IN A MAP METHOD
 
-
-
-
-
-// TOTAL COST TUNED AFTER JUAN 1ST COMMENT
+// ----------------------------------------------------------------------------------------
+// 4. TOTAL COST FORCING NUMBER TO GET A TOTAL
+// ----------------------------------------------------------------------------------------
 
 totalCost() {
-    const totalCost: number[] = []
-    const costArray = this.list.forEach((project) => {
-        const projectCost = project.cost
-        totalCost.push(projectCost)
-        console.log(projectCost)
-        // return totalCost -------- ForEach is not expected to return nothing!!
-        
-    })
-    const costNumber = totalCost.map(Number)
+    const cost: number[] = []
+    this.list.map(project => cost.push(project.cost)
+    )
+    console.log("I reach this point")
+    console.log("here you have your project cost: ", cost)
+
+    const costNumber = cost.map(Number)
     const sumOfCost = costNumber.reduce((total, initialValue) =>  total + initialValue
     )
-
     console.log(sumOfCost)
+}
 
+// ----------------------------------------------------------------------------------------
+// 3. TOTAL COST CONVERTING FOR EACH IN A MAP METHOD AND NOT FORCING ARRAY TO NUMBER
+//    Not working, sum output is a concatenate of strings however arguments are number type
+// ----------------------------------------------------------------------------------------
 
+// totalCost() {
+//     const cost: number[] = []
+//     this.list.map(project => cost.push(project.cost)
+//     )
+//     console.log("I reach this point")
+//     console.log("here you have your project cost: ", cost)
+
+//     const sumOfCost = cost.reduce((total, initialValue) =>  total + initialValue
+//     )
+//     console.log(sumOfCost)
+// }
+// ---------------------------------------------------------------------------------
+// 2. TOTAL COST TUNED AFTER JUAN 1ST COMMENT. (return deleted and 1 less variable)
+// ---------------------------------------------------------------------------------
+
+// totalCost() {
+//     const totalCost: number[] = []
+//     const costArray = this.list.forEach((project) => {
+//         totalCost.push(project.cost)
+//         console.log("here you have your project cost: ",project.cost)
+//     })
+//     const costNumber = totalCost.map(Number)
+//     const sumOfCost = costNumber.reduce((total, initialValue) =>  total + initialValue)
+
+//     console.log(sumOfCost)
+// }
+
+// ---------------------------------------------------------------------------------
 // TOTAL COST ORIGINAL
+// ---------------------------------------------------------------------------------
 
+
+// totalCost() {
+//     const totalCost: number[] = []
+//     const costArray = this.list.forEach((project) => {
+//         const projectCost = project.cost -------- I can pass project.cost as an argument for push method directly. Not needed a new variable.
+//         totalCost.push(projectCost)
+//         console.log(projectCost)
+//         // return totalCost -------- ForEach is not expected to return nothing!!
+        
     // const costNumber = totalCost.map(Number)
     // const sumOfCost = costNumber.reduce((total, initialValue) => {
     //     console.log(sumOfCost)
@@ -161,7 +198,7 @@ totalCost() {
     // return sumOfCost
     // console.log(costNumber)
     // console.log(sumOfCost)
-}
+// }
 
 exportToJSON() {}
 

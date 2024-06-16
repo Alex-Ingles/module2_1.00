@@ -59,6 +59,10 @@ export class Project implements IProject {
             <div class="card-content">
                 <div class="card-property">
                     <p style="color: #969696;">Status</p>
+                    <p>${this.id}</p>
+                </div>
+                <div class="card-property">
+                    <p style="color: #969696;">Status</p>
                     <p>${this.status}</p>
                 </div>
                 <div class="card-property">
