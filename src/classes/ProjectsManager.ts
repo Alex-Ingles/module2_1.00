@@ -126,23 +126,32 @@ deleteProject(id: string) {
     this.list = remaining
 }
 
+// ----------------------------------------------------------------------------------------
+// 5. TOTAL COST WITH A SINGLE SENTENCE
+// ----------------------------------------------------------------------------------------
+
+totalCost() {
+    const accumulator = 0
+        return this.list.reduce((total, project) => accumulator + project.cost, 0)
+    console.log(accumulator)
+}
 
 // ----------------------------------------------------------------------------------------
 // 4. TOTAL COST FORCING NUMBER TO GET A TOTAL
 // ----------------------------------------------------------------------------------------
 
-totalCost() {
-    const cost: number[] = []
-    this.list.map(project => cost.push(project.cost)
-    )
-    console.log("I reach this point")
-    console.log("here you have your project cost: ", cost)
+// totalCost() {
+//     const cost: number[] = []
+//     this.list.map(project => cost.push(project.cost)
+//     )
+//     console.log("I reach this point")
+//     console.log("here you have your project cost: ", cost)
 
-    const costNumber = cost.map(Number)
-    const sumOfCost = costNumber.reduce((total, initialValue) =>  total + initialValue
-    )
-    console.log(sumOfCost)
-}
+//     const costNumber = cost.map(Number)
+//     const sumOfCost = costNumber.reduce((total, initialValue) =>  total + initialValue
+//     )
+//     console.log(sumOfCost)
+// }
 
 // ----------------------------------------------------------------------------------------
 // 3. TOTAL COST CONVERTING FOR EACH IN A MAP METHOD AND NOT FORCING ARRAY TO NUMBER
