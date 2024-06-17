@@ -131,10 +131,14 @@ deleteProject(id: string) {
 // ----------------------------------------------------------------------------------------
 
 totalCost() {
-    const accumulator = 0
-        return this.list.reduce((total, project) => accumulator + project.cost, 0)
-    console.log(accumulator)
+    const total = this.list.reduce((total, project) => total + project.cost, 0)
+    console.log(total)
+    return total
 }
+
+// printTotalCost(){
+//     console.log(() => (this.totalCost))
+// }
 
 // ----------------------------------------------------------------------------------------
 // 4. TOTAL COST FORCING NUMBER TO GET A TOTAL
