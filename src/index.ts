@@ -181,6 +181,13 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
     console.warn("The projectForm wasn't found. Check the ID!")
 }
 
+const exportProjectsBtn = document.getElementById("export-projects-btn")
+if (exportProjectsBtn) {
+    exportProjectsBtn.addEventListener("click", () => {
+        projectsManager.exportToJSON()
+    })
+}
+
 
 
 /* is the same thing to write, in the if/else statement:
