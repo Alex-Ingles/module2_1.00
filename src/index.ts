@@ -188,6 +188,14 @@ if (exportProjectsBtn) {
     })
 }
 
+const importProjectsBtn = document.getElementById("import-projects-btn")
+if (importProjectsBtn) {
+    importProjectsBtn.addEventListener("click", () => {
+        projectsManager.importFromJSON()
+        // console.log(projectsManager.list)
+    })
+    console.log(projectsManager.list)
+}
 
 
 /* is the same thing to write, in the if/else statement:

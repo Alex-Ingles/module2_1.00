@@ -224,9 +224,32 @@ exportToJSON(fileName: string = "projects") {
     URL.revokeObjectURL(url)
 }
 
-importFromJSON() {}
+importFromJSON() {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = 'application/json'
+    const reader = new FileReader()
+    reader.addEventListener('load', () => {
+        const json = reader.result
+        if (!json) { return }
+        const projects: IProject[] = JSON.parse(json as string)
+        for (const project of projects) {
+            try {
+                this.newProject(project)
+            }
+            catch (error) {
+                // console.log("import is not working")
+            }
+        }
 
-
+    })
+    input.addEventListener('change', () => {
+        const filesList = input.files
+        if (!filesList) { return }
+        reader.readAsText(filesList[0])
+    })
+    input.click()
+}
 }
 
         // const projectData = {
