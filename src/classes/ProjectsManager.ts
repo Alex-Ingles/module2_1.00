@@ -238,6 +238,7 @@ importFromJSON() {
                 this.newProject(project)
             }
             catch (error) {
+                alert(error)
                 // console.log("import is not working")
             }
         }
