@@ -29,6 +29,7 @@ export class Project implements IProject {
     id: string
 
     constructor(data: IProject) {
+        this.id = uuidv4()
         for (const key in data) {
             this[key] = data[key]
         }
@@ -39,14 +40,13 @@ export class Project implements IProject {
         // this.userRole = data.userRole
         // this.finishDate = data.finishDate
         // this.cost = data.cost
-        this.id = uuidv4()
         this.setUI()    
 
         // Project card UI
     }
 
     setUI() {
-        if (this.ui) {return}
+        if (this.ui && this.ui instanceof HTMLElement) {return}
         this.ui = document.createElement("div")
         this.ui.className = "project-card"
         this.ui.id = this.name
