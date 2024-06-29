@@ -81,7 +81,6 @@ newProject(data: IProject) {
     console.log(child)
 
     const project = new Project(data)
-
     project.ui.addEventListener("click", () => {
         const projectsPage = document.getElementById("projects-page")
         const detailsPage = document.getElementById("project-details")
@@ -89,6 +88,7 @@ newProject(data: IProject) {
         console.log("pages exists")
         projectsPage.style.display = "none"
         detailsPage.style.display = "flex"
+        this.setDetailsPage(project)
     })
     this.ui.append(project.ui)
     this.list.push(project)
@@ -98,6 +98,15 @@ newProject(data: IProject) {
 
 
     // return project
+}
+
+setDetailsPage(project: Project) {
+    const detailsPage = document.getElementById("project-details")
+    if (!detailsPage) {return}
+    const name = detailsPage.querySelector("[data-project-info='name']")
+    if (name) { name.textContent = project.name}
+
+
 }
 
 getProject(id: string) {
