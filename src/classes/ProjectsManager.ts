@@ -100,13 +100,23 @@ newProject(data: IProject) {
     // return project
 }
 
-setDetailsPage(project: Project) {
+private setDetailsPage(project: Project) {
     const detailsPage = document.getElementById("project-details")
     if (!detailsPage) {return}
     const name = detailsPage.querySelector("[data-project-info='name']")
     if (name) { name.textContent = project.name}
-
-
+    const description = detailsPage.querySelector("[data-project-info='description']")
+    if (description) { description.textContent = project.description}
+    const status = detailsPage.querySelector("[data-project-info='status']")
+    if (status) { status.textContent = project.status}
+    const cost = detailsPage.querySelector("[data-project-info='cost']")
+    const costAsString = project.cost.toString()
+    if (cost && costAsString) { cost.textContent = costAsString}
+    const userRole = detailsPage.querySelector("[data-project-info='userRole']")
+    if (userRole) { userRole.textContent = project.userRole}
+    const finishDate = detailsPage.querySelector("[data-project-info='finishDate']")
+    const finishDateAsString = project.finishDate.toString()
+    if (finishDate) { finishDate.textContent = finishDateAsString}
 }
 
 getProject(id: string) {
