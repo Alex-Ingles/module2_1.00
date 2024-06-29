@@ -202,3 +202,33 @@ if (importProjectsBtn) {
 We can write if (newProjectBtn !== null) that means if newProjectBtn is not null.
 Or we can write the same thing by: if (newProjectBtn) it means the same thing, if newProjectBtn exists.
 */
+
+// Clean Pages
+function cleanPages() {
+    const projectsPage = document.getElementById("projects-page")
+    const usersPage = document.getElementById("users-page")
+    const projectDetailsPage = document.getElementById("project-details")
+    if (projectsPage && usersPage && projectDetailsPage) {
+        projectsPage.style.display = "none"
+        usersPage.style.display = "none"
+        projectDetailsPage.style.display = "none"
+    }
+}
+// Projects-Btn
+const projectsBtn = document.getElementById("nav-projects-btn")
+const projectsPage = document.getElementById("projects-page")
+    if (projectsBtn && projectsPage) {
+        projectsBtn.addEventListener("click", () => {
+            cleanPages()
+            projectsPage.style.display = "flex"
+        })
+    }
+// users-Btn
+const usersBtn = document.getElementById("nav-users-btn")
+const usersPage = document.getElementById("users-page")
+    if (usersBtn && usersPage) {
+        usersBtn.addEventListener("click", () => {
+            cleanPages()
+            usersPage.style.display = "flex"
+        })
+}

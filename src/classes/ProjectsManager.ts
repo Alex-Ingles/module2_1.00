@@ -81,10 +81,19 @@ newProject(data: IProject) {
     console.log(child)
 
     const project = new Project(data)
+
+    project.ui.addEventListener("click", () => {
+        const projectsPage = document.getElementById("projects-page")
+        const detailsPage = document.getElementById("project-details")
+        if (!projectsPage || !detailsPage) {return}
+        console.log("pages exists")
+        projectsPage.style.display = "none"
+        detailsPage.style.display = "flex"
+    })
     this.ui.append(project.ui)
     this.list.push(project)
     console.warn("New Project is created")
-    const parent = document.getElementById("project-list")
+    // const parent = document.getElementById("project-list")
     this.deleteDefaultProjectUI()
 
 
