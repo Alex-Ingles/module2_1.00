@@ -12,6 +12,10 @@ export interface IProject {
     userRole: UserRole
     finishDate: Date
     cost: number
+    initials: string
+    // progress: number
+    // initials: string
+    // // initials: string
 }
 
 export class Project implements IProject {
@@ -27,12 +31,29 @@ export class Project implements IProject {
     ui: HTMLDivElement
     progress: number = 0
     id: string
+    initials: string
 
     constructor(data: IProject) {
         this.id = uuidv4()
         for (const key in data) {
             this[key] = data[key]
         }
+        // this.initials = initials()
+
+        // const initials = (() => {
+        //     if (!data.name) {
+        //         this.initials = "--"
+        //     } else {
+        //     console.log("this.name: ", this.name)
+        //     const words = this.name.split(' ', 2)
+        //     console.log("words: ", words)
+        //     const map1 = words.map((x) => x.charAt(0))
+        //     console.log("map1: ", map1)
+        //     this.initials = map1[0]+map1[1] as string
+        //     }
+        // })
+        // this.initials = findInitials()
+
         // Project data definition
         // this.name = data.name
         // this.description = data.description
@@ -40,10 +61,47 @@ export class Project implements IProject {
         // this.userRole = data.userRole
         // this.finishDate = data.finishDate
         // this.cost = data.cost
-        this.setUI()    
+        this.findInitials()
+        console.log("new project: ", this.initials)
+        this.setUI()
 
-        // Project card UI
+    // Project card UI
     }
+
+    findInitials() {
+        if (!this.name) { return }
+        console.log("this.name: ", this.name)
+        const words = this.name.split(' ', 2)
+        console.log("words: ", words)
+        const map1 = words.map((x) => x.charAt(0).toUpperCase())
+        console.log("map1: ", map1)
+        this.initials = map1[0] + map1[1] as string
+
+
+        // this.initials = map1[0]+ map1[1] as string
+        // console.log("this initials: ", this.initials)
+
+        // const firstInitial = words[0].charAt(0)
+        // const secondInitial = words[1].charAt(0)
+        // const concatInitials = firstInitial + secondInitial
+        // this.initials = concatInitials.toUpperCase()
+
+
+        // return concatInitials.toUpperCase
+        // const upperConcatInitials = concatInitials.toUpperCase
+        // return upperConcatInitials
+        // // this.initials = upperConcatInitials
+
+        // return this.initials
+        // const wordsInitials = {
+        //     for(const word of words) {
+        //         word.at(0)  
+            // }
+    }
+    // }
+    
+
+
 
     setUI() {
         if (this.ui && this.ui instanceof HTMLElement) {return}
@@ -80,6 +138,11 @@ export class Project implements IProject {
                     <p style="color: #969696;">Estimated Progress</p>
                     <p>${this.progress * 100}%</p>
                 </div>
+                <div class="card-property">
+                    <p style="color: #969696;">Initials</p>
+                    <p>${this.initials}</p>
+                </div>
+
             </div>`
     }
 }

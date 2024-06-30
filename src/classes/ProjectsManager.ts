@@ -24,6 +24,8 @@ export class ProjectsManager {
             status: "Default status" as ProjectStatus,
             userRole: "Default userRole" as UserRole,
             finishDate: new Date ("finishDate" as string),
+            progress: 50 as number,
+            // initials: "DP" as string,
         }
         const defaultProject = new Project(defaultData)
         this.ui.append(defaultProject.ui)

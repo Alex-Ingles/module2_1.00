@@ -141,6 +141,10 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
         if(handler == "new-project-form-submit-btn") {
             e.preventDefault()
             const formData = new FormData(projectForm)
+            // const initials = {
+            //     const namesForInitials = formData.get("name") as string
+            //     namesForInitials.
+            // }
             const projectData: IProject = {
                 name: formData.get("name") as string,
                 description: formData.get("description") as string,
@@ -148,6 +152,8 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
                 status: formData.get("status") as ProjectStatus,
                 userRole: formData.get("userRole") as UserRole,
                 finishDate: new Date (formData.get("finishDate") as string),
+                // progress: 0 as number,
+                initials: "" as string
             }
         
             try {
