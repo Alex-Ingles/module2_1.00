@@ -75,7 +75,13 @@ export class Project implements IProject {
         console.log("words: ", words)
         const map1 = words.map((x) => x.charAt(0).toUpperCase())
         console.log("map1: ", map1)
-        this.initials = map1[0] + map1[1] as string
+        // let counter = 0 as number
+        // words.forEach((x) => counter = counter + 1)
+        if (map1[1]) {
+            this.initials = map1[0] + map1[1] as string
+        } else {
+            this.initials = map1[0] as string
+        }
 
 
         // this.initials = map1[0]+ map1[1] as string
