@@ -84,6 +84,7 @@ export class Project implements IProject {
         } else {
             this.initials = map1[0] as string
         }
+        if (this.initialsColor) {return}
         function getRandomInt(max) {
             return Math.floor(Math.random() * max);
           }
