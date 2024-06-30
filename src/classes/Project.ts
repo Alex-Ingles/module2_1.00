@@ -32,6 +32,7 @@ export class Project implements IProject {
     progress: number = 0
     id: string
     initials: string
+    initialsColor: string
 
     constructor(data: IProject) {
         this.id = uuidv4()
@@ -63,6 +64,7 @@ export class Project implements IProject {
         // this.cost = data.cost
         this.findInitials()
         console.log("new project: ", this.initials)
+
         this.setUI()
 
     // Project card UI
@@ -82,6 +84,15 @@ export class Project implements IProject {
         } else {
             this.initials = map1[0] as string
         }
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+          }
+        const random = getRandomInt(6)
+        console.log(random)
+        const colors = Array.of("red", "blue", "green", "magenta", "cyan", "lightblue", "grey")
+        this.initialsColor = colors[random]
+        console.log(this.initialsColor)
+        
 
 
         // this.initials = map1[0]+ map1[1] as string
@@ -107,8 +118,6 @@ export class Project implements IProject {
     // }
     
 
-
-
     setUI() {
         if (this.ui && this.ui instanceof HTMLElement) {return}
         this.ui = document.createElement("div")
@@ -117,7 +126,7 @@ export class Project implements IProject {
         this.ui.innerHTML = `
         <div class="card">
             <div class="card-header">
-                <p style="background-color: #ca8134; padding:10px; border-radius: 8px; aspect-ratio: 1">HC</p>
+                <p style="background-color: ${this.initialsColor}; padding:10px; border-radius: 8px; aspect-ratio: 1">${this.initials}</p>
                 <div>
                     <h5>${this.name}</h5>
                     <h5 class="description">${this.description}</h5>
