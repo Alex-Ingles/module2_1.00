@@ -153,7 +153,8 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
                 userRole: formData.get("userRole") as UserRole,
                 finishDate: new Date (formData.get("finishDate") as string),
                 // progress: 0 as number,
-                initials: "" as string
+                initials: "" as string,
+                progress: 0 as number
             }
         
             try {
@@ -208,6 +209,18 @@ if (importProjectsBtn) {
 We can write if (newProjectBtn !== null) that means if newProjectBtn is not null.
 Or we can write the same thing by: if (newProjectBtn) it means the same thing, if newProjectBtn exists.
 */
+
+
+// // Clean pages 2 -- Trying by GetElementByClass, HTML Collection - Not working
+// function cleanPages2() {
+//     const pages = document.getElementsByClassName("page")
+//     const pagesArray = Array.from(pages)
+//     for(page in pagesArray) {
+//         page.style.display = "none"
+//     }
+// }
+
+
 
 // Clean Pages
 function cleanPages() {

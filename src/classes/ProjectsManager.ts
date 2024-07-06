@@ -10,9 +10,11 @@ import { Project, IProject, UserRole, ProjectStatus } from "./Project"
 export class ProjectsManager {
     list: Project[] = []
     ui: HTMLElement
+    // ui2: HTMLElement
 
     constructor(container: HTMLElement) {
         this.ui = container
+        // this.ui2 = container
         this.setDefaultProjectUI()
     }
 
@@ -25,7 +27,7 @@ export class ProjectsManager {
             userRole: "Default userRole" as UserRole,
             finishDate: new Date ("finishDate" as string),
             progress: 50 as number,
-            // initials: "DP" as string,
+            initials: "DP" as string,
         }
         const defaultProject = new Project(defaultData)
         this.ui.append(defaultProject.ui)
@@ -76,6 +78,9 @@ newProject(data: IProject) {
     })
     console.log(projectNames)
     const nameInUse = projectNames.includes(data.name)
+    if (data.name.length < 6){
+        throw new Error(`Project name "${data.name}" must contain at least 6 characters`)
+    }
     if (nameInUse) {
         throw new Error(`A project with the name "${data.name}" already exists`)
     }
@@ -91,8 +96,10 @@ newProject(data: IProject) {
         projectsPage.style.display = "none"
         detailsPage.style.display = "flex"
         this.setDetailsPage(project)
+        // this.setProjectInformation(project)
     })
     this.ui.append(project.ui)
+    // this.ui2.append(project.ui2)
     this.list.push(project)
     console.warn("New Project is created")
     // const parent = document.getElementById("project-list")
@@ -107,8 +114,16 @@ private setDetailsPage(project: Project) {
     if (!detailsPage) {return}
     const name = detailsPage.querySelector("[data-project-info='name']")
     if (name) { name.textContent = project.name}
+    const name2 = detailsPage.querySelector("[data-project-info='name2']")
+    if (name2) { name2.textContent = project.name}
+    const initials = detailsPage.querySelector("[data-project-info='initials']")
+    if (initials) { initials.textContent = project.initials}
+
     const description = detailsPage.querySelector("[data-project-info='description']")
     if (description) { description.textContent = project.description}
+    const description2 = detailsPage.querySelector("[data-project-info='description2']")
+    if (description2) { description2.textContent = project.description}
+
     const status = detailsPage.querySelector("[data-project-info='status']")
     if (status) { status.textContent = project.status}
     const cost = detailsPage.querySelector("[data-project-info='cost']")
@@ -119,7 +134,49 @@ private setDetailsPage(project: Project) {
     const finishDate = detailsPage.querySelector("[data-project-info='finishDate']")
     const finishDateAsString = project.finishDate.toString()
     if (finishDate) { finishDate.textContent = finishDateAsString}
+
+    const progress = detailsPage.querySelector("[data-project-info='progress']")
+    const progressAsString = project.progress.toString()
+    if (progress && progressAsString) {
+        progress.textContent = progressAsString + "%"
+        const bar = document.getElementById("project-progress-bar")
+        const progressPercent = project.progress + "%"
+        if (bar) {
+        bar.style.width = `"${progressPercent}"`
+        }
+    }
+    // if (progress) {progress.textContent.toString = project.progress}
+
+
 }
+
+// private setProjectInformation(project: Project) {
+//     const projectInfo = document.getElementById("project-information")
+//     if (!projectInfo) {return}
+//     const initials = projectInfo.querySelector("[data-project-info='initials']")
+//     if (initials) { initials.textContent = project.initials}
+
+//     const name = projectInfo.querySelector("[data-project-info='name']")
+//     if (name) { name.textContent = project.name}
+//     const name2 = projectInfo.querySelector("[data-project-info='name2']")
+//     if (name2) { name2.textContent = project.name}
+
+//     const description = projectInfo.querySelector("[data-project-info='description']")
+//     if (description) { description.textContent = project.description}
+//     const status = projectInfo.querySelector("[data-project-info='status']")
+//     if (status) { status.textContent = project.status}
+//     const cost = projectInfo.querySelector("[data-project-info='cost']")
+//     const costAsString = project.cost.toString()
+//     if (cost && costAsString) { cost.textContent = costAsString}
+//     const userRole = projectInfo.querySelector("[data-project-info='userRole']")
+//     if (userRole) { userRole.textContent = project.userRole}
+//     const finishDate = projectInfo.querySelector("[data-project-info='finishDate']")
+//     const finishDateAsString = project.finishDate.toString()
+//     if (finishDate) { finishDate.textContent = finishDateAsString}
+
+
+
+
 
 getProject(id: string) {
     const project = this.list.find((project) => {

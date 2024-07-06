@@ -109,8 +109,7 @@
 
     <!-- ---------------   PROJECT DETAILS  ------------------------->
 
-            <div 
-                class="page" id="project-details" style="display:none">
+            <div class="page" id="project-details" style="display:none">
                 <header class="page-header" id="project-details-page-header">
                     <div id="page-title">
                         <h2 data-project-info="name">Hospital Center</h2>
@@ -120,7 +119,6 @@
                         <button><span class="material-icons-round">
                         file_download
                         </span>Download</button>
-                    
                         <button id="new-project-btn"><span class="material-icons-round">
                         add_circle_outline
                         </span>New Project</button>
@@ -128,19 +126,19 @@
 
                 </header>
                 <div class="main-page-content">
-                    <div style="display:flex; flex-direction:column; row-gap:10px">
+                    <div id="project-details-container" style="display:flex; flex-direction:column; row-gap:10px">
 
                         <!-- dashboard card 1 ----------------------->
 
-                        <div class="dashboard-card" id="Project Information">
+                        <div class="dashboard-card" id="project-information">
                             <div style="display: flex; justify-content: space-between; align-content: center; height: 30px;">
-                                <p style="font-size: 12px; background-color: #969696; width: 30px; height: 30px; border-radius: 15px; padding: 7px;">HC</p>
+                                <p data-project-info="initials" style="font-size: 12px; background-color: #969696; width: 30px; height: 30px; border-radius: 15px; padding: 7px;">HC</p>
                                 <button class="btn-secondary" style="height: 30px;"><p style="width: 40px; font-size: small">Edit</p></button>
                             </div>
                             <div style="padding: 30 0px;">
                                 <div style="left:0">
-                                    <h5 data-project-info="name">Hospital Center</h5>
-                                    <p data-project-info="description" style="font-size:small; font-weight: lighter;">Community hospital located at downtown</p>
+                                    <h5 data-project-info="name2">Hospital Center</h5>
+                                    <p data-project-info="description2" style="font-size:small; font-weight: lighter;">Community hospital located at downtown</p>
                                 </div>
                                 <div style="display: flex; column-gap: 30px; justify-content:space-between; padding: 10px 0; font-size: smaller">
                                     <div>
@@ -163,7 +161,7 @@
                             </div>
                             <div>
                                 <div class="progress-bar">
-                                    <div data-project-info="progress" class="progress-bar-done" style="width:80%;"><h5>80%</h5></div>
+                                    <div id="project-progress-bar" data-project-info="progress" class="progress-bar-done" style="width:80%;"><h5>80%</h5></div>
                                 </div>
                             </div>
                         </div>

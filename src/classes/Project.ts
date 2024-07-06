@@ -13,6 +13,7 @@ export interface IProject {
     finishDate: Date
     cost: number
     initials: string
+    progress: number
     // progress: number
     // initials: string
     // // initials: string
@@ -26,10 +27,11 @@ export class Project implements IProject {
     userRole: "architect" | "engineer" | "developer"
     finishDate: Date
     cost: number
+    progress: number = 0
 
     // Class internals
     ui: HTMLDivElement
-    progress: number = 0
+    ui2: HTMLDivElement
     id: string
     initials: string
     initialsColor: string
@@ -66,6 +68,8 @@ export class Project implements IProject {
         console.log("new project: ", this.initials)
 
         this.setUI()
+        this.setUI2()
+
 
     // Project card UI
     }
@@ -161,4 +165,48 @@ export class Project implements IProject {
 
             </div>`
     }
+
+    setUI2() {
+        if (this.ui2 && this.ui2 instanceof HTMLElement) {return}
+        this.ui = document.createElement("div")
+        this.ui.className = "project-card"
+        this.ui.id = this.name
+        this.ui.innerHTML = `
+        <div class="card">
+            <div class="card-header">
+                <p style="background-color: ${this.initialsColor}; padding:10px; border-radius: 8px; aspect-ratio: 1">${this.initials}</p>
+                <div>
+                    <h5>${this.name}</h5>
+                    <h5 class="description">${this.description}</h5>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="card-property">
+                    <p style="color: #969696;">Status</p>
+                    <p>${this.id}</p>
+                </div>
+                <div class="card-property">
+                    <p style="color: #969696;">Status</p>
+                    <p>${this.status}</p>
+                </div>
+                <div class="card-property">
+                    <p style="color: #969696;">Role</p>
+                    <p>${this.userRole}</p>
+                </div>
+                <div class="card-property">
+                    <p style="color: #969696;">Cost</p>
+                    <p>$${this.cost}</p>
+                </div>
+                <div class="card-property">
+                    <p style="color: #969696;">Estimated Progress</p>
+                    <p>${this.progress * 100}%</p>
+                </div>
+                <div class="card-property">
+                    <p style="color: #969696;">Initials</p>
+                    <p>${this.initials}</p>
+                </div>
+
+            </div>`
+    }
+
 }
