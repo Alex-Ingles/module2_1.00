@@ -17,6 +17,7 @@ export interface IProject {
     // progress: number
     // initials: string
     // // initials: string
+    // finishDateString: 
 }
 
 export class Project implements IProject {
@@ -35,11 +36,28 @@ export class Project implements IProject {
     id: string
     initials: string
     initialsColor: string
+    // finishDateString: string
 
     constructor(data: IProject) {
         this.id = uuidv4()
         for (const key in data) {
             this[key] = data[key]
+
+// Trying to state Date if null
+
+            if (this.finishDate == null) {
+                const defDate = new Date(1979, 7, 3, 12)
+                this.finishDate = defDate
+                console.log("finishDate: ", this.finishDate)
+
+                // this.finishDate = new Date('July 03, 1979 23:55:00')
+
+                // UnixTimeZero
+                // Date.parse(Date.now)
+                // 2024-07-03T00:00:00.000Z
+                // = 2024-07-03T00:00:00.000Z as Date
+            }
+            
         }
         // this.initials = initials()
 
@@ -66,13 +84,51 @@ export class Project implements IProject {
         // this.cost = data.cost
         this.findInitials()
         console.log("new project: ", this.initials)
-
+        this.setDefaultDate()
         this.setUI()
         this.setUI2()
+        // this.finishDateShort()
 
+    // finishDateShort() {
+    //     if (this.finishDate) {
+    //         return (this.finishDate as string)
+    //     }
+    //     // const dateString = this.finishDate.toDateString
+    //     // this.finishDateString = dateString
+    //     // dateString(() => {
+
+    //     const algo: string = this.finishDate.toString
+
+    //     // if (this.finishDate) {    
+
+    //     this.finishDateString = algo.toString
+    //     }
+    //     // = this.finishDate.toDateString as string
+    //     // this.finishDateString = dateString.toString()
+    //     // console.log(dateString)
+    //     // const D = this.finishDate.getDate()
+    //     // const M = this.finishDate.getMonth()
+    //     // const Y = this.finishDate.getFullYear()
+
+    //     // this.finishDateString = D
+    //     // getDate(this.finishDate)
+    // }
 
     // Project card UI
     }
+
+    // State default Date
+    
+    setDefaultDate() {
+        if (this.finishDate == null) {
+            const defDate = new Date(1979, 7, 3, 12)
+            this.finishDate = defDate
+            console.log("finishDate: ", this.finishDate)
+        }
+    }
+
+
+// Find initials
 
     findInitials() {
         if (!this.name) { return }
@@ -92,9 +148,9 @@ export class Project implements IProject {
         function getRandomInt(max) {
             return Math.floor(Math.random() * max);
           }
-        const random = getRandomInt(6)
+        const random = getRandomInt(11)
         console.log(random)
-        const colors = Array.of("red", "blue", "green", "magenta", "cyan", "lightblue", "grey")
+        const colors = Array.of("powderblue", "lightsteelblue", "lightblue", "darkseagreen", "palegoldenrod", "lightslategrey", "cadetblue", "rosybrown", "silver", "tan", "indianred")
         this.initialsColor = colors[random]
         console.log(this.initialsColor)
         
@@ -153,6 +209,10 @@ export class Project implements IProject {
                 <div class="card-property">
                     <p style="color: #969696;">Cost</p>
                     <p>$${this.cost}</p>
+                </div>
+                <div class="card-property">
+                    <p style="color: #969696;">Finish Date</p>
+                    <p>$${this.finishDate}</p>
                 </div>
                 <div class="card-property">
                     <p style="color: #969696;">Estimated Progress</p>

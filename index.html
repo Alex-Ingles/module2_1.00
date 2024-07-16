@@ -16,8 +16,8 @@
                 <div id="nav-buttons">
                     <li id="nav-projects-btn"><span class="material-icons-round">apartment</span>Projects</li>
                     <li id="nav-users-btn"><span class="material-icons-round">account_circle</span>Users</li>
-                    <li><a href="#"><span class="material-icons-round">account_circle</span>Section 1</a></li>
-                    <li><a href="#section2"></a><span class="material-icons-round">account_circle</span>Section 2<a></li>
+                    <!-- <li><a href="#"><span class="material-icons-round">account_circle</span>Section 1</a></li>
+                    <li><a href="#section2"></a><span class="material-icons-round">account_circle</span>Section 2<a></li> -->
                 </div>
             </aside>
             <!-- ---------------   PROJECTS PAGE   -------------------------->
@@ -73,7 +73,7 @@
                                 <label><span class="material-icons-round">
                                     calendar_month
                                     </span>Finish Date</label>
-                                <input name="finishDate" type="date">
+                                <input name="finishDate" value="1979, 7, 3, 12" type="date">
                             </div>
                         </div>
 
@@ -107,9 +107,12 @@
                 </div>
             </div>
 
-    <!-- ---------------   PROJECT DETAILS  ------------------------->
+    <!-- ---------------   PROJECT DETAILS PAGE ------------------------->
 
             <div class="page" id="project-details" style="display:none">
+
+                <!-- header --------------------------------------------------------->
+
                 <header class="page-header" id="project-details-page-header">
                     <div id="page-title">
                         <h2 data-project-info="name">Hospital Center</h2>
@@ -125,6 +128,9 @@
                     </div>
 
                 </header>
+
+                <!-- project details --------------------------------------------------------->
+                
                 <div class="main-page-content">
                     <div id="project-details-container" style="display:flex; flex-direction:column; row-gap:10px">
 
@@ -207,7 +213,7 @@
             <div class="page" id="users-page" style="display:none"> 
                 <!-- dialog --------------------------------------------------------->
                 <dialog id="new-user-modal">
-                    <form>
+                    <form id="new-user-form">
                         <h2>New User</h2>
                         <div class="input-list">
 
