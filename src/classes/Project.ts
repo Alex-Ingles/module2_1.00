@@ -42,23 +42,110 @@ export class Project implements IProject {
         this.id = uuidv4()
         for (const key in data) {
             this[key] = data[key]
-
-// Trying to state Date if null
-
-            if (this.finishDate == null) {
-                const defDate = new Date(1979, 7, 3, 12)
-                this.finishDate = defDate
-                console.log("finishDate: ", this.finishDate)
-
-                // this.finishDate = new Date('July 03, 1979 23:55:00')
-
-                // UnixTimeZero
-                // Date.parse(Date.now)
-                // 2024-07-03T00:00:00.000Z
-                // = 2024-07-03T00:00:00.000Z as Date
-            }
-            
         }
+        console.warn("Intefaced data: ",data)
+        console.warn("value of date on data: ",data.finishDate.valueOf)
+        // if (data.finishDate === null) {
+
+        // }
+        // console.log("MS: ",this.finishDate.valueOf)
+
+        // const newDateFromData = new Date(data.finishDate)
+        // if (!isNaN(newDateFromData))
+
+        // const miliseconds = this.finishDate.getMilliseconds
+        // if (typeof miliseconds === "number") {
+        //     return
+        // }
+        // else {}
+        // console.log("miliseconds is not a number")
+        // const defDate = new Date(1979, 7, 3, 12)
+        // this.finishDate = defDate
+        // console.log("Project Cosntructor -> finishDate: ", this.finishDate)
+        // const finishDateToString = this.finishDate.toString()
+        // console.log("finishDate to string: ",finishDateToString)
+        // const finishDateToISOString = this.finishDate.toISOString()
+        // console.log("finishDate to ISO string: ",finishDateToISOString)
+
+        // // console.log(isNaN(this.finishDate))
+        // // console.log(isNaN(this.finishDate.valueOf))
+        // const finishDateValue = this.finishDate.valueOf()
+        // console.log("Date type is: ",typeof this.finishDate)
+        // console.log(finishDateValue)
+        // if (typeof this.finishDate === "string") {
+        //     return
+        //     }
+        //     else (!isNaN(finishDateValue) === true) 
+        //         console.log("finishDateValue is not a number")
+        //         const defDate = new Date(1979, 7, 3, 12)
+        //         this.finishDate = defDate
+        //         console.log("Project Cosntructor -> finishDate: ", this.finishDate)
+        //         const finishDateToString = this.finishDate.toString()
+        //         console.log("finishDate to string: ",finishDateToString)
+        //         const finishDateToISOString = this.finishDate.toISOString()
+        //         console.log("finishDate to ISO string: ",finishDateToISOString)
+            
+        
+        // if (typeof this.finishDate === NaN) {
+        //     console.log("finishDate is a string")
+        //     }
+
+
+
+        // if (this.finishDate.get)
+
+        // ---------------------
+        // if (typeof this.finishDate === "string") {
+        //     console.log("finishDate is a string")
+        //     }
+        // else if (typeof this.finishDate === "object") {
+        //     console.log("finishDate is an object")
+        //     }
+        // else if (typeof this.finishDate === null) {
+        //     console.log("finishDate is null")
+        // // else if (typeof this.finishDate === Invalid)
+        // //     console.log("finishDate is null")
+        //     }
+        // else
+        //     console.log("finishDate is not a string nor an object")
+        // -------------------
+// Trying to state Date if null
+        // console.log(typeof this.finishDate)
+        // if (!this.finishDate) {
+        //     const defDate = new Date(1979, 7, 3, 12)
+        //     this.finishDate = defDate
+        //     console.log("Project Cosntructor -> finishDate: ", this.finishDate)
+        //     const finishDateToString = this.finishDate.toString()
+        //     console.log(finishDateToString)
+        //     const finishDateToISOString = this.finishDate.toISOString()
+        //     console.log(finishDateToISOString)
+        // }
+// ---------------
+
+
+
+// ------------------
+//         if (typeof this.finishDate === "object") {
+//             const defDate = new Date(1979, 7, 3, 12)
+//             this.finishDate = defDate
+//             console.log("Project Cosntructor -> finishDate: ", this.finishDate)
+//             const finishDateToString = this.finishDate.toString()
+//             console.log(finishDateToString)
+//             const finishDateToISOString = this.finishDate.toISOString()
+//             console.log(finishDateToISOString)
+//         }
+// ---------------
+
+            // this.finishDate = new Date('July 03, 1979 23:55:00')
+
+            // UnixTimeZero
+            // Date.parse(Date.now)
+            // 2024-07-03T00:00:00.000Z
+            // = 2024-07-03T00:00:00.000Z as Date
+        // }
+        console.log("Project Constructor -> Project: ")
+        console.log(this.finishDate)
+        // }
         // this.initials = initials()
 
         // const initials = (() => {
@@ -83,10 +170,19 @@ export class Project implements IProject {
         // this.finishDate = data.finishDate
         // this.cost = data.cost
         this.findInitials()
-        console.log("new project: ", this.initials)
-        this.setDefaultDate()
+        console.log("new project: ", this.initials, this.finishDate)
+        // this.setDefaultDate()
+        console.log("new project (after invoking setDefaultDate): ", this.initials, this.finishDate)
+
+        // if (this.finishDate == null) {
+        //     const defDate = new Date(1979, 7, 3, 12)
+        //     this.finishDate = defDate
+        //     console.log("Project Cosntructor -> finishDate: ", this.finishDate)
+        // }
+        console.log("new project (after invoking setDefaultDate and after if statement): ", this.initials, this.finishDate)
         this.setUI()
-        this.setUI2()
+        // this.setUI2()
+
         // this.finishDateShort()
 
     // finishDateShort() {
@@ -119,14 +215,14 @@ export class Project implements IProject {
 
     // State default Date
     
-    setDefaultDate() {
-        if (this.finishDate == null) {
-            const defDate = new Date(1979, 7, 3, 12)
-            this.finishDate = defDate
-            console.log("finishDate: ", this.finishDate)
-        }
-    }
-
+    // setDefaultDate() {
+    //     if (this.finishDate == null) {
+    //         const defDate = new Date(1979, 7, 3, 12)
+    //         this.finishDate = defDate
+    //         console.log("finishDate: ", this.finishDate)
+    //         return defDate
+    //     }
+    // }
 
 // Find initials
 
@@ -154,8 +250,6 @@ export class Project implements IProject {
         this.initialsColor = colors[random]
         console.log(this.initialsColor)
         
-
-
         // this.initials = map1[0]+ map1[1] as string
         // console.log("this initials: ", this.initials)
 
@@ -163,7 +257,6 @@ export class Project implements IProject {
         // const secondInitial = words[1].charAt(0)
         // const concatInitials = firstInitial + secondInitial
         // this.initials = concatInitials.toUpperCase()
-
 
         // return concatInitials.toUpperCase
         // const upperConcatInitials = concatInitials.toUpperCase
@@ -177,6 +270,10 @@ export class Project implements IProject {
             // }
     }
     // }
+
+    editProject() {
+        console.log("tratando de editar")
+    }
     
 
     setUI() {
@@ -195,7 +292,7 @@ export class Project implements IProject {
             </div>
             <div class="card-content">
                 <div class="card-property">
-                    <p style="color: #969696;">Status</p>
+                    <p style="color: #969696;">Id</p>
                     <p>${this.id}</p>
                 </div>
                 <div class="card-property">
@@ -212,7 +309,7 @@ export class Project implements IProject {
                 </div>
                 <div class="card-property">
                     <p style="color: #969696;">Finish Date</p>
-                    <p>$${this.finishDate}</p>
+                    <p>${this.finishDate}</p>
                 </div>
                 <div class="card-property">
                     <p style="color: #969696;">Estimated Progress</p>

@@ -44,6 +44,7 @@ newProject(data: IProject) {
     const projectNames = this.list.map((project) => {
         return project.name
     })
+    console.log("ProjectsManager.newProject -> Project names list before newProject:")
     console.log(projectNames)
     const nameInUse = projectNames.includes(data.name)
     if (data.name.length < 6){
@@ -56,6 +57,7 @@ newProject(data: IProject) {
     console.log(child)
 
     const project = new Project(data)
+    // project.setDefaultDate()
     project.ui.addEventListener("click", () => {
         const projectsPage = document.getElementById("projects-page")
         const detailsPage = document.getElementById("project-details")
@@ -65,6 +67,9 @@ newProject(data: IProject) {
         detailsPage.style.display = "flex"
         this.setDetailsPage(project)
     })
+    // ------
+    // project.setDefaultDate()
+    // ------
     this.ui.append(project.ui)
     this.list.push(project)
     console.warn("New Project is created")
