@@ -23,6 +23,7 @@ constructor(container: HTMLElement) {
         const defaultProject = new Project(defaultData)
         this.ui.append(defaultProject.ui)
         this.list.push(defaultProject)
+        console.warn("Default Project is created")
         return defaultProject
     }
 // -----------------------------------------------------------------------------
@@ -31,8 +32,10 @@ deleteDefaultProjectUI() {
     const child = document.getElementById("default-project")
     const parent = document.getElementById("projects-list")
     if (child && parent) {
+        console.log("parent & child exists")
         parent.removeChild(child)
         this.list.shift()
+        console.log("child removed", child)
         return(document)
     }
 }
@@ -41,6 +44,8 @@ newProject(data: IProject) {
     const projectNames = this.list.map((project) => {
         return project.name
     })
+    console.log("ProjectsManager.newProject -> Project names list before newProject:")
+    console.log(projectNames)
     const nameInUse = projectNames.includes(data.name)
     if (data.name.length < 6){
         throw new Error(`Project name "${data.name}" must contain at least 6 characters`)
@@ -49,16 +54,22 @@ newProject(data: IProject) {
         throw new Error(`A project with the name "${data.name}" already exists`)
     }
     const child = document.getElementById("default-project")
+    console.log(child)
 
     const project = new Project(data)
+    // project.setDefaultDate()
     project.ui.addEventListener("click", () => {
         const projectsPage = document.getElementById("projects-page")
         const detailsPage = document.getElementById("project-details")
         if (!projectsPage || !detailsPage) {return}
+        console.log("pages exists")
         projectsPage.style.display = "none"
         detailsPage.style.display = "flex"
         this.setDetailsPage(project)
     })
+    // ------
+    // project.setDefaultDate()
+    // ------
     this.ui.append(project.ui)
     this.list.push(project)
     console.warn("New Project is created")
@@ -102,21 +113,22 @@ private setDetailsPage(project: Project) {
         }
     }
 }
-// ----------------------------------------------------------------
+
+
 getProject(id: string) {
     const project = this.list.find((project) => {
         return project.id === id
     })
     return project
 }
-// ----------------------------------------------------------------
+
 getProjectbyName(name: string) {
     const project = this.list.find((project) => {
         return project.name === name
     })
     return project
 }
-// ----------------------------------------------------------------
+
 deleteProject(id: string) {
     const project = this.getProject(id)
     if (!project) { 
@@ -128,13 +140,13 @@ deleteProject(id: string) {
     })
     this.list = remaining
 }
-// ------------------------------------------------------------------
+
 totalCost() {
     const total = this.list.reduce((total, project) => total + project.cost, 0)
     console.log(total)
     return total
 }
-// -------------------------------------------------------------------
+
 exportToJSON(fileName: string = "projects") {
     const json = JSON.stringify(this.list, null, 2)
     const blob = new Blob([json], {type: 'application/json'})
@@ -145,7 +157,7 @@ exportToJSON(fileName: string = "projects") {
     a.click()
     URL.revokeObjectURL(url)
 }
-// -------------------------------------------------------------------
+
 importFromJSON() {
     const input = document.createElement('input')
     input.type = 'file'
@@ -161,8 +173,10 @@ importFromJSON() {
             }
             catch (error) {
                 alert(error)
+                // console.log("imp qort is not working")
             }
         }
+
     })
     input.addEventListener('change', () => {
         const filesList = input.files
