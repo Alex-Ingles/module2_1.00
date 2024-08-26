@@ -51,21 +51,31 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
             console.warn(projectData.finishDate)
             try {
                 new Date(projectData.finishDate)
+                if(isNaN(projectData.finishDate.valueOf())) {
+                    console.warn("XXXXXXXXX:  finishDate valueOf is not a number")
+                    const defDate = new Date(1979, 7, 3, 12)
+                    projectData.finishDate = defDate
+                    console.warn(projectData.finishDate)
+
+                } else {
+                    console.warn("XXXXXXXXX:  finishDate valueOf is a number")
+                } 
             }
             catch (err) {
                 alert(err)
-                const defDate = new Date(1979, 7, 3, 12)
-                projectData.finishDate = defDate
+                // const defDate = new Date(1979, 7, 3, 12)
+                // projectData.finishDate = defDate
+                // console.log(projectData.finishDate)
             }
             console.log("index.ts when form submit: ", projectData.finishDate, typeof projectData.finishDate )
             console.log(projectData.finishDate.valueOf())
             console.log(projectData.finishDate.valueOf.length)
             
-            if (typeof projectData.finishDate !== "object") {
-                const defDate = new Date(1979, 7, 3, 12)
-                projectData.finishDate = defDate
-                console.warn("solved!: ",projectData.finishDate)
-            }
+            // if (typeof projectData.finishDate !== "object") {
+            //     const defDate = new Date(1979, 7, 3, 12)
+            //     projectData.finishDate = defDate
+            //     console.warn("solved!: ",projectData.finishDate)
+            // }
     // }
             console.log("index.ts when form submit: ", projectData.finishDate, typeof projectData.finishDate )
             console.log(projectData.finishDate.valueOf())
