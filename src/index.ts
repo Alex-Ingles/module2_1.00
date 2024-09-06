@@ -168,3 +168,80 @@ const usersPage = document.getElementById("users-page")
 //             usersPage.style.display = "flex"
 //         })
 // }
+
+const editBtn = document.getElementById("edit-project-btn")
+const projectDetailsPage = document.getElementById("project-details")
+
+    if (editBtn) {
+        editBtn.addEventListener("click", () => {
+            console.log("I've listened the edit button")
+            const detailsPage = document.getElementById("project-details")
+            if (!detailsPage) {return}
+            const name = detailsPage.querySelector("[data-project-info='name']")
+            const description = detailsPage.querySelector("[data-project-info='description']")
+            const cost = detailsPage.querySelector("[data-project-info='cost']")
+            const userRole = detailsPage.querySelector("[data-project-info='userRole']")
+            const status = detailsPage.querySelector("[data-project-info='status']")
+            const finishDate = detailsPage.querySelector("[data-project-info='finishDate']")
+            console.warn("finishDate: ",finishDate)
+            console.warn("finishDate.innerHTML: ", finishDate?.innerHTML)
+
+            if (name && projectDetailsPage && projectsPage && projectForm) { 
+                console.log(name)
+                projectDetailsPage.style.display = "none"
+                projectsPage.style.display = "flex"
+                toggleModal("new-project-modal", "show")
+
+                let formName = projectForm.querySelector("[data-project-info='name']")
+                if (name && formName instanceof HTMLInputElement) {
+                    let nameValue = name.innerHTML
+                    if (formName) { formName.value = nameValue }
+                }
+                let formDescription = projectForm.querySelector("[data-project-info='description']")
+                if (description && formDescription instanceof HTMLTextAreaElement) {
+                    let descriptionValue = description.innerHTML
+                    if (formDescription) { formDescription.textContent = descriptionValue }
+                }
+                let formCost = projectForm.querySelector("[data-project-info='cost']")
+                if (cost && formCost instanceof HTMLInputElement) {
+                    let costValue = cost.innerHTML
+                    if (formCost) { formCost.value = costValue }
+                }
+                let formUserRole = projectForm.querySelector("[data-project-info='userRole']")
+                if (userRole && formUserRole instanceof HTMLSelectElement) {
+                    let userRoleValue = userRole.innerHTML
+                    if (formUserRole) { formUserRole.value = userRoleValue }
+                }
+                let formStatus = projectForm.querySelector("[data-project-info='status']")
+                if (status && formStatus instanceof HTMLSelectElement) {
+                    let statusValue = status.innerHTML
+                    if (formStatus) { formStatus.value = statusValue }
+                }
+                let formFinishDate = projectForm.querySelector("[data-project-info='finishDate']")
+                if (finishDate && formFinishDate instanceof HTMLInputElement) {
+                    let finishDate2 = new Date(finishDate.innerHTML)
+                    const finishDate3 = finishDate2.toISOString().split('T')[0];
+                    console.warn("finishDate3: ", finishDate3)
+                    console.warn("finishDate2: ",finishDate2)
+                    console.warn("finishDate2.toLocaleDateString: ",finishDate2.toLocaleDateString)
+                    // let y = finishDate2.getFullYear()
+                    // let month = finishDate2.getMonth()
+                    // let day = finishDate2.getDay()
+                    // let date = finishDate2.getDate()
+                    // console.warn(y, month, day, date)
+                    formFinishDate.value = finishDate3
+                }
+                // if (finishDate && formFinishDate instanceof HTMLInputElement) {
+                //     let finishDateValue = finishDate.innerHTML
+                //     // var today = moment(finishDate).format('YYYY-MM-DD');
+                //     console.warn(finishDate)
+                //     console.warn("finishDateValue: ",finishDateValue)
+                //     console.warn("formFinishDate: ",formFinishDate.valueAsDate)
+                //     if (formFinishDate) { formFinishDate.value = finishDate2.toLocaleDateString }
+                // }
+
+
+            }
+        })
+        console.log("I'm not listening nothing")
+    }

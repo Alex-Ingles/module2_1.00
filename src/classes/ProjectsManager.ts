@@ -114,6 +114,9 @@ private setDetailsPage(project: Project) {
     }
 }
 
+editProject(id: string) {
+    
+}
 
 getProject(id: string) {
     const project = this.list.find((project) => {

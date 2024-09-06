@@ -43,7 +43,7 @@ export class Project implements IProject {
         for (const key in data) {
             this[key] = data[key]
         }
-        console.warn("Intefaced data: ",data)
+        console.warn("Interfaced data: ",data)
         console.warn("value of date on data: ",data.finishDate.valueOf)
         // if (data.finishDate === null) {
 
