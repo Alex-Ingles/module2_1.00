@@ -3,7 +3,6 @@ import { Project, IProject, UserRole, ProjectStatus } from "./Project"
 export class ProjectsManager {
     list: Project[] = []
     ui: HTMLElement
-    // ui2: HTMLElement
 // -----------------------------------------------------------------------------
 constructor(container: HTMLElement) {
         this.ui = container
@@ -57,7 +56,6 @@ newProject(data: IProject) {
     console.log(child)
 
     const project = new Project(data)
-    // project.setDefaultDate()
     project.ui.addEventListener("click", () => {
         const projectsPage = document.getElementById("projects-page")
         const detailsPage = document.getElementById("project-details")
@@ -67,9 +65,6 @@ newProject(data: IProject) {
         detailsPage.style.display = "flex"
         this.setDetailsPage(project)
     })
-    // ------
-    // project.setDefaultDate()
-    // ------
     this.ui.append(project.ui)
     this.list.push(project)
     console.warn("New Project is created")
@@ -176,7 +171,6 @@ importFromJSON() {
             }
             catch (error) {
                 alert(error)
-                // console.log("imp qort is not working")
             }
         }
 

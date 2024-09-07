@@ -63,27 +63,11 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
             }
             catch (err) {
                 alert(err)
-                // const defDate = new Date(1979, 7, 3, 12)
-                // projectData.finishDate = defDate
-                // console.log(projectData.finishDate)
             }
             console.log("index.ts when form submit: ", projectData.finishDate, typeof projectData.finishDate )
             console.log(projectData.finishDate.valueOf())
             console.log(projectData.finishDate.valueOf.length)
             
-            // if (typeof projectData.finishDate !== "object") {
-            //     const defDate = new Date(1979, 7, 3, 12)
-            //     projectData.finishDate = defDate
-            //     console.warn("solved!: ",projectData.finishDate)
-            // }
-    // }
-            console.log("index.ts when form submit: ", projectData.finishDate, typeof projectData.finishDate )
-            console.log(projectData.finishDate.valueOf())
-            console.log(projectData.finishDate.valueOf.length)
-
-            // if (typeof projectData.finishDate.valueOf = "NaN") {
-            //     console.log("Value of date greter than 0")
-            //     }
 
             try {
                 const project = projectsManager.newProject(projectData)
@@ -125,7 +109,6 @@ const importProjectsBtn = document.getElementById("import-projects-btn")
 if (importProjectsBtn) {
     importProjectsBtn.addEventListener("click", () => {
         projectsManager.importFromJSON()
-        // console.log(projectsManager.list)
     })
     console.log(projectsManager.list)
 }
@@ -159,15 +142,6 @@ const usersPage = document.getElementById("users-page")
         })
 }
 // -----------------------------------------------------------------------------
-// const editBtn = document.getElementById("edit-project-btn")
-// // const projectForm = document.getElementById("users-page")
-//     if (editBtn) {
-//         editBtn.addEventListener("click", () => {
-//             // cleanPages()
-//             toggleModal(projectModal, show)
-//             usersPage.style.display = "flex"
-//         })
-// }
 
 const editBtn = document.getElementById("edit-project-btn")
 const projectDetailsPage = document.getElementById("project-details")
@@ -224,21 +198,8 @@ const projectDetailsPage = document.getElementById("project-details")
                     console.warn("finishDate3: ", finishDate3)
                     console.warn("finishDate2: ",finishDate2)
                     console.warn("finishDate2.toLocaleDateString: ",finishDate2.toLocaleDateString)
-                    // let y = finishDate2.getFullYear()
-                    // let month = finishDate2.getMonth()
-                    // let day = finishDate2.getDay()
-                    // let date = finishDate2.getDate()
-                    // console.warn(y, month, day, date)
                     formFinishDate.value = finishDate3
                 }
-                // if (finishDate && formFinishDate instanceof HTMLInputElement) {
-                //     let finishDateValue = finishDate.innerHTML
-                //     // var today = moment(finishDate).format('YYYY-MM-DD');
-                //     console.warn(finishDate)
-                //     console.warn("finishDateValue: ",finishDateValue)
-                //     console.warn("formFinishDate: ",formFinishDate.valueAsDate)
-                //     if (formFinishDate) { formFinishDate.value = finishDate2.toLocaleDateString }
-                // }
 
 
             }
