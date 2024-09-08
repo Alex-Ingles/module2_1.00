@@ -36,9 +36,14 @@ export class Project implements IProject {
 
 
     constructor(data: IProject) {
-        this.id = uuidv4()
         for (const key in data) {
             this[key] = data[key]
+        }
+        console.log(this.id)
+        if (this.id == undefined) {
+            console.log("this.id is undefined")
+            this.id = uuidv4()
+            console.log("this id after uuidv4: ",this.id) 
         }
         console.warn("Interfaced data: ",data)
         console.warn("value of date on data: ",data.finishDate.valueOf)

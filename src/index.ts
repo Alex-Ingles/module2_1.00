@@ -49,6 +49,7 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
                 initials: "" as string,
                 progress: 0 as number
             }
+            console.warn("projectData: ", projectData)
             console.warn(projectData.finishDate)
             try {
                 new Date(projectData.finishDate)
