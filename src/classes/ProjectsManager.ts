@@ -18,6 +18,8 @@ constructor(container: HTMLElement) {
             finishDate: new Date ("finishDate" as string),
             progress: 50 as number,
             initials: "DP" as string,
+            id: "defaultId" as string,
+
         }
         const defaultProject = new Project(defaultData)
         this.ui.append(defaultProject.ui)
@@ -74,6 +76,8 @@ newProject(data: IProject) {
 private setDetailsPage(project: Project) {
     const detailsPage = document.getElementById("project-details")
     if (!detailsPage) {return}
+    const id = detailsPage.querySelector("[data-project-info='id']")
+    if (id) {id.textContent = project.id}
     const name = detailsPage.querySelector("[data-project-info='name']")
     if (name) { name.textContent = project.name}
     const name2 = detailsPage.querySelector("[data-project-info='name2']")
@@ -105,28 +109,32 @@ private setDetailsPage(project: Project) {
         const progressPercent = project.progress + "%"
         if (bar) {
         bar.style.width = `"${progressPercent}"`
+        // bar.style = `"${progressPercent}"`
+
+        console.warn("progress percent: ",progressPercent)
         }
     }
 }
-
+// -----------------------------------------------------------------------------
 editProject(id: string) {
-    
+    this.getProject(id)
+    console.log(this.getProject)
 }
-
+// -----------------------------------------------------------------------------
 getProject(id: string) {
     const project = this.list.find((project) => {
         return project.id === id
     })
     return project
 }
-
+// -----------------------------------------------------------------------------
 getProjectbyName(name: string) {
     const project = this.list.find((project) => {
         return project.name === name
     })
     return project
 }
-
+// -----------------------------------------------------------------------------
 deleteProject(id: string) {
     const project = this.getProject(id)
     if (!project) { 
@@ -138,13 +146,13 @@ deleteProject(id: string) {
     })
     this.list = remaining
 }
-
+// -----------------------------------------------------------------------------
 totalCost() {
     const total = this.list.reduce((total, project) => total + project.cost, 0)
     console.log(total)
     return total
 }
-
+// -----------------------------------------------------------------------------
 exportToJSON(fileName: string = "projects") {
     const json = JSON.stringify(this.list, null, 2)
     const blob = new Blob([json], {type: 'application/json'})
@@ -155,7 +163,7 @@ exportToJSON(fileName: string = "projects") {
     a.click()
     URL.revokeObjectURL(url)
 }
-
+// -----------------------------------------------------------------------------
 importFromJSON() {
     const input = document.createElement('input')
     input.type = 'file'

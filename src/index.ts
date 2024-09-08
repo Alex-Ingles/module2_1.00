@@ -45,6 +45,7 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
                 status: formData.get("status") as ProjectStatus,
                 userRole: formData.get("userRole") as UserRole,
                 finishDate: new Date (formData.get("finishDate") as string),
+                id: formData.get("id") as string,
                 initials: "" as string,
                 progress: 0 as number
             }
@@ -157,6 +158,7 @@ const projectDetailsPage = document.getElementById("project-details")
             const userRole = detailsPage.querySelector("[data-project-info='userRole']")
             const status = detailsPage.querySelector("[data-project-info='status']")
             const finishDate = detailsPage.querySelector("[data-project-info='finishDate']")
+            const id = detailsPage.querySelector("[data-project-info='finishDate']")
             console.warn("finishDate: ",finishDate)
             console.warn("finishDate.innerHTML: ", finishDate?.innerHTML)
 
@@ -200,6 +202,7 @@ const projectDetailsPage = document.getElementById("project-details")
                     console.warn("finishDate2.toLocaleDateString: ",finishDate2.toLocaleDateString)
                     formFinishDate.value = finishDate3
                 }
+
 
 
             }

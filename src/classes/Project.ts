@@ -14,6 +14,7 @@ export interface IProject {
     cost: number
     initials: string
     progress: number
+    id: string
 }
 
 export class Project implements IProject {
@@ -29,9 +30,10 @@ export class Project implements IProject {
     // Class internals
     ui: HTMLDivElement
     ui2: HTMLDivElement
-    id: string
     initials: string
     initialsColor: string
+    id: string
+
 
     constructor(data: IProject) {
         this.id = uuidv4()
