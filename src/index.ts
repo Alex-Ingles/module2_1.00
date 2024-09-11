@@ -50,6 +50,7 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
                 progress: 0 as number
             }
             console.warn("projectData: ", projectData)
+            console.warn("projectData.id: ", projectData.id)
             console.warn(projectData.finishDate)
             try {
                 new Date(projectData.finishDate)
@@ -69,24 +70,30 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
             console.log("index.ts when form submit: ", projectData.finishDate, typeof projectData.finishDate )
             console.log(projectData.finishDate.valueOf())
             console.log(projectData.finishDate.valueOf.length)
-            
 
-            try {
-                const project = projectsManager.newProject(projectData)
-                projectsManager.deleteDefaultProjectUI()
-    
-                projectForm.reset()
-                toggleModal("new-project-modal", "close")
-    
-                console.warn("submit is fired!")
-                console.log(projectData)
-                console.log(projectsManager.list)
-                projectsManager.totalCost()
-                
-            } catch (err) {
-                alert(err)
+
+
+            if (projectsManager && projectsManager.idInUse(projectData.id)) {
+                console.warn("id provided is already in use, existing Project will be updated")
+                projectsManager.updateProject(projectData)
+            } else {
+
+                try {
+                    const project = projectsManager.newProject(projectData)
+                    projectsManager.deleteDefaultProjectUI()
+        
+                    projectForm.reset()
+                    toggleModal("new-project-modal", "close")
+        
+                    console.warn("submit is fired!")
+                    console.log(projectData)
+                    console.log(projectsManager.list)
+                    projectsManager.totalCost()
+                    
+                } catch (err) {
+                    alert(err)
+                }
             }
-            
         } else if(handler == "new-project-form-cancel-btn") {
             e.preventDefault()
             projectForm.reset()
@@ -159,15 +166,40 @@ const projectDetailsPage = document.getElementById("project-details")
             const userRole = detailsPage.querySelector("[data-project-info='userRole']")
             const status = detailsPage.querySelector("[data-project-info='status']")
             const finishDate = detailsPage.querySelector("[data-project-info='finishDate']")
-            const id = detailsPage.querySelector("[data-project-info='finishDate']")
+            const id = detailsPage.querySelector("[data-project-info='id']")
+            const initials = detailsPage.querySelector("[data-project-info='initials']")
+            const progress = detailsPage.querySelector("[data-project-info='progress']")
             console.warn("finishDate: ",finishDate)
             console.warn("finishDate.innerHTML: ", finishDate?.innerHTML)
+
+
+            const setDetailsPageData: IProject = {
+                name: name?.innerHTML as string,
+                description: description?.innerHTML as string,
+                cost: Number(cost?.innerHTML) as number,
+                status: status?.innerHTML as ProjectStatus,
+                userRole: userRole?.innerHTML as UserRole,
+                finishDate: new Date (finishDate?.innerHTML as string),
+                id: id?.innerHTML as string,
+                initials: initials?.innerHTML as string,
+                // initials: initials?.innerHTML as string,
+                progress: Number(progress?.innerHTML) as number
+            }
+            console.log("setDetailsPageData: ",setDetailsPageData)
+
+
 
             if (name && projectDetailsPage && projectsPage && projectForm) { 
                 console.log(name)
                 projectDetailsPage.style.display = "none"
                 projectsPage.style.display = "flex"
                 toggleModal("new-project-modal", "show")
+
+                let formId = projectForm.querySelector("[data-project-info='id']")
+                if (id && formId instanceof HTMLInputElement) {
+                    let idValue = id.innerHTML
+                    if (formId) { formId.value = idValue }
+                }
 
                 let formName = projectForm.querySelector("[data-project-info='name']")
                 if (name && formName instanceof HTMLInputElement) {

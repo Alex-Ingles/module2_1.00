@@ -27,7 +27,7 @@ constructor(container: HTMLElement) {
         console.warn("Default Project is created")
         return defaultProject
     }
-// -----------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------
 deleteDefaultProjectUI() {
     console.log("I reach deleteDefault function")
     const child = document.getElementById("default-project")
@@ -51,9 +51,9 @@ newProject(data: IProject) {
     if (data.name.length < 6){
         throw new Error(`Project name "${data.name}" must contain at least 6 characters`)
     }
-    if (nameInUse) {
-        throw new Error(`A project with the name "${data.name}" already exists`)
-    }
+    // if (nameInUse) {
+    //     throw new Error(`A project with the name "${data.name}" already exists`)
+    // }
     const child = document.getElementById("default-project")
     console.log(child)
 
@@ -116,10 +116,98 @@ private setDetailsPage(project: Project) {
     }
 }
 // -----------------------------------------------------------------------------
-editProject(id: string) {
-    this.getProject(id)
-    console.log(this.getProject)
+
+idInUse(id: string) {
+    const projectIds = this.list.map((project) => {
+        return project.id
+    })
+    if (projectIds.includes(id)) {
+        return true
+    }
+    else {
+        return false
+    }
+    console.warn("idInUse: id already exists")
 }
+
+
+// idInUse(id: string) {
+// const projectIds = this.list.map((project) => {
+//     return project.id
+// })
+// const idInUse = projectIds.includes(id)
+// console.warn("idInUse: id already exists")
+
+// }
+
+// -----------------------------------------------------------------------------
+updateProject(data: IProject) {
+    // this.getProject(id)
+    // console.log(this.getProject)
+
+
+    // const projectNames = this.list.map((project) => {
+    //     return project.name
+    // })
+    // console.log("ProjectsManager.newProject -> Project names list before newProject:")
+    // console.log(projectNames)
+    // const nameInUse = projectNames.includes(data.name)
+    if (data.name.length < 6){
+        throw new Error(`Project name "${data.name}" must contain at least 6 characters`)
+    }
+    // if (nameInUse) {
+    //     throw new Error(`A project with the name "${data.name}" already exists`)
+    // }
+    // const child = document.getElementById("default-project")
+    // console.log(child)
+
+    // let projectToBeUpdated = this.getProject(data.id)
+    this.deleteProject(data.id)
+    this.newProject(data)
+    // console.log("projectToBeUpdated: ", projectToBeUpdated)
+
+
+    // let projectUpdated = data
+    // console.log("projectToBeUpdated: ",projectToBeUpdated)
+    // let projectUpdated = data
+    // for (const key in projectToBeUpdated) {
+    //     this[key] = data[key]
+    // }
+    // console.log("projectUpdated: ", projectToBeUpdated)
+
+    // const projectsIds = this.list.map((project) => {
+    //     return project.id })
+    // const projectIndex = this.list.indexOf(data)
+    
+
+    // if (data.id) {
+    //     console.log("projectsIds: ",projectsIds)
+    //     // projectsIds.find()
+    // }
+
+
+    // const updatedProjectIndex = projectsIds.findIndex(data.id.valueOf)
+    // console.log("idNumber: ",updatedProjectIndex)
+
+    // const project = new Project(data)
+    // project.ui.addEventListener("click", () => {
+    //     const projectsPage = document.getElementById("projects-page")
+    //     const detailsPage = document.getElementById("project-details")
+    //     if (!projectsPage || !detailsPage) {return}
+    //     console.log("pages exists")
+    //     projectsPage.style.display = "none"
+    //     detailsPage.style.display = "flex"
+    //     this.setDetailsPage(project)
+    // })
+    // this.ui.append(project.ui)
+    // this.list.push(project)
+    // console.warn("New Project is created")
+    // this.deleteDefaultProjectUI()
+}
+
+
+
+
 // -----------------------------------------------------------------------------
 getProject(id: string) {
     const project = this.list.find((project) => {

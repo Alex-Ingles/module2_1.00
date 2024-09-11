@@ -39,7 +39,9 @@ export class Project implements IProject {
         for (const key in data) {
             this[key] = data[key]
         }
-        console.log(this.id)
+        console.log("data: ", data)
+        console.log("Project: ", Project)
+        console.log("this.id: ",this.id)
         if (this.id == undefined) {
             console.log("this.id is undefined")
             this.id = uuidv4()
