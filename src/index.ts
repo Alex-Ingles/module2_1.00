@@ -1,5 +1,8 @@
 import { IProject, ProjectStatus, UserRole} from "./classes/Project"
 import { ProjectsManager } from "./classes/ProjectsManager"
+import { IToDo, ToDoStatus } from "./classes/ToDo"
+import { ToDoManager } from "./classes/ToDoManager"
+
 // -----------------------------------------------------------------------------
 function toggleModal(id: string, showclose: "show" | "close") {
     const modal = document.getElementById(id)
@@ -16,6 +19,8 @@ function toggleModal(id: string, showclose: "show" | "close") {
 // -----------------------------------------------------------------------------
 const projectListUI = document.getElementById("projects-list") as HTMLElement
 const projectsManager = new ProjectsManager(projectListUI)
+const todoListUI = document.getElementById("todo-list") as HTMLElement
+const todoManager = new ToDoManager(todoListUI)
 // -----------------------------------------------------------------------------
 console.log(projectsManager.list)
 console.log("default project is created")
@@ -106,6 +111,132 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
 } else {
     console.warn("The projectForm wasn't found. Check the ID!")
 }
+
+// -----------------------------------------------------------------------------
+const newToDoBtn = document.getElementById("new-todo-btn")
+if (newToDoBtn) {
+    newToDoBtn.addEventListener("click", () => {toggleModal("new-todo-modal", "show")})
+    console.warn("toggle on newToDoButton is working !!")
+} else {
+    console.warn("New Projects Button was not found")
+}
+
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+const todoForm = document.getElementById("new-todo-form")
+const projectDetails = document.getElementById("project-details")
+if (projectDetails) {
+const projectIdElement = projectDetails.querySelector("[data-project-info='id']")
+    if (projectIdElement) {
+    const projectId = projectIdElement.innerHTML as string
+    }
+
+
+if (todoForm && todoForm instanceof HTMLFormElement) {
+    todoForm.addEventListener("submit", (e) => {
+        let submitter = e.submitter as HTMLElement
+        let handler = submitter.id
+
+        if(handler == "new-todo-form-submit-btn") {
+            e.preventDefault()
+            const formData = new FormData(todoForm)
+            console.warn(formData)
+            let todoData: IToDo = {
+                name: formData.get("name") as string,
+                description: formData.get("description") as string,
+                status: formData.get("status") as ToDoStatus,
+                deadline: new Date (formData.get("deadline") as string),
+                id: formData.get("id") as string,
+                relatedProject: formData.get("relatedProject") as string,
+            }
+            // const detailsPage = document.getElementById("details-page")
+            // if (detailsPage && todoData.relatedProject) {
+            //     const projectId = detailsPage.querySelector("[data-project-info='id']")
+        
+            const projectDetails = document.getElementById("project-details")
+            if (projectDetails) {
+            const projectIdElement = projectDetails.querySelector("[data-project-info='id']")
+            }
+            if (projectIdElement) {
+            const projectId = projectIdElement.innerHTML as string
+       
+                if (projectId) {
+                todoData.relatedProject = projectId
+                }
+            }
+            console.warn(projectDetailsPage)
+            console.warn("relatedProjectId: ",todoData.relatedProject)
+            console.warn("todoData: ", todoData)
+            console.warn("todoData.id: ", todoData.id)
+            console.warn(todoData.deadline)
+            try {
+                new Date(todoData.deadline)
+                if(isNaN(todoData.deadline.valueOf())) {
+                    console.warn("XXXXXXXXX:  deadline valueOf is not a number")
+                    const defDate = new Date(1979, 7, 3, 12)
+                    todoData.deadline = defDate
+                    console.warn(todoData.deadline)
+
+                } else {
+                    console.warn("XXXXXXXXX:  deadline valueOf is a number")
+                } 
+            }
+            catch (err) {
+                alert(err)
+            }
+            try {
+                const todo = todoManager.newToDo(todoData)
+                todoForm.reset()
+                toggleModal("new-todo-modal", "close")
+
+
+
+            }
+            catch {
+
+            }
+            console.log("index.ts - when form submit: ", todoData.deadline, typeof todoData.deadline )
+            console.log(todoData.deadline.valueOf())
+            console.log(todoData.deadline.valueOf.length)
+
+// Edit To-Dos
+
+            // if (projectsManager && projectsManager.idInUse(projectData.id)) {
+            //     console.warn("id provided is already in use, existing Project will be updated")
+            //     projectsManager.updateProject(projectData)
+            // } else {
+
+            //     try {
+            //         const project = projectsManager.newProject(projectData)
+            //         projectsManager.deleteDefaultProjectUI()
+        
+            //         projectForm.reset()
+            //         toggleModal("new-project-modal", "close")
+        
+            //         console.warn("submit is fired!")
+            //         console.log(projectData)
+            //         console.log(projectsManager.list)
+            //         projectsManager.totalCost()
+                    
+            //     } catch (err) {
+            //         alert(err)
+            //     }
+            // }
+
+        } else if(handler == "new-todo-form-cancel-btn") {
+            e.preventDefault()
+            todoForm.reset()
+            console.warn("cancel is fired!")
+            toggleModal("new-todo-modal", "close")
+            // console.log(projectsManager.list)
+        }
+    })
+
+} else {
+    console.warn("The todoForm wasn't found. Check the ID!")
+}
+
 // -----------------------------------------------------------------------------
 const exportProjectsBtn = document.getElementById("export-projects-btn")
 if (exportProjectsBtn) {
@@ -242,3 +373,4 @@ const projectDetailsPage = document.getElementById("project-details")
         })
         console.log("I'm not listening nothing")
     }
+}

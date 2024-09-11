@@ -117,6 +117,55 @@
 
             <div class="page" id="project-details" style="display:none">
 
+                <!-- dialog --------------------------------------------------------->
+
+                <dialog id="new-todo-modal">
+                    <form id="new-todo-form">
+                        <h2>New To-Do</h2>
+                        <div class="input-list">
+                            <div class="form-field-container">
+                                <!-- <label><span class="material-icons-round">
+                                    apartment
+                                    </span>Name</label> -->
+                                <input data-todo-info="id" name="id" type="hidden" cols="1" rows="1">
+
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    apartment
+                                    </span>Name</label>
+                                <input data-todo-info="name" name="name" type="string" cols="1" rows="1" placeholder="Enter your project name">
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    notes
+                                    </span>Description</label>
+                                <textarea data-todo-info="description" name="description" cols="30" rows="5" placeholder="Give your description here"></textarea>
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    account_circle
+                                    </span>Status</label>
+                                <select data-todo-info="status" name="status">
+                                    <option>pending</option>
+                                    <option>on-going</option>
+                                    <option>solved</option>
+                                </select>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    calendar_month
+                                    </span>Finish Date</label>
+                                <input data-todo-info="deadline" name="deadline" type="date">
+                            </div>
+                        </div>
+
+                        <div class="submit-buttons">
+                            <button id="new-todo-form-cancel-btn" type="cancel">Cancel</button>
+                            <button id="new-todo-form-submit-btn" type="submit" style="background-color: green">Accept</button>
+                        </div>
+                    </form>
+                </dialog>
+
+
                 <!-- header --------------------------------------------------------->
 
                 <header class="page-header" id="project-details-page-header">
@@ -141,7 +190,7 @@
                 <div class="main-page-content">
                     <div id="project-details-container" style="display:flex; flex-direction:column; row-gap:10px">
 
-                        <!-- dashboard card 1 ----------------------->
+                        <!-- dashboard card 1 ProjectDetails----------------------->
 
                         <div class="dashboard-card" id="project-information">
                             <div style="display: flex; justify-content: space-between; align-content: center; height: 30px;">
@@ -180,7 +229,7 @@
                             </div>
                         </div>
 
-                        <!-- dashboard card 2 ------------------------->
+                        <!-- dashboard card 2 - ToDos ------------------------->
 
                         <div class="dashboard-card">
                             <div class="dashboard-card-header">
@@ -188,10 +237,14 @@
                                 <div class="dashboard-card-buttons">
                                     <span class="material-icons-round">search</span>
                                     <input class="search-box" type="text" placeholder="Search by name">
-                                    <span class="material-icons-round">add</span>
+                                    <!-- <span class="material-icons-round">add</span> -->
+                                    <button id="new-todo-btn"><span class="material-icons-round">
+                                        add_circle_outline
+                                        </span></button>
+                
                                 </div>
                             </div>
-                            <div class="todo-list">
+                            <div class="todo-list" id="todo-list">
 
                                 <!-- todo card -->
 
