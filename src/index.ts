@@ -1,6 +1,6 @@
 import { IProject, ProjectStatus, UserRole} from "./classes/Project"
 import { ProjectsManager } from "./classes/ProjectsManager"
-import { IToDo, ToDoStatus } from "./classes/ToDo"
+import { ToDo, IToDo, ToDoStatus } from "./classes/ToDo"
 import { ToDoManager } from "./classes/ToDoManager"
 
 // -----------------------------------------------------------------------------
@@ -20,7 +20,7 @@ function toggleModal(id: string, showclose: "show" | "close") {
 const projectListUI = document.getElementById("projects-list") as HTMLElement
 const projectsManager = new ProjectsManager(projectListUI)
 const todoListUI = document.getElementById("todo-list") as HTMLElement
-const todoManager = new ToDoManager(todoListUI)
+export const todoManager = new ToDoManager(todoListUI)
 // -----------------------------------------------------------------------------
 console.log(projectsManager.list)
 console.log("default project is created")
@@ -52,7 +52,8 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
                 finishDate: new Date (formData.get("finishDate") as string),
                 id: formData.get("id") as string,
                 initials: "" as string,
-                progress: 0 as number
+                progress: 0 as number,
+                // todoList: []
             }
             console.warn("projectData: ", projectData)
             console.warn("projectData.id: ", projectData.id)
@@ -186,12 +187,17 @@ if (todoForm && todoForm instanceof HTMLFormElement) {
                 alert(err)
             }
             try {
-                const todo = todoManager.newToDo(todoData)
-                todoForm.reset()
-                toggleModal("new-todo-modal", "close")
-
-
-
+                const project = projectsManager.getProject(todoData.relatedProject)
+                if (project) {
+                    project.todoList.push(new ToDo(todoData))
+                    // todoManager.newToDo(todoData)
+                    todoForm.reset()
+                    projectsManager.setDetailsPage(project)
+                    // projectsManager.todoListRefresh()
+                    toggleModal("new-todo-modal", "close")
+                    projectsManager.setDetailsPage(project)
+                    console.log(project.todoList)
+                }
             }
             catch {
 
@@ -314,7 +320,8 @@ const projectDetailsPage = document.getElementById("project-details")
                 id: id?.innerHTML as string,
                 initials: initials?.innerHTML as string,
                 // initials: initials?.innerHTML as string,
-                progress: Number(progress?.innerHTML) as number
+                progress: Number(progress?.innerHTML) as number,
+                // todoList: ToDo[] = []
             }
             console.log("setDetailsPageData: ",setDetailsPageData)
 

@@ -34,7 +34,7 @@ export class ToDo implements IToDo {
         // console.log("Project: ", Project)
         console.log("this.id: ",this.id)
         this.setUI()
-        if (this.id == undefined) {
+        if (this.id == "") {
             console.log("this.id is undefined")
             this.id = uuidv4()
             console.log("this id after uuidv4: ",this.id) 
@@ -87,10 +87,10 @@ export class ToDo implements IToDo {
         console.log("I've reached this point")
         this.ui = document.createElement("div")
         this.ui.className = "todo-card"
-        this.ui.id = this.name
+        // this.ui.id = this.id
         this.ui.innerHTML = `
         <div class="todo-card">
-            <span class="material-icons-round" style="width:30px; height:30px; display:flex; justify-content:center; align-items:center">check_circle_outline</span>
+            <span id="${this.id}" class="material-icons-round" style="width:30px; height:30px; display:flex; justify-content:center; align-items:center">check_circle_outline</span>
             <div class="todo-description"><p>${this.description}</p></h5></div>
             <div class="todo-deadline">${this.deadline}</div>
         </div>`

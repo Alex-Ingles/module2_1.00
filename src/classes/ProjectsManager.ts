@@ -1,4 +1,7 @@
 import { Project, IProject, UserRole, ProjectStatus } from "./Project"
+import { ToDoManager } from "./ToDoManager"
+import { ToDo } from "./ToDo"
+import { todoManager } from "/Users/alex/Desktop/dev/module2_0.00/src/index.ts"
 
 export class ProjectsManager {
     list: Project[] = []
@@ -73,7 +76,7 @@ newProject(data: IProject) {
     this.deleteDefaultProjectUI()
 }
 // -----------------------------------------------------------------------------
-private setDetailsPage(project: Project) {
+setDetailsPage(project: Project) {
     const detailsPage = document.getElementById("project-details")
     if (!detailsPage) {return}
     const id = detailsPage.querySelector("[data-project-info='id']")
@@ -114,7 +117,46 @@ private setDetailsPage(project: Project) {
         console.warn("progress percent: ",progressPercent)
         }
     }
+    const container = document.getElementById("todo-list")
+    if (container && container instanceof HTMLElement) {
+        // const todoManager = new ToDoManager(container)
+        todoManager.cleanToDoManager()
+        for (const toDo of project.todoList) {
+            try { 
+                todoManager.newToDo(toDo)
+            }
+            catch (error) {
+                alert (error)
+            }
+        }
+    }
+
+    
 }
+// -----------------------------------------------------------------------------
+// todoListRefresh() {
+//     console.warn("todoListRefresh is invoked")
+//     const detailsPage = document.getElementById("project-details")
+//     if (!detailsPage) {return}
+//     const container = document.getElementById("todo-list")
+//     const projectId = detailsPage.querySelector("[data-project-info='id']")
+//     if (projectId) {
+//         const project = this.getProject(projectId.innerHTML)
+//         if (container && container instanceof HTMLElement && project) {
+//             // const todoManager = new ToDoManager(container)
+//             todoManager.cleanToDoManager()
+//             for (const toDo of project.todoList) {
+//                 try { 
+//                     todoManager.newToDo(toDo)
+//                 }
+//                 catch (error) {
+//                     alert (error)
+//                 }
+//             }
+//         }
+//     }
+// }
+
 // -----------------------------------------------------------------------------
 
 idInUse(id: string) {

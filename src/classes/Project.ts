@@ -1,5 +1,6 @@
 
 import { v4 as uuidv4 } from "uuid"
+import { ToDo, IToDo } from "./ToDo"
 
 export type ProjectStatus = "pending" | "active" | "finished"
 export type UserRole = "architect" | "engineer" | "developer"
@@ -15,6 +16,7 @@ export interface IProject {
     initials: string
     progress: number
     id: string
+    // todoList: ToDo[]
 }
 
 export class Project implements IProject {
@@ -26,6 +28,7 @@ export class Project implements IProject {
     finishDate: Date
     cost: number
     progress: number = 0
+    todoList: ToDo[] = []
 
     // Class internals
     ui: HTMLDivElement
@@ -42,7 +45,7 @@ export class Project implements IProject {
         console.log("data: ", data)
         console.log("Project: ", Project)
         console.log("this.id: ",this.id)
-        if (this.id == undefined) {
+        if (this.id == "") {
             console.log("this.id is undefined")
             this.id = uuidv4()
             console.log("this id after uuidv4: ",this.id) 
