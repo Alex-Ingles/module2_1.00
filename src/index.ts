@@ -146,14 +146,28 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
         if(handler == "new-project-form-submit-btn") {
             e.preventDefault()
             const formData = new FormData(projectForm)
+            // const progressNumber: number = 0
+            // if (formData && formData.get("progress")?.valueOf()) {
+            //     const progressFormData: string = formData.get("progress")?.valueOf()
+            //     const progressFormDataParsedNumber = Number.parseInt(progressFormData)
+            // }
+
+
+
+
+
+
+
+
+
             const projectData: IProject = {
                 name: formData.get("name") as string,
                 description: formData.get("description") as string,
                 status: formData.get("status") as ProjectStatus,
                 userRole: formData.get("userRole") as UserRole,
                 finishDate: new Date (formData.get("finishDate") as string),
-                cost: formData.get("cost") as number,
-                progress: 0 as number,
+                cost: new Number(formData.get("cost")) as number,
+                progress: new Number(formData.get("progress")) as number,
                 todoList: [],
                 id: formData.get("id") as string,
                 initials: "" as string
@@ -211,11 +225,12 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
             } else {
 
                 try {
-                    const project = projectsManager.newProject(projectData)
+                    projectsManager.newProject(projectData)
                     projectsManager.deleteDefaultProjectUI()
         
                     projectForm.reset()
                     toggleModal("new-project-modal", "close")
+                    // projectsManager.setDetailsPage(project.id)
         
                     console.warn("submit is fired!")
                     console.log(projectData)
@@ -253,15 +268,21 @@ if (editProjectForm && editProjectForm instanceof HTMLFormElement) {
             const projectData: IProject = {
                 name: formData.get("name") as string,
                 description: formData.get("description") as string,
-                cost: formData.get("cost") as number,
+                cost: new Number(formData.get("cost")) as number,
                 status: formData.get("status") as ProjectStatus,
                 userRole: formData.get("userRole") as UserRole,
                 finishDate: new Date (formData.get("finishDate") as string),
                 id: formData.get("id") as string,
                 initials: "" as string,
-                progress: 0 as number,
+                progress: new Number (formData.get("progress")) as number,
                 todoList: []
             }
+            // const progress: number = 0
+            // if (formData.get("progress")) {
+            //     const formDataProgress = formData.get("progress") as number
+            //     const formDataProgressParsed = Number.parseInt(formDataProgress))
+            // }
+
             console.warn("projectData: ", projectData)
             console.warn("projectData.id: ", projectData.id)
             console.warn(projectData.finishDate)
@@ -737,6 +758,12 @@ const projectDetailsPage = document.getElementById("project-details")
             const id = detailsPage.querySelector("[data-project-info='id']")
             const initials = detailsPage.querySelector("[data-project-info='initials']")
             const progress = detailsPage.querySelector("[data-project-info='progress']")
+            let progressNumber: number = 0
+            if (progress && progress.innerHTML) {
+                console.log("I - editProjectBtn - progress.innerHTML: ", progress.innerHTML)
+                progressNumber = Number.parseInt(progress.innerHTML)
+                // progress = progressNumber
+            }
             console.warn("finishDate: ",finishDate)
             console.warn("finishDate.innerHTML: ", finishDate?.innerHTML)
             const todoList = []
@@ -752,7 +779,12 @@ const projectDetailsPage = document.getElementById("project-details")
                 id: id?.innerHTML as string,
                 initials: initials?.innerHTML as string,
                 // initials: initials?.innerHTML as string,
-                progress: Number(progress?.innerHTML) as number,
+                // progress: Number(progress?.innerHTML) as number,
+                progress: progressNumber as number,
+                // {
+                //     if (progress && progress.innerHTML) {
+                //         Number.parseInt(progress.value) as number,
+
                 todoList: todoList as ToDo []
             }
             console.log("setDetailsPageData: ",setDetailsPageData)
@@ -786,6 +818,12 @@ const projectDetailsPage = document.getElementById("project-details")
                     let costValue = cost.innerHTML
                     if (formCost) { formCost.value = costValue }
                 }
+                let formProgress = editProjectForm.querySelector("[data-project-info='progress']")
+                if (progress && formProgress instanceof HTMLInputElement) {
+                    let progressValue = progress.innerHTML
+                    if (formProgress) { formProgress.value = progressValue }
+                }
+
                 let formUserRole = editProjectForm.querySelector("[data-project-info='userRole']")
                 if (userRole && formUserRole instanceof HTMLSelectElement) {
                     let userRoleValue = userRole.innerHTML

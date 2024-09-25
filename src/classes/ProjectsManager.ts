@@ -180,17 +180,15 @@ setDetailsPage(project: Project) {
 
     const progress = detailsPage.querySelector("[data-project-info='progress']")
     const progressAsString = project.progress.toString()
-    if (progress && progressAsString) {
-        progress.textContent = progressAsString + "%"
-        const bar = document.getElementById("project-progress-bar")
-        const progressPercent = project.progress + "%"
-        if (bar) {
-        bar.style.width = `"${progressPercent}"`
+    if (progress && progressAsString) { progress.textContent = progressAsString }
+    const bar = document.getElementById("project-progress-bar")
+    // const progressPercent = project.progress + "%" as string
+    if (bar) { bar.style.width = `"${progress}%"`
         // bar.style = `"${progressPercent}"`
 
-        console.warn("progress percent: ",progressPercent)
+        console.warn("progress percent: ",progress)
         }
-    }
+    
 
 
 
@@ -477,8 +475,10 @@ updateProject(data: IProject) {
     const finishDate = projectCard.querySelector("[data-project-info='finishDate']")
     const finishDateAsString = data.finishDate.toString()
     if (finishDate) { finishDate.textContent = finishDateAsString}
-    const progress = projectCard.querySelector("[data-project-info='progress']")
+    let progress = projectCard.querySelector("[data-project-info='progress']")
     const progressAsString = data.progress.toString()
+    if (progress) { progress.textContent = progressAsString }
+    // const progressAsString = data.progress.toString()
 }
 
 //--------------------------------------------------------------------------------
