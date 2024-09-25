@@ -408,7 +408,7 @@ form .submit-buttons {
 }
 
 .todo-card {
-    background-color: var(--background-200);
+    /* background-color: var(--background-200); */
     padding:10px;
     border-radius: 10px;
     display: flex;
@@ -417,6 +417,18 @@ form .submit-buttons {
     justify-content:space-between;
     align-items: center;
 }
+
+/* .todo-card-solved {
+    background-color: greenyellow;
+    padding:10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    justify-content:space-between;
+    align-items: center;
+} */
+
 
 .todo-description {
     width: 70%;

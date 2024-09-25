@@ -24,7 +24,7 @@
 
             <div class="page" id="projects-page" >
 
-                <!-- dialog --------------------------------------------------------->
+                <!-- dialog New --------------------------------------------------------->
 
                 <dialog id="new-project-modal">
                     <form id="new-project-form">
@@ -90,6 +90,74 @@
                     </form>
                 </dialog>
 
+                <!-- dialog Edit --------------------------------------------------------->
+
+                <dialog id="edit-project-modal">
+                    <form id="edit-project-form">
+                        <h2>Edit Project</h2>
+                        <div class="input-list">
+                            <div class="form-field-container">
+                                <!-- <label><span class="material-icons-round">
+                                    apartment
+                                    </span>Name</label> -->
+                                <input data-project-info="id" name="id" type="hidden" cols="1" rows="1" placeholder="auto-id">
+
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    apartment
+                                    </span>Name</label>
+                                <input data-project-info="name" name="name" type="string" cols="1" rows="1" placeholder="Enter your project name">
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    notes
+                                    </span>Description</label>
+                                <textarea data-project-info="description" name="description" cols="30" rows="5" placeholder="Give your description here"></textarea>
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    euro
+                                    </span>Cost</label>
+                                <input data-project-info="cost" name="cost" type="number" placeholder="Give the project cost here">
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    account_circle
+                                    </span>Role</label>
+                                <select data-project-info="userRole" name="userRole">
+                                    <option>Architect</option>
+                                    <option>Engineer</option>
+                                    <option>Developer</option>
+                                </select>
+
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    not_listed_location
+                                    </span>Status</label>
+                                <select data-project-info="status" name="status">
+                                    <option>Pending</option>
+                                    <option>Active</option>
+                                    <option>Finished</option>
+                                </select>
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    calendar_month
+                                    </span>Finish Date</label>
+                                <input data-project-info="finishDate" name="finishDate" type="date">
+                            </div>
+                        </div>
+
+                        <div class="submit-buttons">
+                            <button id="edit-project-form-cancel-btn" type="cancel">Cancel</button>
+                            <button id="edit-project-form-submit-btn" type="submit" style="background-color: green">Accept</button>
+                        </div>
+                    </form>
+                </dialog>
+
+
+
                 <!-- header --------------------------------------------------------->
 
                 <header class="page-header" id="projects-page-header">
@@ -147,7 +215,7 @@
                                     </span>Status</label>
                                 <select data-todo-info="status" name="status">
                                     <option>pending</option>
-                                    <option>on-going</option>
+                                    <option>on going</option>
                                     <option>solved</option>
                                 </select>
                             <div class="form-field-container">
@@ -159,13 +227,70 @@
                         </div>
 
                         <div class="submit-buttons">
-                            <button id="new-todo-form-cancel-btn" type="cancel">Cancel</button>
+                            <button id="new-todo-form-cancel-btn" type="submit">Cancel</button>
                             <button id="new-todo-form-submit-btn" type="submit" style="background-color: green">Accept</button>
+                            <button id="new-todo-form-delete-btn" type="button" style="background-color: red">Delete</button>
+
                         </div>
                     </form>
                 </dialog>
 
+                <!-- dialog --------------------------------------------------------->
 
+                <dialog id="edit-todo-modal">
+                    <form id="edit-todo-form">
+                        <h2>Edit To-Do</h2>
+                        <div class="input-list">
+                            <div class="form-field-container">
+                                <!-- <label><span class="material-icons-round">
+                                    apartment
+                                    </span>Name</label> -->
+                                <input data-todo-info="id" name="id" type="hidden" cols="1" rows="1">
+                            </div>
+                            <div hidden class="form-field-container">
+                                <!-- <label><span class="material-icons-round">
+                                    apartment
+                                    </span>Name</label> -->
+                                <input data-todo-info="relatedProject" name="id" type="hidden" cols="1" rows="1">
+                            </div>  
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    apartment
+                                    </span>Name</label>
+                                <input data-todo-info="name" name="name" type="string" cols="1" rows="1" placeholder="Enter your project name">
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    notes
+                                    </span>Description</label>
+                                <textarea data-todo-info="description" name="description" cols="30" rows="5" placeholder="Give your description here"></textarea>
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    account_circle
+                                    </span>Status</label>
+                                <select data-todo-info="status" name="status">
+                                    <option>pending</option>
+                                    <option>on going</option>
+                                    <option>solved</option>
+                                </select>
+                            </div>
+                            <div class="form-field-container">
+                                <label><span class="material-icons-round">
+                                    calendar_month
+                                    </span>deadline</label>
+                                <input data-todo-info="deadline" name="deadline" type="date">
+                            </div>
+                        </div>
+
+                        <div class="submit-buttons">
+                            <button id="edit-todo-form-cancel-btn" type="submit">Cancel</button>
+                            <button id="edit-todo-form-submit-btn" type="submit" style="background-color: green">Accept</button>
+                            <button id="edit-todo-form-delete-btn" type="button" style="background-color: red">Delete</button>
+
+                        </div>
+                    </form>
+                </dialog>
                 <!-- header --------------------------------------------------------->
 
                 <header class="page-header" id="project-details-page-header">
@@ -181,6 +306,7 @@
                         <button id="new-project-btn"><span class="material-icons-round">
                         add_circle_outline
                         </span>New Project</button>
+    
                     </div>
 
                 </header>
@@ -196,7 +322,9 @@
                             <div style="display: flex; justify-content: space-between; align-content: center; height: 30px;">
                                 <p data-project-info="initials" style="font-size: 12px; background-color: #969696; width: 30px; height: 30px; border-radius: 15px; padding: 7px;">HC</p>
                                 <p data-project-info="id" style="font-size: 8px; width: 200px; height: 30px">Id</p>
-                                <button id="edit-project-btn" class="btn-secondary" style="height: 30px;"><p style="width: 40px; font-size: small">Edit</p></button>
+                                <button id="edit-project-btn" type="button" class="btn-secondary" style="height: 30px;"><p style="width: 40px; font-size: small">Edit</p></button>
+                                <button id="delete-project-btn" class="btn-secondary" style="height: 30px;"><p style="width: 40px; font-size: small">Delete</p></button>
+
                             </div>
                             <div style="padding: 30 0px;">
                                 <div style="left:0">
@@ -248,7 +376,7 @@
 
                                 <!-- todo card -->
 
-                                <div class="todo-card">
+                                <div id="id1" class="todo-card">
                                     <span class="material-icons-round" style="width:30px; height:30px; display:flex; justify-content:center; align-items:center">check_circle_outline</span>
                                     <!-- <div style="width:30px; height:30px; background-color: green;"></div> -->
                                     <div class="todo-description"><p>Pending to finish the todo list dashboard, giving format and check buttons.</p></h5></div>
@@ -257,7 +385,7 @@
 
                                 <!-- todo card -->
 
-                                <div class="todo-card">
+                                <div id="id2" class="todo-card">
                                     <span class="material-icons-round" style="width:30px; height:30px; display:flex; justify-content:center; align-items:center">check_circle_outline</span>
                                     <div class="todo-description"><p>DM Juan attaching my solution!</p></h5></div>
                                     <div class="todo-deadline">25-2-2024</div>

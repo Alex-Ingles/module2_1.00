@@ -1,6 +1,7 @@
 import { Project, IProject, UserRole, ProjectStatus } from "./Project"
 import { ProjectsManager } from "./ProjectsManager"
 import { ToDo, IToDo, ToDoStatus} from "./ToDo"
+// import { projectsManager } from "../index.ts"
 
 export class ToDoManager {
     list: ToDo[] = []
@@ -8,6 +9,7 @@ export class ToDoManager {
 
 // -----------------------------------------------------------------------------
     constructor(container: HTMLElement) {
+            console.warn("TDM - ToDo constructor invoked")
             this.ui = container
             // this.setDefaultToDoUI()
         }
@@ -41,7 +43,17 @@ export class ToDoManager {
 //     }
 // }
 // -----------------------------------------------------------------------------
-newToDo(data: IToDo) {
+// newToDo(data: IToDo) {
+//     console.warn("TDM - newToDo invoked")
+//     const todo = new ToDo(data)
+//     this.ui.append(todo.ui)
+//     console.log("ToDoMng NewToDo this.ui after append: ", this.ui)
+//     this.list.push(todo)
+//     console.warn("New To-do is created")
+//     console.warn("To-do list: ",this.list)
+// }
+// -----------------------------------------------------------------------------
+
     // const projectNames = this.list.map((project) => {
     //     return project.name
     // })
@@ -57,7 +69,6 @@ newToDo(data: IToDo) {
     // const child = document.getElementById("default-project")
     // console.log(child)
 
-    const todo = new ToDo(data)
     // todo.ui.addEventListener("click", () => {
     //     const projectsPage = document.getElementById("projects-page")
     //     const detailsPage = document.getElementById("project-details")
@@ -69,48 +80,71 @@ newToDo(data: IToDo) {
     // })
     // const project = new Project
 
-    this.ui.append(todo.ui)
-    console.log("ToDoMng NewToDo this.ui after append: ", this.ui)
-    this.list.push(todo)
-    // projectsManager.getProject(data.relatedProject)
-    console.warn("New To-do is created")
-    console.warn("To-do list: ",this.list)
+    // projectsManager.getProject(todo.relatedProject)?.todoList.push(todo)
+
     // this.deleteDefaultProjectUI()
 
-}
 // -----------------------------------------------------------------------------
-cleanToDoManager() {
-    console.warn("cleanToDomanager is invoked")
+// cleanToDoManager() {
+//     console.warn("TDM - cleanToDomanager invoked")
+//     // const child = document.getElementById("defaultId")
+//     const parent = document.getElementById("todo-list")
+//     if (parent && parent instanceof HTMLElement) {
+//         let count = parent.childElementCount
+//         console.log(count)
+//         for (var i=0;i < count;i++) {
+//             var child = parent.firstElementChild
+//             if (child) {
+//             parent.removeChild(child)
+//             // this.deleteToDo(this.list[i].id)
+//             console.log("for is invoked")
+//             }
+//         }
+//     }
+//     console.warn("this.ui.children: ",this.ui.children)
+// }
 
-    // if (this.ui && this.ui instanceof HTMLElement) {
-    // this.ui = document.createElement("div")
-    // this.ui.className = "project-card"
-    // this.ui.id = this.name
-    // this.ui.innerHTML = `
-    // <div class="card">
 
-    console.log("cleanToDoManager - this.list: ", this.list)
-    console.log("cleanToDoManager - this.ui: ", this.ui.children)
-
-    // var todoIds = [];
-    // for(var i=0;i<this.list.length;i++){
-    //     const id = this.list[i].id
-    //     todoIds.push(id);
+// -----------------------------------------------------------------------------
+    // for (var i=0;i<this.list.length;i++) {
+    //     this.deleteToDo(this.list[i].id)
+    //     console.log("for is invoked")
+    //     // console.log(this.list[i].id)
     // }
 
-    // const todoIds = this.list.map((todo) => {
-    //     return todo.id
-    // })
-    // console.warn("todoIds: ", todoIds)
+
+    // for (var i=0;i<this.list.length;i++) {
+    //     console.log("for is invoked")
+    //     console.log(this.list[i].id)
+    //     let child = document.getElementById(`"${this.list[i].id}"`)
+    //     if (child && parent) {
+    //         console.log("cleanToDoManager: reach this point")
+    //         parent.removeChild(child)
+    //         // this.list.shift()
+    //         return(document)
+    //     }
+    // }
+
+//----------------------------------------------------------------
+// filterToDoManager(id) {
+//     const projectToDos = this.list.filter((todo) => todo.relatedProject == id)
+//     this.list = projectToDos
+
+// }
 
 
-    for (var i=0;i<this.list.length;i++) {
-        console.warn("for is invoked");
-        let todo = this.list[i] as ToDo
-        if (todo) {
-            const id = todo.id
-            console.log("for todo.id: ", id)
-            this.deleteToDo(id)
+    // for (var i=0;i<this.list.length;i++) {
+    //     console.warn("for is invoked");
+    //     console.log("this list length: ", this.list.length)
+    //     if (this.list[i] as ToDo) {
+
+        // let todo = this.list[i] as ToDo
+        // if (todo) {
+            // const id = todo.id
+
+            // console.log("for todo.id: ", this.list[i].id)
+            // this.deleteToDo(this.list[i].id)
+            // console.warn("this.ui.children: ",this.ui.children)
 
 
             // const ui = document.getElementById(id)
@@ -118,9 +152,9 @@ cleanToDoManager() {
             //         console.log(ui)
             //         ui.remove()
             //     }
-        }
-    }
-    console.warn("this.ui.children: ",this.ui.children)
+    //     }
+    // }
+    // console.warn("this.ui.children: ",this.ui.children)
 
     // console.warn("this.ui children: ",this.ui.children)
     // const childrenIds = this.list.filter((todo) => {
@@ -182,7 +216,7 @@ cleanToDoManager() {
     // const children = this.ui.children
     // children
     // }
-}
+// }
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
@@ -394,24 +428,28 @@ cleanToDoManager() {
     // input.click()
 // }
 // -----------------------------------------------------------------------------
-getToDo(id: string) {
-    const todo = this.list.find((todo) => {
-        return todo.id === id
-    })
-    return todo
-}
+// getToDo(id: string) {
+//     console.warn("TDM - getToDo invoked")
+//     const todo = this.list.find((todo) => {
+//         return todo.id === id
+//     })
+//     return todo
+// }
 
 // -----------------------------------------------------------------------------
-deleteToDo(id: string) {
-    const todo = this.getToDo(id)
-    if (!todo) { 
-        console.log("Id provided does'nt match with any id of todo.list")
-        return }
-    todo.ui.remove()
-    const remaining = this.list.filter((todo) => {
-        return todo.id !== id
-    })
-    this.list = remaining
-}
+// deleteToDo(id: string) {
+//     console.warn("TDM - deleteToDo invoked")
+//     const todo = this.getToDo(id)
+//     if (!todo) { 
+//         console.log("Id provided does'nt match with any id of todo.list")
+//         return
+//     } else {
+//         todo.ui.remove()
+//         const remaining = this.list.filter((todo) => {
+//         return todo.id !== id
+//     })
+//     this.list = remaining
+// }
 
+// }
 }
