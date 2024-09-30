@@ -130,7 +130,7 @@ export class Project implements IProject {
                 </div>
                 <div class="card-property">
                     <p style="color: #969696;">Estimated Progress</p>
-                    <p data-project-info="progress">${progressPercent}%</p>
+                    <p data-project-info="progress">${this.progress}%</p>
                 </div>
                 <div class="card-property">
                     <p style="color: #969696;">Initials</p>
