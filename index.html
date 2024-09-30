@@ -58,7 +58,7 @@
                                 <label><span class="material-icons-round">
                                     clock
                                     </span>Progress</label>
-                                <input data-project-info="progress" name="cost" type="string" placeholder="Give the progression %">
+                                <input data-project-info="progress" name="progress" type="string" placeholder="Give the progression %">
                             </div>
 
                             <div class="form-field-container">
@@ -365,7 +365,10 @@
                             </div>
                             <div>
                                 <div class="progress-bar">
-                                    <div id="project-progress-bar" data-project-info="progress" class="progress-bar-done" style="width:80%"><h5>80%</h5></div>
+                                    <!-- <div id="project-progress-bar" class="progress-bar-done" style="width: 20%;"> -->
+                                    <div id="project-progress-bar" class="progress-bar-done" style="background-color: rgb(158, 195, 158); border-radius: 10px 0 0 10px;">
+                                            <h5 data-project-info="progress">80%</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
