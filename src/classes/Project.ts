@@ -70,7 +70,7 @@ export class Project implements IProject {
         console.warn("P - findInitials invoked")
         if (!this.name) { return }
         const words = this.name.split(' ', 2)
-        const map1 = words.map((x) => x.charAt(0).toUpperCase())
+        const map1 = words.map((x) => x.charAt(0))
         if (map1[1]) {
             this.initials = map1[0] + map1[1] as string
         } else {
@@ -84,11 +84,6 @@ export class Project implements IProject {
         const colors = Array.of("powderblue", "lightsteelblue", "lightblue", "darkseagreen", "palegoldenrod", "lightslategrey", "cadetblue", "rosybrown", "silver", "tan", "indianred")
         this.initialsColor = colors[random]
     }
-
-    // editProject() {
-    //     console.warn("P - editProject invoked")
-    //     // console.log("tratando de editar")
-    // }
 
     setUI() {
         console.warn("P - setUI invoked")
@@ -134,7 +129,7 @@ export class Project implements IProject {
                 </div>
                 <div class="card-property">
                     <p style="color: #969696;">Initials</p>
-                    <p data-project-info="initials">${this.initials}</p>
+                    <p data-project-info="initials" style="text-transform: uppercase">${this.initials}</p>
                 </div>
 
             </div>`

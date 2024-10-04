@@ -179,6 +179,12 @@ if (editProjectForm && editProjectForm instanceof HTMLFormElement) {
                 editProjectForm.reset()
                 toggleModal("edit-project-modal", "close")
                 projectsManager.totalCost()
+                const projectsPage = document.getElementById("projects-page")
+                const detailsPage = document.getElementById("details-page")
+                if (projectsPage && detailsPage) {
+                projectsPage.style.display = "none"
+                detailsPage.style.display = "flex"
+                }
 
                 console.warn("submit is fired!")
                 console.log(projectData)
@@ -337,8 +343,11 @@ if (editTodoForm && editTodoForm instanceof HTMLFormElement) {
                 alert(err)
             }
             console.warn("I - Update todoData:", todoData)
-            projectsManager.updateToDo(todoData)
+            const newToDo = new ToDo (todoData)
+            projectsManager.updateToDo(newToDo)
             toggleModal("edit-todo-modal", "close")
+            let newToDoProject = projectsManager.getProject(newToDo.relatedProject)
+            projectsManager.setDetailsPage(newToDoProject)
 
             console.log("index.ts - when form submit: ", todoData.deadline, typeof todoData.deadline )
             console.log(todoData.deadline.valueOf())

@@ -11,8 +11,11 @@
 <body>
     <main id="content">
         <section class="section" id="section1">
-            <aside id="sidebar">
-                <img id="company-logo" src="./Assets/company-logo.svg" alt="Construction Company"></img>
+            <aside id="sidebar" style="min-width: 140px; height: 100vh; display: flex; flex-direction: column; align-content: center; vertical-align: middle;">
+                <div id="company-logo-box" style="height: 7%; display: flex; flex-direction: column;">
+                    <p id="company-logo" style="font-family: courier; font-size: 24px; align-content: center; margin: auto; vertical-align: middle; text-align: center;">Qtt's</p>
+                </div>
+                <!-- <img id="company-logo" src="../Assets/company-logo-2.svg" alt="Construction Company"></img> -->
                 <div id="nav-buttons">
                     <li id="nav-projects-btn"><span class="material-icons-round">apartment</span>Projects</li>
                     <li id="nav-users-btn"><span class="material-icons-round">account_circle</span>Users</li>
@@ -22,7 +25,7 @@
             </aside>
             <!-- ---------------   PROJECTS PAGE   -------------------------->
 
-            <div class="page" id="projects-page" >
+            <div class="page" id="projects-page" style="display:block">
 
                 <!-- dialog New --------------------------------------------------------->
 
@@ -173,7 +176,7 @@
 
                 <!-- header --------------------------------------------------------->
 
-                <header class="page-header" id="projects-page-header">
+                <header class="page-header" id="projects-page-header" style="height:7%;">
                     <h2>Projects</h2>
                     <div class="page-header-buttons">    
                         <button  id="export-projects-btn"><span class="material-icons-round action-icon">
@@ -190,7 +193,7 @@
 
                 <!-- project list --------------------------------------------------------->
                 
-                <div id="projects-list">
+                <div id="projects-list" style="padding: 15px 20px; align-items:center; justify-items: center; overflow-y: auto; max-height: 95vh;">
                 </div>
             </div>
 
@@ -264,7 +267,7 @@
                                 <!-- <label><span class="material-icons-round">
                                     apartment
                                     </span>Name</label> -->
-                                <input data-todo-info="relatedProject" name="id" type="hidden" cols="1" rows="1">
+                                <input data-todo-info="relatedProject" name="relatedProject" type="hidden" cols="1" rows="1">
                             </div>  
                             <div class="form-field-container">
                                 <label><span class="material-icons-round">

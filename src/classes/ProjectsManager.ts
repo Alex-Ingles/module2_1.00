@@ -209,6 +209,11 @@ setDetailsPage(project: Project) {
                             if (formId && formId instanceof HTMLInputElement) {
                                 formId.value = defToDo.id
                             }
+                            let formRelatedProject = editToDoForm.querySelector("[data-todo-info='relatedProject']")
+                            if (formRelatedProject && formRelatedProject instanceof HTMLInputElement) {
+                                formRelatedProject.value = defToDo.relatedProject
+                            }
+
                             let formName = editToDoForm.querySelector("[data-todo-info='name']")
                             if (formName && formName instanceof HTMLInputElement) {
                                 formName.value = defToDo.name 
@@ -286,7 +291,7 @@ updateProject(data: IProject) {
     const status = projectCard.querySelector("[data-project-info='status']")
     if (status) {status.textContent = data.status}
     const cost = projectCard.querySelector("[data-project-info='cost']")
-    const costAsString = data.cost.toString()
+    const costAsString = data.cost.toString(10)
     if (cost && costAsString) { cost.textContent = costAsString}
     const userRole = projectCard.querySelector("[data-project-info='userRole']")
     if (userRole) { userRole.textContent = data.userRole}
@@ -299,29 +304,34 @@ updateProject(data: IProject) {
 }
 
 // Update ToDo -----------------------------------------------------------------------------
-updateToDo(data: IToDo) {
+updateToDo(data: ToDo) {
     console.warn("PM - updateToDo invoked")
 
     const newList: Project[] = []
     const newToDoList: ToDo[] = [] 
+    console.log(data)
+    console.log(this.list)
+
     for (const oldproject of this.list) {
         if (oldproject.id !== data.relatedProject) {
             newList.push(oldproject)
         } else {
-            for (const oldtodo of oldproject.todoList) {
+            for (let oldtodo of oldproject.todoList) {
                 if (oldtodo.id !== data.id) {
                     newToDoList.push(oldtodo)
+                    console.log(newToDoList)
                 } else {
-                    for (const key in oldtodo) {
+                    for (let key in oldtodo) {
                         oldtodo[key] = data[key]
-                        newToDoList.push(oldtodo)
                     }
+                    newToDoList.push(oldtodo)
                 }
             }
             oldproject.todoList = newToDoList
             newList.push(oldproject)
         }
     }
+    console.warn("PM - this.list after updating: ", this.list)
 
     const todoCard = document.getElementById(data.id)
     if (!todoCard) {return}
