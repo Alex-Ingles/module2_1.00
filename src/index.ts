@@ -496,7 +496,7 @@ if (editBtn) {
                 const finishDate3 = finishDate2.toISOString().split('T')[0];
                 console.warn("finishDate3: ", finishDate3)
                 console.warn("finishDate2: ",finishDate2)
-                console.warn("finishDate2.toLocaleDateString: ",finishDate2.toLocaleDateString)
+                console.warn("finishDate2.toLocaleDateString: ",finishDate2.toLocaleDateString("es-ES"))
                 formFinishDate.value = finishDate3
             }
         }

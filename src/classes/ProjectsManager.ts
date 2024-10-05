@@ -131,6 +131,12 @@ setDetailsPage(project: Project) {
     const finishDateAsString = project.finishDate.toString()
     if (finishDate) { finishDate.textContent = finishDateAsString}
 
+    const shortFinishDate = detailsPage.querySelector("[data-project-info='shortFinishDate']")
+    // const shortFinishDateAsString = project.shortFinishDate
+    // if (shortFinishDate) { shortFinishDate.textContent = project.shortFinishDate }
+    if (shortFinishDate) { shortFinishDate.textContent = new Date (project.finishDate).toLocaleDateString("es-ES") }
+
+
     const progress = detailsPage.querySelector("[data-project-info='progress']")
     console.warn("PM SetDetails progress: ", progress)
     const progressAsString = project.progress.toString(10)
@@ -298,6 +304,11 @@ updateProject(data: IProject) {
     const finishDate = projectCard.querySelector("[data-project-info='finishDate']")
     const finishDateAsString = data.finishDate.toString()
     if (finishDate) { finishDate.textContent = finishDateAsString}
+    const shortFinishDate = projectCard.querySelector("[data-project-info='shortFinishDate']")
+    // const finishDateAsString = data.finishDate.toString()
+    console.warn(this.getProject(data.id).shortFinishDate)
+    if (shortFinishDate) { shortFinishDate.textContent = new Date (data.finishDate).toLocaleDateString("es-ES")}
+
     let progress = projectCard.querySelector("[data-project-info='progress']")
     const progressAsString = data.progress.toString()
     if (progress) { progress.textContent = progressAsString }

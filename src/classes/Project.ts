@@ -36,10 +36,14 @@ export class Project implements IProject {
     initials: string
     initialsColor: string
     id: string
+    shortFinishDate: string
 
 
     constructor(data: IProject) {
         console.warn("P - Project constructor invoked")
+
+        // const provDate = new Date(this.finishDate)
+        // this.finishDate = provDate
 
         for (const key in data) {
             this[key] = data[key]
@@ -63,6 +67,7 @@ export class Project implements IProject {
         console.log("new project: ", this.initials, this.finishDate)
         console.log("new project (after invoking setDefaultDate): ", this.initials, this.finishDate)
         console.log("new project (after invoking setDefaultDate and after if statement): ", this.initials, this.finishDate)
+        this.setShortFinishDate()
         this.setUI()
     }
 
@@ -119,9 +124,13 @@ export class Project implements IProject {
                     <p style="color: #969696;">Cost</p>
                     <p data-project-info="cost">$${this.cost}</p>
                 </div>
-                <div class="card-property">
+                <div style="display: none" class="card-property">
                     <p style="color: #969696;">Finish Date</p>
                     <p data-project-info="finishDate">${this.finishDate}</p>
+                </div>
+                <div class="card-property">
+                    <p style="color: #969696;">Finish Date</p>
+                    <p data-project-info="shortFinishDate">${this.shortFinishDate}</p>
                 </div>
                 <div class="card-property">
                     <p style="color: #969696;">Estimated Progress</p>
@@ -134,4 +143,9 @@ export class Project implements IProject {
 
             </div>`
     }
+
+    setShortFinishDate() {
+        this.shortFinishDate = new Date (this.finishDate).toLocaleDateString("es-ES")
+    }
+
 }
