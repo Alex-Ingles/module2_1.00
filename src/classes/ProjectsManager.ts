@@ -113,7 +113,10 @@ setDetailsPage(project: Project) {
     const name2 = detailsPage.querySelector("[data-project-info='name2']")
     if (name2) { name2.textContent = project.name}
     const initials = detailsPage.querySelector("[data-project-info='initials']")
-    if (initials) { initials.textContent = project.initials}
+    if (initials && initials instanceof HTMLParagraphElement) { 
+        initials.textContent = project.initials
+        initials.style.backgroundColor = project.initialsColor
+    }
 
     const description = detailsPage.querySelector("[data-project-info='description']")
     if (description) { description.textContent = project.description}

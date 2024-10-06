@@ -60,12 +60,13 @@ export class ToDo implements IToDo {
         this.ui.id = this.id
         this.ui.innerHTML = `
         <div class="todo-card" type="button">
-            <button id="${this.id}-btn"><span class="material-icons-round">edit</span></button>
+            <button hidden id="${this.id}-btn"><span class="material-icons-round">edit</span></button>
             <span class="material-icons-round" style="width:30px; height:30px; display:flex; justify-content:center; align-items:center">check_circle_outline</span>
-            <div><h5 data-todo-info:"id" class="todo-description">${this.id}</h5></div>
-            <div><h5 hidden data-todo-info:"status" class="todo-description">${this.status}</h5></div>
-            <div><h5 hidden data-todo-info:"relatedProject" class="todo-description">${this.relatedProject}</h5></div>
-            <div><h5 data-todo-info:"description" class="todo-description">${this.description}</h5></div>
+            <div hidden><h5 data-todo-info:"id" class="todo-description">${this.id}</h5></div>
+            <div style="width: 50%"><h5 data-todo-info:"description" class="todo-description">${this.description}</h5></div>
+
+            <div style="width: 15%"><h5 data-todo-info:"status" class="todo-description">${this.status}</h5></div>
+            <div hidden><h5 data-todo-info:"relatedProject" class="todo-description">${this.relatedProject}</h5></div>
             <div style="display: none"><h5 data-todo-info:"deadline" class="todo-deadline">${this.deadline}</h5></div>
             <div><h5 data-todo-info:"shortdeadline" class="todo-deadline">${this.shortdeadline}</h5></div>
 

@@ -12,7 +12,7 @@
     <main id="content">
         <section class="section" id="section1">
             <aside id="sidebar" style="min-width: 140px; height: 100vh; display: flex; flex-direction: column; align-content: center; vertical-align: middle;">
-                <div id="company-logo-box" style="height: 7%; display: flex; flex-direction: column;">
+                <div id="company-logo-box" style="height: 9%; display: flex; flex-direction: column;">
                     <p id="company-logo" style="font-family: courier; font-size: 24px; align-content: center; margin: auto; vertical-align: middle; text-align: center;">Qtt's</p>
                 </div>
                 <!-- <img id="company-logo" src="../Assets/company-logo-2.svg" alt="Construction Company"></img> -->
@@ -176,7 +176,7 @@
 
                 <!-- header --------------------------------------------------------->
 
-                <header class="page-header" id="projects-page-header" style="height:7%;">
+                <header class="page-header" id="projects-page-header" style="height: 9%;">
                     <h2>Projects</h2>
                     <div class="page-header-buttons">    
                         <button  id="export-projects-btn"><span class="material-icons-round action-icon">
@@ -310,17 +310,17 @@
                 </dialog>
                 <!-- header --------------------------------------------------------->
 
-                <header class="page-header" id="project-details-page-header">
+                <header class="page-header" id="project-details-page-header" style="height: 9%">
                     <div id="page-title">
                         <h2 data-project-info="name">Hospital Center</h2>
                         <!-- <input data-project-info="name" name="name" type="string" cols="1" rows="1" placeholder="Enter your project name">Hospital Center</input> -->
                         <h5 data-project-info="description" style="color:#969696">Community hospital located at downtown</h5>
                     </div>
-                    <div class="page-header-buttons">
-                        <button><span class="material-icons-round">
+                    <div style="display: none" class="page-header-buttons">
+                        <button hidden><span class="material-icons-round">
                         file_download
                         </span>Download</button>
-                        <button id="new-project-btn"><span class="material-icons-round">
+                        <button hidden id="new-project-btn"><span class="material-icons-round">
                         add_circle_outline
                         </span>New Project</button>
     
@@ -338,9 +338,11 @@
                         <div class="dashboard-card" id="project-information">
                             <div style="display: flex; justify-content: space-between; align-content: center; height: 30px;">
                                 <p data-project-info="initials" style="font-size: 12px; background-color: #969696; width: 30px; height: 30px; border-radius: 15px; padding: 7px;">HC</p>
-                                <p data-project-info="id" style="font-size: 8px; width: 200px; height: 30px">Id</p>
-                                <button id="edit-project-btn" type="button" class="btn-secondary" style="height: 30px;"><p style="width: 40px; font-size: small">Edit</p></button>
-                                <button id="delete-project-btn" class="btn-secondary" style="height: 30px;"><p style="width: 40px; font-size: small">Delete</p></button>
+                                <p data-project-info="id" style="font-size: 8px; width: 200px; height: 30px; display: none">Id</p>
+                                <div>
+                                    <button id="edit-project-btn" type="button" class="btn-secondary" style="height: 30px;"><p style="width: 40px; font-size: small">Edit</p></button>
+                                    <button id="delete-project-btn" class="btn-secondary" style="height: 30px;"><p style="width: 40px; font-size: small">Delete</p></button>
+                                </div>
 
                             </div>
                             <div style="padding: 30 0px;">
@@ -463,7 +465,7 @@
                     </form>
                 </dialog>
                 <!-- page header ---------------------------------------------------->
-                <header id="users-page-header" class="page-header">
+                <header id="users-page-header" style="height: 9%" class="page-header">
                         <h2>Users</h2>
                         <div style="display:flex; flex-direction:row; column-gap:10px">
                             <button><span class="material-icons-round">file_download</span></button>
