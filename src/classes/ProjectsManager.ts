@@ -180,6 +180,7 @@ setDetailsPage(project: Project) {
                     const toDoCard = defToDo.ui
                     console.log(toDoCard, toDoCard.innerHTML)
                     const editToDoForm = document.getElementById("edit-todo-form")
+                    if (editToDoForm && editToDoForm instanceof HTMLFormElement) { editToDoForm.reset() }
  
                     if(toDoCard) {
                         console.log("todoCard exists")
@@ -189,6 +190,7 @@ setDetailsPage(project: Project) {
                         const cardStatus = detailsPage.querySelector("[data-todo-info='status']")
                         const cardDeadline = detailsPage.querySelector("[data-todo-info='deadline']")
                         const cardRelatedProject = detailsPage.querySelector("[data-todo-info='relatedProject']")
+                        const cardShortDeadline = detailsPage.querySelector("[data-todo-info='shortdeadline']")
                         console.log("todoCard data: ",cardId, cardName, cardDescription, cardStatus, cardDeadline, cardRelatedProject)
                         if (cardId && cardName && cardDescription && cardStatus && cardDeadline && cardRelatedProject)
                         console.log("todoCard data: ",cardId.innerHTML, cardName.innerHTML, cardDescription.innerHTML, cardStatus.innerHTML, cardDeadline.innerHTML, cardRelatedProject?.innerHTML)
@@ -205,7 +207,7 @@ setDetailsPage(project: Project) {
                         console.log("setToDoCardData: ",setToDoCardData)
     
                         if (cardName && toDoCard && container && editToDoForm && detailsPage) { 
-                            console.log(name)
+                            console.log(name) // ojo! va a buscar Project.name
 
                             const editModal = document.getElementById("edit-todo-modal")
                             if (editModal && editModal instanceof HTMLDialogElement) {
@@ -224,18 +226,54 @@ setDetailsPage(project: Project) {
                             if (formName && formName instanceof HTMLInputElement) {
                                 formName.value = defToDo.name 
                             }
+
                             let formDescription = editToDoForm.querySelector("[data-todo-info='description']")
-                            if (formDescription && formDescription instanceof HTMLTextAreaElement) {
-                                formDescription.textContent = defToDo.description 
+                            if (defToDo.description && formDescription instanceof HTMLTextAreaElement) {
+                                let descriptionValue = defToDo.description
+                                if (formDescription) {formDescription.textContent = descriptionValue} 
                             }
+
+
+                            // let formDescription = editToDoForm.querySelector("[data-todo-info='description']")
+                            // if (cardDescription && formDescription instanceof HTMLTextAreaElement) {
+                            //     let descriptionValue = cardDescription.innerHTML
+                            //     if (formDescription) {formDescription.textContent = descriptionValue} 
+                            // }
+
+                            // let formDescription = editProjectForm.querySelector("[data-project-info='description']")
+                            // if (description && formDescription instanceof HTMLTextAreaElement) {
+                            //     let descriptionValue = description.innerHTML
+                            //     if (formDescription) { formDescription.textContent = descriptionValue }
+                            // }
+                
+
+
                             let formStatus = editToDoForm.querySelector("[data-todo-info='status']")
                             if (formStatus && formStatus instanceof HTMLSelectElement) {
                                 formStatus.value = defToDo.status 
                             }
-                            let formDeadline = editToDoForm.querySelector("[data-project-info='deadline']")
+                            // let formDeadline = editToDoForm.querySelector("[data-todo-info='deadline']")
+                            // if (formDeadline && formDeadline instanceof HTMLInputElement) {
+                            //     formDeadline.value = defToDo.shortdeadline
+
+                            //     // formDeadline.value = new Date (defToDo.deadline).toLocaleDateString("es-ES")
+
+                            //     // formDeadline.value = new Date (defToDo.deadline).toLocaleString("es-ES")
+                            //     // formDeadline.value = defToDo.deadline.toISOString().split('T')[0]
+                            //     console.log(formDeadline.value)
+                            // }
+
+                            let formDeadline = editToDoForm.querySelector("[data-todo-info='deadline']")
                             if (formDeadline && formDeadline instanceof HTMLInputElement) {
-                                formDeadline.value = defToDo.deadline.toISOString().split('T')[0]
+                                let deadline2 = new Date(defToDo.deadline)
+                                const deadline3 = deadline2.toISOString().split('T')[0];
+                                console.warn("finishDate3: ", deadline3)
+                                console.warn("finishDate2: ",deadline2)
+                                console.warn("finishDate2.toLocaleDateString: ",deadline2.toLocaleDateString("es-ES"))
+                                formDeadline.value = deadline3
                             }
+                
+
                         }
                     }
             })}

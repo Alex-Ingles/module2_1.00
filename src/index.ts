@@ -179,12 +179,13 @@ if (editProjectForm && editProjectForm instanceof HTMLFormElement) {
                 editProjectForm.reset()
                 toggleModal("edit-project-modal", "close")
                 projectsManager.totalCost()
-                const projectsPage = document.getElementById("projects-page")
-                const detailsPage = document.getElementById("details-page")
-                if (projectsPage && detailsPage) {
-                projectsPage.style.display = "none"
-                detailsPage.style.display = "flex"
-                }
+                // const projectsPage = document.getElementById("projects-page")
+                // const detailsPage = document.getElementById("details-page")
+                // if (projectsPage && detailsPage) {
+                // projectsPage.style.display = "none"
+                // detailsPage.style.display = "flex"
+                // projectsManager.setDetailsPage(projectsManager.getProject(projectData.id))
+                // }
 
                 console.warn("submit is fired!")
                 console.log(projectData)
@@ -356,6 +357,15 @@ if (editTodoForm && editTodoForm instanceof HTMLFormElement) {
         if (handler == "edit-todo-form-cancel-btn") {
             e.preventDefault()
             editTodoForm.reset()
+
+            // editTofoForm.getElementById("data-todo-info='description')
+
+            // const textareaField = editTodoForm.querySelector("data-todo-description")
+            // if (textareaField && textareaField instanceof HTMLTextAreaElement) {
+            //     textareaField.replaceWith("")
+            //     console.log("Reach this point")
+            // }
+
             console.warn("cancel is fired!")
             toggleModal("edit-todo-modal", "close")
             projectsManager.setDetailsPage

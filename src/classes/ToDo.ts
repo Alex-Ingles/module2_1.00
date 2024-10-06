@@ -24,15 +24,19 @@ export class ToDo implements IToDo {
     ui: HTMLDivElement
     id: string
     relatedProject: string
+    shortdeadline: string
 
 
     constructor(data: IToDo) {
         console.warn("TD - ToDo constructor invoked")
+        // const newdeadline = new Date (this.deadline)
+        // data.deadline = newdeadline
         for (const key in data) {
             this[key] = data[key]
         }
         console.log("data: ", data)
         console.log("this.id: ",this.id)
+        this.setShortDeadline()
         this.setUI()
         this.setTODOCardColor()
         if (this.id == "") {
@@ -62,7 +66,9 @@ export class ToDo implements IToDo {
             <div><h5 hidden data-todo-info:"status" class="todo-description">${this.status}</h5></div>
             <div><h5 hidden data-todo-info:"relatedProject" class="todo-description">${this.relatedProject}</h5></div>
             <div><h5 data-todo-info:"description" class="todo-description">${this.description}</h5></div>
-            <div><h5 data-todo-info:"deadline" class="todo-deadline">${this.deadline}</h5></div>
+            <div style="display: none"><h5 data-todo-info:"deadline" class="todo-deadline">${this.deadline}</h5></div>
+            <div><h5 data-todo-info:"shortdeadline" class="todo-deadline">${this.shortdeadline}</h5></div>
+
         </div>`
     }
 
@@ -81,5 +87,10 @@ export class ToDo implements IToDo {
             }
          }
     }
+
+    setShortDeadline() {
+        this.shortdeadline = new Date (this.deadline).toLocaleDateString("es-ES")
+    }
+
 
 }
