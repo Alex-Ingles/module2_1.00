@@ -135,10 +135,7 @@ setDetailsPage(project: Project) {
     if (finishDate) { finishDate.textContent = finishDateAsString}
 
     const shortFinishDate = detailsPage.querySelector("[data-project-info='shortFinishDate']")
-    // const shortFinishDateAsString = project.shortFinishDate
-    // if (shortFinishDate) { shortFinishDate.textContent = project.shortFinishDate }
     if (shortFinishDate) { shortFinishDate.textContent = new Date (project.finishDate).toLocaleDateString("es-ES") }
-
 
     const progress = detailsPage.querySelector("[data-project-info='progress']")
     console.warn("PM SetDetails progress: ", progress)
@@ -146,12 +143,10 @@ setDetailsPage(project: Project) {
     console.warn("PM SetDetails: ",project.progress)
     console.warn("PM SetDetails: ",progressAsString)
 
-    // const progressAsString = project.progress.toString()
     if (progress && progressAsString) { progress.textContent = progressAsString }
     const bar = document.getElementById("project-progress-bar")
     console.warn("PM - New - bar:", bar)
     if (bar && bar instanceof HTMLDivElement) {
-        // bar.style.width = `"${progressAsString}%"`
         bar.style.width = progressAsString + "%"
 
         console.warn("bar-style-width :", bar.style.width)
@@ -210,8 +205,7 @@ setDetailsPage(project: Project) {
                         console.log("setToDoCardData: ",setToDoCardData)
     
                         if (cardName && toDoCard && container && editToDoForm && detailsPage) { 
-                            console.log(name) // ojo! va a buscar Project.name
-
+                            console.log(name)
                             const editModal = document.getElementById("edit-todo-modal")
                             if (editModal && editModal instanceof HTMLDialogElement) {
                                 editModal.showModal()
@@ -224,48 +218,19 @@ setDetailsPage(project: Project) {
                             if (formRelatedProject && formRelatedProject instanceof HTMLInputElement) {
                                 formRelatedProject.value = defToDo.relatedProject
                             }
-
                             let formName = editToDoForm.querySelector("[data-todo-info='name']")
                             if (formName && formName instanceof HTMLInputElement) {
                                 formName.value = defToDo.name 
                             }
-
                             let formDescription = editToDoForm.querySelector("[data-todo-info='description']")
                             if (defToDo.description && formDescription instanceof HTMLTextAreaElement) {
                                 let descriptionValue = defToDo.description
                                 if (formDescription) {formDescription.textContent = descriptionValue} 
                             }
-
-
-                            // let formDescription = editToDoForm.querySelector("[data-todo-info='description']")
-                            // if (cardDescription && formDescription instanceof HTMLTextAreaElement) {
-                            //     let descriptionValue = cardDescription.innerHTML
-                            //     if (formDescription) {formDescription.textContent = descriptionValue} 
-                            // }
-
-                            // let formDescription = editProjectForm.querySelector("[data-project-info='description']")
-                            // if (description && formDescription instanceof HTMLTextAreaElement) {
-                            //     let descriptionValue = description.innerHTML
-                            //     if (formDescription) { formDescription.textContent = descriptionValue }
-                            // }
-                
-
-
                             let formStatus = editToDoForm.querySelector("[data-todo-info='status']")
                             if (formStatus && formStatus instanceof HTMLSelectElement) {
                                 formStatus.value = defToDo.status 
                             }
-                            // let formDeadline = editToDoForm.querySelector("[data-todo-info='deadline']")
-                            // if (formDeadline && formDeadline instanceof HTMLInputElement) {
-                            //     formDeadline.value = defToDo.shortdeadline
-
-                            //     // formDeadline.value = new Date (defToDo.deadline).toLocaleDateString("es-ES")
-
-                            //     // formDeadline.value = new Date (defToDo.deadline).toLocaleString("es-ES")
-                            //     // formDeadline.value = defToDo.deadline.toISOString().split('T')[0]
-                            //     console.log(formDeadline.value)
-                            // }
-
                             let formDeadline = editToDoForm.querySelector("[data-todo-info='deadline']")
                             if (formDeadline && formDeadline instanceof HTMLInputElement) {
                                 let deadline2 = new Date(defToDo.deadline)
@@ -275,8 +240,6 @@ setDetailsPage(project: Project) {
                                 console.warn("finishDate2.toLocaleDateString: ",deadline2.toLocaleDateString("es-ES"))
                                 formDeadline.value = deadline3
                             }
-                
-
                         }
                     }
             })}
@@ -286,7 +249,6 @@ setDetailsPage(project: Project) {
         }
     }
 }
-
 // Id In Use -----------------------------------------------------------------------------
 
 idInUse(id: string) {
@@ -346,10 +308,8 @@ updateProject(data: IProject) {
     const finishDateAsString = data.finishDate.toString()
     if (finishDate) { finishDate.textContent = finishDateAsString}
     const shortFinishDate = projectCard.querySelector("[data-project-info='shortFinishDate']")
-    // const finishDateAsString = data.finishDate.toString()
     console.warn(this.getProject(data.id).shortFinishDate)
     if (shortFinishDate) { shortFinishDate.textContent = new Date (data.finishDate).toLocaleDateString("es-ES")}
-
     let progress = projectCard.querySelector("[data-project-info='progress']")
     const progressAsString = data.progress.toString()
     if (progress) { progress.textContent = progressAsString }

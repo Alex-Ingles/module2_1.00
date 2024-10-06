@@ -42,9 +42,6 @@ export class Project implements IProject {
     constructor(data: IProject) {
         console.warn("P - Project constructor invoked")
 
-        // const provDate = new Date(this.finishDate)
-        // this.finishDate = provDate
-
         for (const key in data) {
             this[key] = data[key]
         }
@@ -108,7 +105,7 @@ export class Project implements IProject {
                 </div>
             </div>
             <div class="card-content">
-                <div class="card-property">
+                <div style="display: none" class="card-property">
                     <p style="color: #969696;">Id</p>
                     <p data-project-info="id">${this.id}</p>
                 </div>
@@ -147,5 +144,4 @@ export class Project implements IProject {
     setShortFinishDate() {
         this.shortFinishDate = new Date (this.finishDate).toLocaleDateString("es-ES")
     }
-
 }

@@ -29,8 +29,6 @@ export class ToDo implements IToDo {
 
     constructor(data: IToDo) {
         console.warn("TD - ToDo constructor invoked")
-        // const newdeadline = new Date (this.deadline)
-        // data.deadline = newdeadline
         for (const key in data) {
             this[key] = data[key]
         }

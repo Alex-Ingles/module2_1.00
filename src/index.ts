@@ -55,18 +55,11 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
                 finishDate: new Date (formData.get("finishDate") as string),
                 cost: new Number(formData.get("cost")) as number,
                 progress: new Number(formData.get("progress")) as number,
-                // progress: new Number(formData.get("progress")?.valueOf()) as number,
                 todoList: [],
                 id: formData.get("id") as string,
                 initials: "" as string
             }
             console.warn(projectData)
-            // let progressValue = projectData.progress.valueOf()
-            // let progressValue = projectData.progress as number
-
-            // console.warn("I - New Project Submit progressValue: ", progressValue)
-            // projectData.progress = progressValue
-
             console.warn("PM - NewProjectSubmit projectData.finishDate - projectData.progress: ", projectData.finishDate, projectData.progress)
 
             try {
@@ -179,13 +172,6 @@ if (editProjectForm && editProjectForm instanceof HTMLFormElement) {
                 editProjectForm.reset()
                 toggleModal("edit-project-modal", "close")
                 projectsManager.totalCost()
-                // const projectsPage = document.getElementById("projects-page")
-                // const detailsPage = document.getElementById("details-page")
-                // if (projectsPage && detailsPage) {
-                // projectsPage.style.display = "none"
-                // detailsPage.style.display = "flex"
-                // projectsManager.setDetailsPage(projectsManager.getProject(projectData.id))
-                // }
 
                 console.warn("submit is fired!")
                 console.log(projectData)
@@ -357,14 +343,6 @@ if (editTodoForm && editTodoForm instanceof HTMLFormElement) {
         if (handler == "edit-todo-form-cancel-btn") {
             e.preventDefault()
             editTodoForm.reset()
-
-            // editTofoForm.getElementById("data-todo-info='description')
-
-            // const textareaField = editTodoForm.querySelector("data-todo-description")
-            // if (textareaField && textareaField instanceof HTMLTextAreaElement) {
-            //     textareaField.replaceWith("")
-            //     console.log("Reach this point")
-            // }
 
             console.warn("cancel is fired!")
             toggleModal("edit-todo-modal", "close")

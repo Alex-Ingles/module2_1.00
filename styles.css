@@ -400,21 +400,10 @@ form .submit-buttons {
 }
 
 .progress-bar-done {
-    /* background-color: rgb(158, 195, 158);
-    border-radius: 10px 0 0 10px; */
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-/* .project-progress-bar {
-    background-color: rgb(158, 195, 158);
-    border-radius: 10px 0 0 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-
 
 .todo-list {
     display: flex;
@@ -424,7 +413,6 @@ form .submit-buttons {
 }
 
 .todo-card {
-    /* background-color: var(--background-200); */
     padding:10px;
     border-radius: 10px;
     display: flex;
@@ -434,18 +422,6 @@ form .submit-buttons {
     align-items: center;
     width: 100%;
 }
-
-/* .todo-card-solved {
-    background-color: greenyellow;
-    padding:10px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: row;
-    column-gap: 10px;
-    justify-content:space-between;
-    align-items: center;
-} */
-
 
 .todo-description {
     width: 70%;
@@ -485,7 +461,7 @@ form .submit-buttons {
 }
 
 .users-list-header {
-    background-color: light-grey;
+    background-color: var(--background-200);
     color: grey;
     display: grid;
     grid-template-columns: 5% 90% 5%;
@@ -493,7 +469,7 @@ form .submit-buttons {
     padding: 5px 5px;
     
     div {
-        background-color: green;
+        background-color: var(--background-200);
     }
 }
 
