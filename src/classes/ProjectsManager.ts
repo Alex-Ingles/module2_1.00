@@ -8,40 +8,54 @@ export class ProjectsManager {
 constructor(container: HTMLElement) {
         console.warn("PM - New ProjectsManager constructor invoked" )
         this.ui = container
-        this.setDefaultProjectUI()
+        const project = this.newProject({
+            name: "default project",
+            description: "This is just a default app project",
+            status: "pending",
+            userRole: "architect",
+            finishDate: new Date(),
+            cost: 10,
+            initials: "",
+            progress: 0,
+            id: "default id",
+            todoList: [],
+        })
+        console.log(project)
+        project?.ui.click()
+                // this.setDefaultProjectUI()
     }
 // -----------------------------------------------------------------------------
-setDefaultProjectUI() {
-    console.warn("PM - setDefaultProjectUI invoked")
-    const defaultData: IProject = {
-        name: "default-project" as string,
-        description: "Default description" as string,
-        cost: 0 as number,
-        status: "Default status" as ProjectStatus,
-        userRole: "Default userRole" as UserRole,
-        finishDate: new Date ("finishDate" as string),
-        progress: 50 as number,
-        initials: "DP" as string,
-        id: "defaultId" as string,
-        todoList: []
+// setDefaultProjectUI() {
+//     console.warn("PM - setDefaultProjectUI invoked")
+//     const defaultData: IProject = {
+//         name: "default-project" as string,
+//         description: "Default description" as string,
+//         cost: 0 as number,
+//         status: "Default status" as ProjectStatus,
+//         userRole: "Default userRole" as UserRole,
+//         finishDate: new Date ("finishDate" as string),
+//         progress: 50 as number,
+//         initials: "DP" as string,
+//         id: "defaultId" as string,
+//         todoList: []
 
-    }
-    const defaultProject = new Project(defaultData)
-    defaultProject.ui.addEventListener("click", () => {
-        const projectsPage = document.getElementById("projects-page")
-        const detailsPage = document.getElementById("project-details")
-        if (!projectsPage || !detailsPage) {return}
-        console.log("pages exists")
-        projectsPage.style.display = "none"
-        detailsPage.style.display = "flex"
-        this.setDetailsPage(defaultProject)
-    })
+//     }
+//     const defaultProject = new Project(defaultData)
+//     defaultProject.ui.addEventListener("click", () => {
+//         const projectsPage = document.getElementById("projects-page")
+//         const detailsPage = document.getElementById("project-details")
+//         if (!projectsPage || !detailsPage) {return}
+//         console.log("pages exists")
+//         projectsPage.style.display = "none"
+//         detailsPage.style.display = "flex"
+//         this.setDetailsPage(defaultProject)
+//     })
 
-    this.ui.append(defaultProject.ui)
-    this.list.push(defaultProject)
-    console.warn("Default Project is created")
-    return defaultProject
-}
+//     this.ui.append(defaultProject.ui)
+//     this.list.push(defaultProject)
+//     console.warn("Default Project is created")
+//     return defaultProject
+// }
 // -----------------------------------------------------------------------------
 deleteDefaultProjectUI() {
     console.warn("PM - deleteDefaultProjectUI invoked")
@@ -97,9 +111,12 @@ newProject(data: IProject) {
         this.ui.append(project.ui)
         this.list.push(project)
         console.warn("PM - newProject projectsManager list after function: ", this.list)
+        console.warn("New Project is created")
+        // return { project as Project }
+        // return { project }
+        return project
 
     }
-    console.warn("New Project is created")
 }
 // set Details Page -----------------------------------------------------------------------------
 setDetailsPage(project: Project) {

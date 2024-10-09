@@ -1,6 +1,7 @@
 import { IProject, ProjectStatus, UserRole} from "./classes/Project"
 import { ProjectsManager } from "./classes/ProjectsManager"
 import { ToDo, IToDo, ToDoStatus } from "./classes/ToDo"
+import * as THREE from "three"
 
 // -----------------------------------------------------------------------------
 function toggleModal(id: string, showclose: "show" | "close") {
@@ -512,4 +513,29 @@ if (deleteProjectBtn) {
 } else {
     console.log("I reach de deleteProject")
 }
+
+// ThreeJS viewer
+const scene = new THREE.Scene
+const viewerContainer = document.getElementById("viewer-container") as HTMLElement
+const containerDimensions = viewerContainer.getBoundingClientRect()
+const aspectRatio = containerDimensions.width / containerDimensions.height
+const camera = new THREE.PerspectiveCamera
+camera.position.z = 5
+
+const renderer = new THREE.WebGLRenderer
+viewerContainer.append(renderer.domElement)
+renderer.setSize(containerDimensions.width, containerDimensions.height)
+
+const boxGeometry = new THREE.BoxGeometry()
+const material = new THREE.MeshStandardMaterial()
+const cube = new THREE.Mesh(boxGeometry, material)
+
+const directionalLight = new THREE.DirectionalLight()
+const ambientLight = new THREE.AmbientLight()
+
+scene.add(cube, directionalLight, ambientLight)
+
+renderer.render(scene, camera)
+
+
 
