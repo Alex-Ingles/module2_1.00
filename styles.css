@@ -441,13 +441,23 @@ form .submit-buttons {
 }
 
 
-#project-details > .main-page-content {
+/* #project-details > .main-page-content {
     display: grid;
     padding: 20px 30px;
     gap: 30px;
-    grid-template-columns: 475px 1fr;
+    grid-template-columns: 50% 50%;
     height: 100%
-}
+} */
+
+/* #project-details > .main-page-content {
+    display: grid;
+    padding: 20px 30px;
+    gap: 30px;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+
+    /* height: 100% */
+/* } */
 
 /* User list style */
 

@@ -312,8 +312,8 @@
 
                 <!-- project details --------------------------------------------------------->
                 
-                <div class="main-page-content">
-                    <div id="project-details-container" style="display:flex; flex-direction:column; row-gap:10px">
+                <div class="main-page-content" display="flex" flex-direction="row" style="height: 91%; width: 100%; display: grid; gap: 20px; grid-template-columns: 30% 70%; grid-template-rows: 100%; padding: 20px 30px;">
+                    <div id="project-details-container" style="display:flex; flex-direction:column; row-gap:10px; height: 100%">
 
                         <!-- dashboard card 1 ProjectDetails----------------------->
 
@@ -399,7 +399,10 @@
                             </div>
                         </div>
                     </div>
-                <div id="viewer-container" class="dashboard-card"></div>
+                    <div id="viewer-container-section" class="dashboard-card" display="flex" style="min-width: 0;">
+                        <div id="viewer-container-header" class="dashboard-card-header" height="9%">Title</div>
+                        <div id="viewer-container" style= "min-width: 0; flex-direction: column; height: 100%; width: 100%" display="flex"></div>
+                    </div>
                 </div>
             </div>
 
