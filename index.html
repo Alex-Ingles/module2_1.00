@@ -9,186 +9,26 @@
     
 </head>
 <body>
+    <div id="app"></div>
     <main id="content">
         <section class="section" id="section1">
+
+<!-- deleted for a react implementation -----------------------------------------------------------------------
+
             <aside id="sidebar" style="min-width: 140px; height: 100vh; display: flex; flex-direction: column; align-content: center; vertical-align: middle;">
                 <div id="company-logo-box" style="height: 9%; display: flex; flex-direction: column;">
                     <p id="company-logo" style="font-family: courier; font-size: 24px; align-content: center; margin: auto; vertical-align: middle; text-align: center;">Qtt's</p>
                 </div>
-                <!-- <img id="company-logo" src="../Assets/company-logo-2.svg" alt="Construction Company"></img> -->
+                <img id="company-logo" src="../Assets/company-logo-2.svg" alt="Construction Company"></img>
                 <div id="nav-buttons">
                     <li id="nav-projects-btn"><span class="material-icons-round">apartment</span>Projects</li>
                     <li id="nav-users-btn"><span class="material-icons-round">account_circle</span>Users</li>
-                    <!-- <li><a href="#"><span class="material-icons-round">account_circle</span>Section 1</a></li>
-                    <li><a href="#section2"></a><span class="material-icons-round">account_circle</span>Section 2<a></li> -->
+                    <li><a href="#"><span class="material-icons-round">account_circle</span>Section 1</a></li>
+                    <li><a href="#section2"></a><span class="material-icons-round">account_circle</span>Section 2<a></li> 
                 </div>
-            </aside>
-            <!-- ---------------   PROJECTS PAGE   -------------------------->
+            </aside> -->
 
-            <div class="page" id="projects-page" style="display:block">
-
-                <!-- dialog New --------------------------------------------------------->
-
-                <dialog id="new-project-modal">
-                    <form id="new-project-form">
-                        <h2>New Project</h2>
-                        <div class="input-list">
-                            <div class="form-field-container">
-                                <input data-project-info="id" name="id" type="hidden" cols="1" rows="1" placeholder="auto-id">
-
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    apartment
-                                    </span>Name</label>
-                                <input data-project-info="name" name="name" type="string" cols="1" rows="1" placeholder="Enter your project name">
-                            </div>
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    notes
-                                    </span>Description</label>
-                                <textarea data-project-info="description" name="description" cols="30" rows="5" placeholder="Give your description here"></textarea>
-                            </div>
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    euro
-                                    </span>Cost</label>
-                                <input data-project-info="cost" name="cost" type="string" placeholder="Give the project cost here">
-                            </div>
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    clock
-                                    </span>Progress</label>
-                                <input data-project-info="progress" name="progress" type="string" placeholder="Give the progression %">
-                            </div>
-
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    account_circle
-                                    </span>Role</label>
-                                <select data-project-info="userRole" name="userRole">
-                                    <option>Architect</option>
-                                    <option>Engineer</option>
-                                    <option>Developer</option>
-                                </select>
-
-                            </div>
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    not_listed_location
-                                    </span>Status</label>
-                                <select data-project-info="status" name="status">
-                                    <option>Pending</option>
-                                    <option>Active</option>
-                                    <option>Finished</option>
-                                </select>
-                            </div>
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    calendar_month
-                                    </span>Finish Date</label>
-                                <input data-project-info="finishDate" name="finishDate" type="date">
-                            </div>
-                        </div>
-
-                        <div class="submit-buttons">
-                            <button id="new-project-form-cancel-btn" type="cancel">Cancel</button>
-                            <button id="new-project-form-submit-btn" type="submit" style="background-color: green">Accept</button>
-                        </div>
-                    </form>
-                </dialog>
-
-                <!-- dialog Edit --------------------------------------------------------->
-
-                <dialog id="edit-project-modal">
-                    <form id="edit-project-form">
-                        <h2>Edit Project</h2>
-                        <div class="input-list">
-                            <div class="form-field-container">
-                                <input data-project-info="id" name="id" type="hidden" cols="1" rows="1" placeholder="auto-id">
-
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    apartment
-                                    </span>Name</label>
-                                <input data-project-info="name" name="name" type="string" cols="1" rows="1" placeholder="Enter your project name">
-                            </div>
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    notes
-                                    </span>Description</label>
-                                <textarea data-project-info="description" name="description" cols="30" rows="5" placeholder="Give your description here"></textarea>
-                            </div>
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    euro
-                                    </span>Cost</label>
-                                <input data-project-info="cost" name="cost" type="string" placeholder="Give the project cost here">
-                            </div>
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    time
-                                    </span>Progress</label>
-                                <input data-project-info="progress" name="progress" type="string" placeholder="Give the project progress here">
-                            </div>
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    account_circle
-                                    </span>Role</label>
-                                <select data-project-info="userRole" name="userRole">
-                                    <option>Architect</option>
-                                    <option>Engineer</option>
-                                    <option>Developer</option>
-                                </select>
-
-                            </div>
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    not_listed_location
-                                    </span>Status</label>
-                                <select data-project-info="status" name="status">
-                                    <option>Pending</option>
-                                    <option>Active</option>
-                                    <option>Finished</option>
-                                </select>
-                            </div>
-                            <div class="form-field-container">
-                                <label><span class="material-icons-round">
-                                    calendar_month
-                                    </span>Finish Date</label>
-                                <input data-project-info="finishDate" name="finishDate" type="date">
-                            </div>
-                        </div>
-
-                        <div class="submit-buttons">
-                            <button id="edit-project-form-cancel-btn" type="cancel">Cancel</button>
-                            <button id="edit-project-form-submit-btn" type="submit" style="background-color: green">Accept</button>
-                        </div>
-                    </form>
-                </dialog>
-
-                <!-- header --------------------------------------------------------->
-
-                <header class="page-header" id="projects-page-header" style="height: 9%;">
-                    <h2>Projects</h2>
-                    <div class="page-header-buttons">    
-                        <button  id="export-projects-btn"><span class="material-icons-round action-icon">
-                        file_download
-                        </span></button>
-                        <button id="import-projects-btn"><span class="material-icons-round action-icon">
-                            file_upload
-                            </span></button>
-                            <button id="new-project-btn"><span class="material-icons-round">
-                        add_circle_outline
-                        </span>New Project</button>
-                    </div>
-                </header>
-
-                <!-- project list --------------------------------------------------------->
-                
-                <div id="projects-list" style="padding: 15px 20px; align-items:center; justify-items: center; overflow-y: auto; max-height: 95vh;">
-                </div>
-            </div>
-
+            
     <!-- ---------------   PROJECT DETAILS PAGE ------------------------->
 
             <div class="page" id="project-details" style="display:none">
@@ -631,6 +471,6 @@
             </div>
         </section>
     </main>
-    <script type="module" src="./src/index.ts"></script>
+    <script type="module" src="./src/index.tsx"></script>
 </body>
 </html>

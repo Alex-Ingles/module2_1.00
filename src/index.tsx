@@ -1,3 +1,8 @@
+import * as React from "react"
+import * as ReactDOM from "react-dom/client"
+import { Sidebar } from "./react-components/Sidebar"
+import { ProjectsPage } from "./react-components/ProjectsPage"
+
 import * as THREE from "three"
 import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js"
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js"
@@ -9,6 +14,19 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader.js"
 import { IProject, ProjectStatus, UserRole} from "./classes/Project"
 import { ProjectsManager } from "./classes/ProjectsManager"
 import { ToDo, IToDo, ToDoStatus } from "./classes/ToDo"
+
+ 
+const rootElement = document.getElementById("app") as HTMLDivElement
+const appRoot = ReactDOM.createRoot(rootElement)
+appRoot.render(
+    <>
+    <Sidebar />
+    <ProjectsPage />
+    </>
+)
+
+
+
 
 // -----------------------------------------------------------------------------
 function toggleModal(id: string, showclose: "show" | "close") {
@@ -26,26 +44,26 @@ function toggleModal(id: string, showclose: "show" | "close") {
 }
 // -----------------------------------------------------------------------------
 const projectListUI = document.getElementById("projects-list") as HTMLElement
-const projectsManager = new ProjectsManager(projectListUI)
+const projectsManager = new ProjectsManager()
 
 // -----------------------------------------------------------------------------
 console.log(projectsManager.list)
 console.log("default project is created")
 
 // New Project Btn -----------------------------------------------------------------------------
-const newProjectBtn = document.getElementById("new-project-btn")
-if (newProjectBtn) {
-    newProjectBtn.addEventListener("click", () => {
-        toggleModal("new-project-modal", "show")
-    })
-    const projectForm = document.getElementById("new-project-form")
-    if (projectForm && projectForm instanceof HTMLFormElement) {
-        projectForm.reset()
-    }
-    console.warn("toggle on newProjectButton is working !!")
-} else {
-    console.warn("New Projects Button was not found")
-}
+// const newProjectBtn = document.getElementById("new-project-btn")
+// if (newProjectBtn) {
+//     newProjectBtn.addEventListener("click", () => {
+//         toggleModal("new-project-modal", "show")
+//     })
+//     const projectForm = document.getElementById("new-project-form")
+//     if (projectForm && projectForm instanceof HTMLFormElement) {
+//         projectForm.reset()
+//     }
+//     console.warn("toggle on newProjectButton is working !!")
+// } else {
+//     console.warn("New Projects Button was not found")
+// }
 // New Project Form Submit -----------------------------------------------------------------------------
 const projectForm = document.getElementById("new-project-form")
 if (projectForm && projectForm instanceof HTMLFormElement) {
@@ -361,20 +379,20 @@ if (editTodoForm && editTodoForm instanceof HTMLFormElement) {
     console.warn("The todoForm wasn't found. Check the ID!")
 }
 // Export projects btn -----------------------------------------------------------------------------
-const exportProjectsBtn = document.getElementById("export-projects-btn")
-if (exportProjectsBtn) {
-    exportProjectsBtn.addEventListener("click", () => {
-        projectsManager.exportToJSON()
-    })
-}
+// const exportProjectsBtn = document.getElementById("export-projects-btn")
+// if (exportProjectsBtn) {
+//     exportProjectsBtn.addEventListener("click", () => {
+//         projectsManager.exportToJSON()
+//     })
+// }
 // Import projects btn -----------------------------------------------------------------------------
-const importProjectsBtn = document.getElementById("import-projects-btn")
-if (importProjectsBtn) {
-    importProjectsBtn.addEventListener("click", () => {
-        projectsManager.importFromJSON()
-    })
-    console.log(projectsManager.list)
-}
+// const importProjectsBtn = document.getElementById("import-projects-btn")
+// if (importProjectsBtn) {
+//     importProjectsBtn.addEventListener("click", () => {
+//         projectsManager.importFromJSON()
+//     })
+//     console.log(projectsManager.list)
+// }
 // CleanPages -----------------------------------------------------------------------------
 function cleanPages() {
     console.warn("I - cleanPages invoked")
@@ -575,34 +593,34 @@ grid.material.opacity = 0.4
 grid.material.color = new THREE.Color("#808080")
 scene.add(axes, grid, dirLight, dirLight2, spotLightHelper)
 
-const gui = new GUI()
-const cubeControls = gui.addFolder("cube")
-cubeControls.add(cube.position, "x", -10, 10, 1) 
-cubeControls.add(cube.position, "y", -10, 10, 1)
-cubeControls.add(cube.position, "z", -10, 10, 1)
-cubeControls.add(cube, "visible")
-cubeControls.addColor(cube.material, "color")
+// const gui = new GUI()
+// const cubeControls = gui.addFolder("cube")
+// cubeControls.add(cube.position, "x", -10, 10, 1) 
+// cubeControls.add(cube.position, "y", -10, 10, 1)
+// cubeControls.add(cube.position, "z", -10, 10, 1)
+// cubeControls.add(cube, "visible")
+// cubeControls.addColor(cube.material, "color")
 
-const lightControls = gui.addFolder("directionalLight",)
-lightControls.add(directionalLight.position, "x", -1000, 1000, 1)
-lightControls.add(directionalLight.position, "y", -1000, 1000, 1)
-lightControls.add(directionalLight.position, "z", -1000, 1000, 1)
-lightControls.add(directionalLight, "intensity", 0, 100 , 0.01)
-lightControls.addColor(directionalLight, "color")
+// const lightControls = gui.addFolder("directionalLight",)
+// lightControls.add(directionalLight.position, "x", -1000, 1000, 1)
+// lightControls.add(directionalLight.position, "y", -1000, 1000, 1)
+// lightControls.add(directionalLight.position, "z", -1000, 1000, 1)
+// lightControls.add(directionalLight, "intensity", 0, 100 , 0.01)
+// lightControls.addColor(directionalLight, "color")
 
-const lightControls2 = gui.addFolder("directionalLight2",)
-lightControls2.add(directionalLight2.position, "x", -1000, 1000, 1)
-lightControls2.add(directionalLight2.position, "y", -1000, 1000, 1)
-lightControls2.add(directionalLight2.position, "z", -1000, 1000, 1)
-lightControls2.add(directionalLight2, "intensity", 0, 100, 0.01)
-lightControls2.addColor(directionalLight2, "color")
+// const lightControls2 = gui.addFolder("directionalLight2",)
+// lightControls2.add(directionalLight2.position, "x", -1000, 1000, 1)
+// lightControls2.add(directionalLight2.position, "y", -1000, 1000, 1)
+// lightControls2.add(directionalLight2.position, "z", -1000, 1000, 1)
+// lightControls2.add(directionalLight2, "intensity", 0, 100, 0.01)
+// lightControls2.addColor(directionalLight2, "color")
 
-const spotLightControls = gui.addFolder("spotLight",)
-lightControls2.add(spotLight.position, "x", -1000, 1000, 1)
-lightControls2.add(spotLight.position, "y", -1000, 1000, 1)
-lightControls2.add(spotLight.position, "z", -1000, 1000, 1)
-lightControls2.add(spotLight, "intensity", 0, 100, 0.01)
-lightControls2.addColor(spotLight, "color")
+// const spotLightControls = gui.addFolder("spotLight",)
+// lightControls2.add(spotLight.position, "x", -1000, 1000, 1)
+// lightControls2.add(spotLight.position, "y", -1000, 1000, 1)
+// lightControls2.add(spotLight.position, "z", -1000, 1000, 1)
+// lightControls2.add(spotLight, "intensity", 0, 100, 0.01)
+// lightControls2.addColor(spotLight, "color")
 
 
 const objLoader = new OBJLoader()

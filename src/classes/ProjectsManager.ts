@@ -3,11 +3,11 @@ import { ToDo, IToDo, ToDoStatus } from "./ToDo"
 
 export class ProjectsManager {
     list: Project[] = []
-    ui: HTMLElement
+    // ui: HTMLElement
 // -----------------------------------------------------------------------------
-constructor(container: HTMLElement) {
+constructor() {
         console.warn("PM - New ProjectsManager constructor invoked" )
-        this.ui = container
+        // this.ui = container
         const project = this.newProject({
             name: "default project",
             description: "This is just a default app project",
@@ -21,7 +21,7 @@ constructor(container: HTMLElement) {
             todoList: [],
         })
         console.log(project)
-        project?.ui.click()
+        // project?.ui.click()
                 // this.setDefaultProjectUI()
     }
 // -----------------------------------------------------------------------------
@@ -108,7 +108,7 @@ newProject(data: IProject) {
             this.setDetailsPage(project)
         })
         console.warn("PM - newProject project after function: ", project)
-        this.ui.append(project.ui)
+        // this.ui.append(project.ui)
         this.list.push(project)
         console.warn("PM - newProject projectsManager list after function: ", this.list)
         console.warn("New Project is created")
@@ -433,41 +433,41 @@ totalCost() {
     return total
 }
 // -----------------------------------------------------------------------------
-exportToJSON(fileName: string = "projects") {
-    const json = JSON.stringify(this.list, null, 2)
-    const blob = new Blob([json], {type: 'application/json'})
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = fileName
-    a.click()
-    URL.revokeObjectURL(url)
-}
+// exportToJSON(fileName: string = "projects") {
+//     const json = JSON.stringify(this.list, null, 2)
+//     const blob = new Blob([json], {type: 'application/json'})
+//     const url = URL.createObjectURL(blob)
+//     const a = document.createElement("a")
+//     a.href = url
+//     a.download = fileName
+//     a.click()
+//     URL.revokeObjectURL(url)
+// }
 // -----------------------------------------------------------------------------
-importFromJSON() {
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.accept = 'application/json'
-    const reader = new FileReader()
-    reader.addEventListener('load', () => {
-        const json = reader.result
-        if (!json) { return }
-        const projects: IProject[] = JSON.parse(json as string)
-        for (const project of projects) {
-            try {
-                this.newProject(project)
-            }
-            catch (error) {
-                alert(error)
-            }
-        }
+// importFromJSON() {
+//     const input = document.createElement('input')
+//     input.type = 'file'
+//     input.accept = 'application/json'
+//     const reader = new FileReader()
+//     reader.addEventListener('load', () => {
+//         const json = reader.result
+//         if (!json) { return }
+//         const projects: IProject[] = JSON.parse(json as string)
+//         for (const project of projects) {
+//             try {
+//                 this.newProject(project) 
+//             }
+//             catch (error) {
+//                 alert(error)
+//             }
+//         }
 
-    })
-    input.addEventListener('change', () => {
-        const filesList = input.files
-        if (!filesList) { return }
-        reader.readAsText(filesList[0])
-    })
-    input.click()
-}
+//     })
+//     input.addEventListener('change', () => {
+//         const filesList = input.files
+//         if (!filesList) { return }
+//         reader.readAsText(filesList[0])
+//     })
+//     input.click()
+// }
 }
