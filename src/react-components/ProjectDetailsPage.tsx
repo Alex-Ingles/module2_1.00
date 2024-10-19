@@ -1,6 +1,20 @@
 import * as React from "react"
+import * as Router from "react-router-dom"
 
-export function ProjectDetailsPage() {
+import { ProjectsManager } from "../classes/ProjectsManager"
+
+interface Props {
+    projectsManager: ProjectsManager
+}
+
+export function ProjectDetailsPage(props: Props) {
+    const routeParams = Router.useParams<{id: string}>()
+    console.log("I`m the ID ma boys: ", routeParams.id)
+    const projectId = routeParams.id
+    if (projectId) {
+    const project = props.projectsManager.getProject(projectId)
+    // if (project) {
+    
     return (
         <div className="page" id="project-details">
             <dialog id="new-todo-modal">
@@ -166,9 +180,9 @@ export function ProjectDetailsPage() {
                 style={{ height: "9%" }}
             >
                 <div id="page-title">
-                <h2 data-project-info="name">Hospital Center</h2>
+                <h2 data-project-info="name">{ project.name }</h2>
                 <h5 data-project-info="description" style={{ color: "#969696" }}>
-                    Community hospital located at downtown
+                    { project.description }
                 </h5>
                 </div>
                 <div style={{ display: "none" }} className="page-header-buttons">
@@ -191,7 +205,7 @@ export function ProjectDetailsPage() {
                 width: "100%",
                 display: "grid",
                 gap: 20,
-                gridTemplateColumns: "30% 70%",
+                gridTemplateColumns: "50% 50%",
                 gridTemplateRows: "100%",
                 padding: "20px 30px"
                 }}
@@ -226,13 +240,13 @@ export function ProjectDetailsPage() {
                         padding: 7
                         }}
                     >
-                        HC
+                        { project.initials }
                     </p>
                     <p
                         data-project-info="id"
                         style={{ fontSize: 8, width: 200, height: 30, display: "none" }}
                     >
-                        Id
+                        { project.id }
                     </p>
                     <div>
                         <button
@@ -254,12 +268,12 @@ export function ProjectDetailsPage() {
                     </div>
                     <div style={{ padding: "30 0px" }}>
                     <div style={{ left: 0 }}>
-                        <h5 data-project-info="name2">Hospital Center</h5>
+                        <h5 data-project-info="name2">{ project.name }</h5>
                         <p
                         data-project-info="description2"
                         style={{ fontSize: "small", fontWeight: "lighter" }}
                         >
-                        Community hospital located at downtown
+                        { project.description }
                         </p>
                     </div>
                     <div
@@ -272,34 +286,34 @@ export function ProjectDetailsPage() {
                         }}
                     >
                         <div>
-                        <h5 style={{ color: "#969696" }}>Status</h5>
-                        <h5 data-project-info="status">Active</h5>
+                            <h5 style={{ color: "#969696" }}>Status</h5>
+                            <h5 data-project-info="status">{ project.status }</h5>
                         </div>
                         <div>
-                        <h5 style={{ color: "#969696" }}>Cost</h5>
-                        <h5 data-project-info="cost" style={{ color: "white" }}>
-                            €2.400.000
-                        </h5>
+                            <h5 style={{ color: "#969696" }}>Cost</h5>
+                            <h5 data-project-info="cost" style={{ color: "white" }}>
+                            { project.cost.valueOf() }
+                            </h5>
                         </div>
                         <div>
-                        <h5 style={{ color: "#969696" }}>Role</h5>
-                        <h5 data-project-info="userRole" style={{ color: "white" }}>
-                            Engineer
-                        </h5>
+                            <h5 style={{ color: "#969696" }}>User Role</h5>
+                            <h5 data-project-info="userRole" style={{ color: "white" }}>
+                            { project.userRole }
+                            </h5>
                         </div>
                         <div hidden={true}>
                         <h5 style={{ color: "#969696" }}>Finish Date</h5>
                         <h5 data-project-info="finishDate" style={{ color: "white" }}>
-                            2025-05-01
+                            { project.finishDate.toString() }
                         </h5>
                         </div>
                         <div>
-                        <h5 style={{ color: "#969696" }}>Finish Date</h5>
+                        <h5 style={{ color: "#969696" }}>Short Finish Date</h5>
                         <h5
                             data-project-info="shortFinishDate"
                             style={{ color: "white" }}
                         >
-                            2025-05-01
+                            { project.shortFinishDate.toString() }
                         </h5>
                         </div>
                     </div>
@@ -311,10 +325,13 @@ export function ProjectDetailsPage() {
                         className="progress-bar-done"
                         style={{
                             backgroundColor: "rgb(158, 195, 158)",
-                            borderRadius: "10px 0 0 10px"
+                            borderRadius: "10px 0 0 10px",
+                            width: `"${project.progress.valueOf()}%"`,
                         }}
                         >
-                        <h5 data-project-info="progress">80%</h5>
+                        <h5 data-project-info="progress">
+                            { project.progress .valueOf()}%
+                        </h5>
                         </div>
                     </div>
                     </div>
@@ -410,6 +427,6 @@ export function ProjectDetailsPage() {
                 </div>
             </div>
         </div>
-
     )
+}
 }

@@ -4,7 +4,7 @@ import * as Router from "react-router-dom"
 import { Sidebar } from "./react-components/Sidebar"
 import { ProjectsPage } from "./react-components/ProjectsPage"
 import { ProjectDetailsPage } from "./react-components/ProjectDetailsPage"
-
+ 
 import * as THREE from "three"
 import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js"
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js"
@@ -17,7 +17,9 @@ import { IProject, ProjectStatus, UserRole} from "./classes/Project"
 import { ProjectsManager } from "./classes/ProjectsManager"
 import { ToDo, IToDo, ToDoStatus } from "./classes/ToDo"
 
- 
+const projectsManager = new ProjectsManager()
+// let projectDetailsPageComponent = ProjectDetailsPage({projectsManager})
+
 const rootElement = document.getElementById("app") as HTMLDivElement
 const appRoot = ReactDOM.createRoot(rootElement)
 appRoot.render(
@@ -25,8 +27,8 @@ appRoot.render(
     <Router.BrowserRouter>
         <Sidebar />
         <Router.Routes>
-            <Router.Route path="/" element={<ProjectsPage />} />
-            <Router.Route path="/project" element={<ProjectDetailsPage />} />
+            <Router.Route path="/" element={<ProjectsPage projectsManager={projectsManager}/>} />
+            <Router.Route path="/project/:id" element={<ProjectDetailsPage projectsManager={projectsManager}/>} />
         </Router.Routes>
     </Router.BrowserRouter>
     </>
@@ -51,7 +53,7 @@ function toggleModal(id: string, showclose: "show" | "close") {
 }
 // -----------------------------------------------------------------------------
 const projectListUI = document.getElementById("projects-list") as HTMLElement
-const projectsManager = new ProjectsManager()
+// const projectsManager = new ProjectsManager()
 
 // -----------------------------------------------------------------------------
 console.log(projectsManager.list)

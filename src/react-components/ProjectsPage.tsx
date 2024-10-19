@@ -1,16 +1,26 @@
 import * as React from "react"
+import * as Router from "react-router-dom"
 import { IProject, Project, ProjectStatus, UserRole} from "../classes/Project"
 import { ProjectsManager } from "../classes/ProjectsManager"
 import { ProjectCard } from "./ProjectCard"
+import { Route } from "react-router-dom"
 
-export function ProjectsPage() {
-    const [projectsManager] = React.useState(new ProjectsManager())
-    const [projects, setProjects] = React.useState<Project[]>(projectsManager.list)
-    projectsManager.onProjectCreated = () => {setProjects([...projectsManager.list])}
-    projectsManager.onProjectDeleted = () => {setProjects([...projectsManager.list])}
+interface Props {
+    projectsManager: ProjectsManager
+}
+
+export function ProjectsPage(props: Props) {
+    // const [projectsManager] = React.useState(new ProjectsManager())
+    const [projects, setProjects] = React.useState<Project[]>(props.projectsManager.list)
+    props.projectsManager.onProjectCreated = () => {setProjects([...props.projectsManager.list])}
+    props.projectsManager.onProjectDeleted = () => {setProjects([...props.projectsManager.list])}
 
     const projectCards = projects.map((project) => {
-        return <ProjectCard project={project} key={project.id}/>
+        return (
+            <Router.Link to={`/project/${project.id}`} key={project.id}>
+                <ProjectCard project={project}/>
+            </Router.Link>
+        )
     })
     
     React.useEffect(() => {
@@ -64,9 +74,9 @@ export function ProjectsPage() {
             console.log(projectData.finishDate.valueOf())
             console.log(projectData.finishDate.valueOf.length)
 
-            if (projectsManager && projectsManager.idInUse(projectData.id)) {
+            if (props.projectsManager && props.projectsManager.idInUse(projectData.id)) {
                 console.warn("id provided is already in use, existing Project will be updated")
-                projectsManager.updateProject(projectData)
+                props.projectsManager.updateProject(projectData)
                 projectForm.reset()
 
                 const modal = document.getElementById("new-project-modal")
@@ -79,24 +89,24 @@ export function ProjectsPage() {
 
                 console.warn("submit is fired!")
                 console.log(projectData)
-                console.log(projectsManager.list)
+                console.log(props.projectsManager.list)
 
-                projectsManager.totalCost()
+                props.projectsManager.totalCost()
             } else {
                 try {
-                    projectsManager.newProject(projectData)
-                    projectsManager.deleteDefaultProjectUI()
+                    props.projectsManager.newProject(projectData)
+                    props.projectsManager.deleteDefaultProjectUI()
                     projectForm.reset()
                     const modal = document.getElementById("new-project-modal")
                     if (!(modal && modal instanceof HTMLDialogElement)) {return}
                     modal.close()
     
                     // toggleModal("new-project-modal", "close")
-                    projectsManager.totalCost()
+                    props.projectsManager.totalCost()
 
                     console.warn("submit is fired!")
                     console.log(projectData)
-                    console.log(projectsManager.list)
+                    console.log(props.projectsManager.list)
 
                 } catch (err) {
                     alert(err)
@@ -125,7 +135,7 @@ export function ProjectsPage() {
             for (const project of projects) {
                 const count = 0
                 try {
-                    projectsManager.newProject(project)
+                    props.projectsManager.newProject(project)
                     console.log(count+1)
                 }
                 catch (error) {
@@ -145,7 +155,7 @@ export function ProjectsPage() {
     const onExportClick = () => {
         // exportToJSON(fileName: string = "projects") {
             const fileName = "projects"
-            const json = JSON.stringify(projectsManager.list, null, 2)
+            const json = JSON.stringify(props.projectsManager.list, null, 2)
             const blob = new Blob([json], {type: 'application/json'})
             const url = URL.createObjectURL(blob)
             const a = document.createElement("a")
