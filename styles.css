@@ -182,6 +182,11 @@ button:hover {
     text-align: center;
 }
 
+#nav-buttons a{
+    color: white;
+    text-decoration: none;
+}
+
 #nav-buttons {
     display: flex;
     flex-direction: column;
