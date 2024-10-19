@@ -4,6 +4,9 @@ import { ToDo, IToDo, ToDoStatus } from "./ToDo"
 export class ProjectsManager {
     list: Project[] = []
     // ui: HTMLElement
+    onProjectCreated = (project: Project) => {}
+    onProjectDeleted = () => {}
+
 // -----------------------------------------------------------------------------
 constructor() {
         console.warn("PM - New ProjectsManager constructor invoked" )
@@ -98,15 +101,15 @@ newProject(data: IProject) {
         data.todoList = newToDoList
 
         const project = new Project(data)
-        project.ui.addEventListener("click", () => {
-            const projectsPage = document.getElementById("projects-page")
-            const detailsPage = document.getElementById("project-details")
-            if (!projectsPage || !detailsPage) {return}
-            console.log("pages exists")
-            projectsPage.style.display = "none"
-            detailsPage.style.display = "flex"
-            this.setDetailsPage(project)
-        })
+        // project.ui.addEventListener("click", () => {
+        //     const projectsPage = document.getElementById("projects-page")
+        //     const detailsPage = document.getElementById("project-details")
+        //     if (!projectsPage || !detailsPage) {return}
+        //     console.log("pages exists")
+        //     projectsPage.style.display = "none"
+        //     detailsPage.style.display = "flex"
+        //     this.setDetailsPage(project)
+        // })
         console.warn("PM - newProject project after function: ", project)
         // this.ui.append(project.ui)
         this.list.push(project)
@@ -114,6 +117,7 @@ newProject(data: IProject) {
         console.warn("New Project is created")
         // return { project as Project }
         // return { project }
+        this.onProjectCreated(project)
         return project
 
     }
@@ -418,6 +422,7 @@ deleteProjectFromList(id: string) {
             return project.id !== id
         })
         this.list = remaining
+        this.onProjectDeleted()
         console.log("deleteProjectFromList: I reach this point")
         console.log("remaining: ",remaining)
     } else { 

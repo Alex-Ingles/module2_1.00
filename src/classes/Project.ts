@@ -65,7 +65,7 @@ export class Project implements IProject {
         console.log("new project (after invoking setDefaultDate): ", this.initials, this.finishDate)
         console.log("new project (after invoking setDefaultDate and after if statement): ", this.initials, this.finishDate)
         this.setShortFinishDate()
-        this.setUI()
+        // this.setUI()
     }
 
     findInitials() {
@@ -87,59 +87,59 @@ export class Project implements IProject {
         this.initialsColor = colors[random]
     }
 
-    setUI() {
-        console.warn("P - setUI invoked")
-        if (this.ui && this.ui instanceof HTMLElement) {return}
-        let progressPercent = this.progress * 100
-        let progressPercentToString = progressPercent.toString
-        this.ui = document.createElement("div")
-        this.ui.className = "project-card"
-        this.ui.id = this.id
-        this.ui.innerHTML = `
-        <div class="card">
-            <div class="card-header">
-                <p data-project-info="initials" style="background-color: ${this.initialsColor}; padding:10px; border-radius: 8px; aspect-ratio: 1">${this.initials}</p>
-                <div>
-                    <h5 data-project-info="name">${this.name}</h5>
-                    <h5 data-project-info="description" class="description">${this.description}</h5>
-                </div>
-            </div>
-            <div class="card-content">
-                <div style="display: none" class="card-property">
-                    <p style="color: #969696;">Id</p>
-                    <p data-project-info="id">${this.id}</p>
-                </div>
-                <div class="card-property">
-                    <p style="color: #969696;">Status</p>
-                    <p data-project-info="status">${this.status}</p>
-                </div>
-                <div class="card-property">
-                    <p style="color: #969696;">Role</p>
-                    <p data-project-info="userRole">${this.userRole}</p>
-                </div>
-                <div class="card-property">
-                    <p style="color: #969696;">Cost</p>
-                    <p data-project-info="cost">$${this.cost}</p>
-                </div>
-                <div style="display: none" class="card-property">
-                    <p style="color: #969696;">Finish Date</p>
-                    <p data-project-info="finishDate">${this.finishDate}</p>
-                </div>
-                <div class="card-property">
-                    <p style="color: #969696;">Finish Date</p>
-                    <p data-project-info="shortFinishDate">${this.shortFinishDate}</p>
-                </div>
-                <div class="card-property">
-                    <p style="color: #969696;">Estimated Progress</p>
-                    <p data-project-info="progress">${this.progress}%</p>
-                </div>
-                <div class="card-property">
-                    <p style="color: #969696;">Initials</p>
-                    <p data-project-info="initials" style="text-transform: uppercase">${this.initials}</p>
-                </div>
+    // setUI() {
+    //     console.warn("P - setUI invoked")
+    //     if (this.ui && this.ui instanceof HTMLElement) {return}
+    //     let progressPercent = this.progress * 100
+    //     let progressPercentToString = progressPercent.toString
+    //     this.ui = document.createElement("div")
+    //     this.ui.className = "project-card"
+    //     this.ui.id = this.id
+    //     this.ui.innerHTML = `
+    //     <div class="card">
+    //         <div class="card-header">
+    //             <p data-project-info="initials" style="background-color: ${this.initialsColor}; padding:10px; border-radius: 8px; aspect-ratio: 1">${this.initials}</p>
+    //             <div>
+    //                 <h5 data-project-info="name">${this.name}</h5>
+    //                 <h5 data-project-info="description" class="description">${this.description}</h5>
+    //             </div>
+    //         </div>
+    //         <div class="card-content">
+    //             <div style="display: none" class="card-property">
+    //                 <p style="color: #969696;">Id</p>
+    //                 <p data-project-info="id">${this.id}</p>
+    //             </div>
+    //             <div class="card-property">
+    //                 <p style="color: #969696;">Status</p>
+    //                 <p data-project-info="status">${this.status}</p>
+    //             </div>
+    //             <div class="card-property">
+    //                 <p style="color: #969696;">Role</p>
+    //                 <p data-project-info="userRole">${this.userRole}</p>
+    //             </div>
+    //             <div class="card-property">
+    //                 <p style="color: #969696;">Cost</p>
+    //                 <p data-project-info="cost">$${this.cost}</p>
+    //             </div>
+    //             <div style="display: none" class="card-property">
+    //                 <p style="color: #969696;">Finish Date</p>
+    //                 <p data-project-info="finishDate">${this.finishDate}</p>
+    //             </div>
+    //             <div class="card-property">
+    //                 <p style="color: #969696;">Finish Date</p>
+    //                 <p data-project-info="shortFinishDate">${this.shortFinishDate}</p>
+    //             </div>
+    //             <div class="card-property">
+    //                 <p style="color: #969696;">Estimated Progress</p>
+    //                 <p data-project-info="progress">${this.progress}%</p>
+    //             </div>
+    //             <div class="card-property">
+    //                 <p style="color: #969696;">Initials</p>
+    //                 <p data-project-info="initials" style="text-transform: uppercase">${this.initials}</p>
+    //             </div>
 
-            </div>`
-    }
+    //         </div>`
+    // }
 
     setShortFinishDate() {
         this.shortFinishDate = new Date (this.finishDate).toLocaleDateString("es-ES")

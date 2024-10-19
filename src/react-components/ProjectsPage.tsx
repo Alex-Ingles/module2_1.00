@@ -1,10 +1,21 @@
 import * as React from "react"
-import { IProject, ProjectStatus, UserRole} from "../classes/Project"
+import { IProject, Project, ProjectStatus, UserRole} from "../classes/Project"
 import { ProjectsManager } from "../classes/ProjectsManager"
+import { ProjectCard } from "./ProjectCard"
 
 export function ProjectsPage() {
+    const [projectsManager] = React.useState(new ProjectsManager())
+    const [projects, setProjects] = React.useState<Project[]>(projectsManager.list)
+    projectsManager.onProjectCreated = () => {setProjects([...projectsManager.list])}
+    projectsManager.onProjectDeleted = () => {setProjects([...projectsManager.list])}
 
-    const projectsManager = new ProjectsManager()
+    const projectCards = projects.map((project) => {
+        return <ProjectCard project={project} key={project.id}/>
+    })
+    
+    React.useEffect(() => {
+        console.log("Projects state updated", projects)
+    })
 
     const onNewProjectClick = () => {
         const modal = document.getElementById("new-project-modal")
@@ -394,7 +405,8 @@ export function ProjectsPage() {
             overflowY: "auto",
             maxHeight: "95vh"
             }}
-        ></div>
+        >{ projectCards }
+        </div>
         </div>
         )
 }
