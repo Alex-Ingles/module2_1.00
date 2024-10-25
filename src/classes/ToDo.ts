@@ -4,13 +4,13 @@ import { v4 as uuidv4 } from "uuid"
 export type ToDoStatus = "pending" | "on going" | "solved"
 
 export interface IToDo {
-
     name: string
     description: string
     status: ToDoStatus
     deadline: Date
     id: string
     relatedProject: string
+
 }
 
 export class ToDo implements IToDo {
@@ -19,11 +19,11 @@ export class ToDo implements IToDo {
     description: string
     status: "pending" | "on going" | "solved"
     deadline: Date
+    relatedProject: string
 
     // Class internals
     ui: HTMLDivElement
     id: string
-    relatedProject: string
     shortdeadline: string
 
 
