@@ -35,12 +35,14 @@ export function ProjectsPage(props: Props) {
         if (!(modal && modal instanceof HTMLDialogElement)) {return}
         modal.showModal()
     }
+
+// ----------------------------------------------------------------------------------------------------
     const onFormSubmit = (e: React.FormEvent) => {
         // let submitter = e.submitter as HTMLElement
         // let handler = submitter.id
         // if(handler == "new-project-form-submit-btn") {
         const projectForm = document.getElementById("new-project-form")
-        if (!(projectForm && projectForm instanceof HTMLFormElement)) {return}
+        if (!(projectForm && projectForm instanceof HTMLFormElement)) {return} // To avoid complainning
             e.preventDefault()
             const formData = new FormData(projectForm)
             // console.warn(formData)

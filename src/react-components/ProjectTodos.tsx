@@ -5,6 +5,7 @@ import { Project } from "../classes/Project"
 import { ToDo, IToDo, ToDoStatus } from "../classes/ToDo" 
 import { TodoCard } from "./ToDoCard"
 import { ProjectDetailsPage } from "./ProjectDetailsPage"
+import { TodoForm } from "./TodoForm"
 
 interface Props {
     projectsManager: ProjectsManager,
@@ -12,36 +13,16 @@ interface Props {
 
 export function ProjectTodos(props: Props) {
 
-    const routeParams = Router.useParams<{id: string}>()
-    console.log("I`m the ID ma boys: ", routeParams.id)
+    const routeParams = Router.useParams<{id: string}>() // getting id parameter from the Route
+    // console.log("I`m the ID ma boys: ", routeParams.id)
     if (!routeParams.id) { return (<p>Project ID is needed to see this page</p>)} 
-    const project = props.projectsManager.getProject(routeParams.id)
+    const project = props.projectsManager.getProject(routeParams.id) // getting the project by id from projectsManager
     if (!project) { return (<p>The project with ID: {routeParams.id} wasnn't found. </p>)}
 
-    // const [projectTodos]
     const [toDos, setToDos] = React.useState<ToDo[]>( project.todoList )
     // const [todo, setTodo] = React.useState<ToDo>([...project.todoList ])
     props.projectsManager.onTodoCreated = () => {setToDos([...project.todoList])}
     props.projectsManager.onTodoDeleted = () => {setToDos([...project.todoList])}
-
-    const toDosCards =  
-        project.todoList.map((todo) => {
-        // toDos.map((todo) => {
-            console.log(toDos)
-            return (
-                <Router.Link to={`/project/${todo.id}`} key={todo.id}>
-                    <TodoCard todo={todo} />
-                </Router.Link>
-            )
-        }
-    )
-
-
-    // ---------------------------------------------------------GPT suggestion
-    // const [newToDo, setNewTodo] = React.useState<IToDo>({
-    //     props.projectsManager.newTodo()
-    // })
-
 
     const [newToDo, setNewTodo] = React.useState<IToDo>({
         id: "",
@@ -49,26 +30,19 @@ export function ProjectTodos(props: Props) {
         description: "",
         status: "pending",
         deadline: new Date(),
-        relatedProject: "routeParams.id"
+        relatedProject: project.id,
+        todocardcolor: ""
     })
 
-// ----------------------------------------------------------------from <GPT>
-    // const handleFormSubmit = (e: React.FormEvent) => {
-    //         e.preventDefault();
-    //         // Create new ToDo and update the state
-    //         const updatedToDos = [...toDos, new ToDo(newToDo)];
-    //         setToDos(updatedToDos);
-    //         project.todoList = updatedToDos; // Update the project's to-do list
-    //         if (routeParams.id) {
-    //         setNewTodo({
-    //         id: "",
-    //         name: "",
-    //         description: "",
-    //         status: "pending",
-    //         deadline: new Date(),
-    //         relatedProject: routeParams.id
-    //         })};
-    //     };
+    const toDosCards =  // Creating an array iterator to get all the TodoCards from each Todo in the todolist.
+        project.todoList.map((todo) => {
+            console.log("toDos: ",toDos)
+            console.log("todo: ", todo)
+            return (
+                <TodoCard projectsManager={props.projectsManager} project={project} todo={todo} />
+            )
+        })
+
 // -----------------------------------------------------------------from <GPT>
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -96,116 +70,98 @@ export function ProjectTodos(props: Props) {
 
     //         todoForm.addEventListener("submit", (e) => {
 
-// -----------------------------------------------------------------------  on form submit
-    const onFormSubmit = (e: React.FormEvent) => {
-        const newTodoModal = document.getElementById("new-todo-modal")
-        const newTodoForm = document.getElementById("new-todo-form")
-        if (!(newTodoForm && newTodoForm instanceof HTMLFormElement)) { return <p>New To-do form doesn't exists</p> }
-            e.preventDefault()
-            const formData = new FormData(newTodoForm)
-            // console.warn(formData)
-            const todoData: IToDo = {
-                name: formData.get("name") as string,
-                description: formData.get("description") as string,
-                status: formData.get("status") as ToDoStatus,
-                deadline: new Date (formData.get("deadline") as string),
-                id: formData.get("id") as string,
-                // relatedProject: formData.get("relatedProject") as string,
-                relatedProject: routeParams.id as string,
-
-            }
-            // const projectDetails = document.getElementById("project-details")
-            // if (projectDetails) {
-            //     const projectIdElement = projectDetails.querySelector("[data-project-info='id']")
-            //     if (projectIdElement) {
-            //         const projectId = projectIdElement.innerHTML as string
-            //         if (projectId) {
-            //             todoData.relatedProject = projectId
-            //         }
-            //     }
-            // }
-            console.warn("relatedProjectId: ",todoData.relatedProject)
-            console.warn("todoData: ", todoData)
-            console.warn("todoData.id: ", todoData.id)
-            console.warn(todoData.deadline)
-            try {
-                new Date(todoData.deadline)
-                if (isNaN(todoData.deadline.valueOf())) {
-                    console.warn("XXXXXXXXX:  deadline valueOf is not a number")
-                    const defDate = new Date(1979, 7, 3, 12)
-                    todoData.deadline = defDate
-                    console.warn(todoData.deadline)
-                } else {
-                    console.warn("XXXXXXXXX:  deadline valueOf is a number")
-                } 
-            } catch (err) {
-                alert(err)
-            }
-            try {
-                const project = props.projectsManager.getProject(todoData.relatedProject)
-                if (!project) {return <p>Project not found</p>}
-                const todoCreated = new ToDo(todoData)
-                project.todoList.push(todoCreated)
-                newTodoForm.reset()
-                if (!newTodoModal) {return(<p>newTodoModal does'nt exists</p>)}
-                if (newTodoModal instanceof HTMLDialogElement) {
-                    newTodoModal.close()
-                }
-                // history.back()
-                // props.projectsManager.setDetailsPage(project)
-                console.log(project.todoList)
-                props.projectsManager.onTodoCreated(todoCreated)
-                // const modal = document.getElementById("new-todo-modal")
-                    // if (modal && modal instanceof HTMLFormElement) {
-                    //     modal.close();
-                    // toggleModal("new-todo-modal", "close")
-            } catch {
-                console.log("cannot execute push and toggle")
-            }
-            console.log("index.ts - when form submit: ", todoData.deadline, typeof todoData.deadline )
-            console.log(todoData.deadline.valueOf())
-            console.log(todoData.deadline.valueOf.length)
-            recallDetails(routeParams)
-        }
-//-------------- Recall DetailsProjectsPage
-
-    const recallDetails = (id) => {
-        // id = routeParams.id
-    }
-
 // ------------------------------------------------------------------------ on Form Cancel
-    const onFormCancel = (e:React.FormEvent) => {
-        const newTodoForm = document.getElementById("new-todo-form")
-        if (!(newTodoForm && newTodoForm instanceof HTMLFormElement)) { return <p>New To-do form doesnt exists</p> }
-        e.preventDefault()
-        newTodoForm.reset()
-        newTodoForm.close()
-}
-// ------------------------------------------------------------------------- on Todo Created
-    const onToDoCreated = () => {
-        const newToDoBtn = document.getElementById("new-todo-btn")
+    const onFormCancel = (e) => {
         const modal = document.getElementById("new-todo-modal")
-        if (newToDoBtn && modal instanceof HTMLFormElement) {
-        newToDoBtn.addEventListener("click", () => {modal.display="true"})
-        console.warn("toggle on newToDoButton is working !!")
-        } else {
-            console.warn("New Projects Button was not found")
-        }
-    }
-    // ------------------------------------------------------------------------- on Todo Deleted
-    const onToDoDeleted = () => {
-        console.log("onToDoCreated")
+        if (!(modal && modal instanceof HTMLDialogElement)) { return <p>New To-do form doesnt exists</p> }
+        e.preventDefault()
+        // modal.reset()
+        modal.close()
+}
+// ------------------------------------------------------------------------ on Form Cancel
+    const onFormDelete = (e) => {
+        const modal = document.getElementById("new-todo-modal")
+        if (!(modal && modal instanceof HTMLDialogElement)) { return <p>New To-do form doesnt exists</p> }
+        e.preventDefault()
+        modal.close()
     }
     // ------------------------------------------------------------------------- on New Todo Click
     const onNewToDoClick = () => {
-        const modal = document.getElementById("new-todo-modal")
+        const modal = document.getElementById("todo-modal")
         if (!(modal && modal instanceof HTMLDialogElement)) {return}
+        // const todoToPass = setNewTodo(newToDo)
+        const todoToPass = new ToDo(newToDo)
+        setNewTodo(newToDo)
+        // const todoToPass = setNewTodo(({
+        //     id: "",
+        //     name: "",
+        //     description: "",
+        //     status: "pending",
+        //     deadline: new Date(),
+        //     relatedProject: project.id,
+        //     todocardcolor: ""
+        // }))
         modal.showModal()
+        return (
+            <TodoForm projectsManager={props.projectsManager} project={project} todo={todoToPass}/>
+        )
     }
     // ------------------------------------------------------------------------- return UI
     return (
         <div className="dashboard-card" id="project-todos">
-            <dialog id="new-todo-modal">
+            <dialog id="todo-modal">
+                <TodoForm projectsManager={props.projectsManager} project={project} todo={new ToDo(newToDo)}/>
+            </dialog>
+            <div className="dashboard-card-header">
+                <h4>To-do</h4>
+                <div className="dashboard-card-buttons">
+                    <span className="material-icons-round">search</span>
+                    <input className="search-box" type="text" placeholder="Search by name"/>
+                    <button onClick={ onNewToDoClick } id="new-todo-btn">
+                        <span className="material-icons-round">add_circle_outline</span>
+                    </button>
+                </div>
+            </div>
+            <div className="todo-list" id="todo-list">
+                { toDosCards }
+            </div>
+        </div>
+
+    )
+}
+
+
+// ------------------------------------------------------------------------- on Todo Created
+    // const onToDoCreated = () => {
+    //     const newToDoBtn = document.getElementById("new-todo-btn")
+    //     const modal = document.getElementById("new-todo-modal")
+    //     if (newToDoBtn && modal instanceof HTMLFormElement) {
+    //     newToDoBtn.addEventListener("click", () => {modal.display="true"})
+    //     console.warn("toggle on newToDoButton is working !!")
+    //     } else {
+    //         console.warn("New Projects Button was not found")
+    //     }
+    // }
+    // ------------------------------------------------------------------------- on Todo Deleted
+    // const onToDoDeleted = () => {
+    //     console.log("onToDoCreated")
+    // }
+
+    //-------------- Recall DetailsProjectsPage
+
+    // const recallDetails = (id) => {
+    //     // id = routeParams.id
+    // }
+
+    // ------------------------------------------------------------------------- on New Todo Click
+    // const onToDoCardClick = () => {
+    //     const modal = document.getElementById("todo-modal")
+    //     if (!(modal && modal instanceof HTMLDialogElement)) {return}
+    //     modal.showModal()
+    // }
+
+
+            {/* <dialog id="new-todo-modal">
                 <form id="new-todo-form" onSubmit={ onFormSubmit }>
                     <h2>New To-Do in ProjectTodos</h2>
                     <div className="input-list">
@@ -232,11 +188,10 @@ export function ProjectTodos(props: Props) {
                             <span className="material-icons-round">calendar_month</span>Finish
                             Date
                             </label>
-                            <input data-todo-info="deadline" name="deadline" type="date" onChange={handleInputChange} />
+                            <input data-todo-info="deadline" name="deadline" type="date" onChange={ handleInputChange } />
                         </div>
                     </div>
                         <div className="submit-buttons">
-                        {/* <Router.Link to={`/project/${project.id}`} key={project.id}> */}
 
                         <button
                             onClick = { onFormCancel }
@@ -244,8 +199,6 @@ export function ProjectTodos(props: Props) {
                         >
                             Cancel
                         </button>
-                        {/* </Router.Link>
-                        <Router.Link to={`/project/${project.id}`} key={project.id}> */}
                         <button
                             onClick= { onFormSubmit }
                             id="new-todo-form-submit-btn"
@@ -254,7 +207,6 @@ export function ProjectTodos(props: Props) {
                         >
                             Accept
                         </button>
-                        {/* </Router.Link> */}
                         <button
                             id="new-todo-form-delete-btn"
                             type="button"
@@ -265,22 +217,104 @@ export function ProjectTodos(props: Props) {
                         </div>
                 </div>
                 </form>
-            </dialog>
+            </dialog> */}
             
-            <div className="dashboard-card-header">
-                <h4>To-do</h4>
-                <div className="dashboard-card-buttons">
-                    <span className="material-icons-round">search</span>
-                    <input className="search-box" type="text" placeholder="Search by name"/>
-                    <button onClick={ onNewToDoClick } id="new-todo-btn">
-                        <span className="material-icons-round">add_circle_outline</span>
-                    </button>
-                </div>
-            </div>
-            <div className="todo-list" id="todo-list">
-                { toDosCards }
-            </div>
-        </div>
+// -------------------------------------------------------------------------------------------------- 
+// ONFORMSUBMIT OLD
+// -----------------------------------------------------------------------  on form submit
+// const onFormSubmit = (e: React.FormEvent) => {
+//     const newTodoModal = document.getElementById("new-todo-modal")
+//     const newTodoForm = document.getElementById("new-todo-form")
+//     if (!(newTodoForm && newTodoForm instanceof HTMLFormElement)) { return <p>New To-do form doesn't exists</p> }
+//         e.preventDefault()
+//         const formData = new FormData(newTodoForm)
+//         // console.warn(formData)
+//         const todoData: IToDo = {
+//             name: formData.get("name") as string,
+//             description: formData.get("description") as string,
+//             status: formData.get("status") as ToDoStatus,
+//             deadline: new Date (formData.get("deadline") as string),
+//             id: formData.get("id") as string,
+//             // relatedProject: formData.get("relatedProject") as string,
+//             relatedProject: routeParams.id as string,
+//             todocardcolor: ""
 
-    )
-}
+//         }
+//         // const projectDetails = document.getElementById("project-details")
+//         // if (projectDetails) {
+//         //     const projectIdElement = projectDetails.querySelector("[data-project-info='id']")
+//         //     if (projectIdElement) {
+//         //         const projectId = projectIdElement.innerHTML as string
+//         //         if (projectId) {
+//         //             todoData.relatedProject = projectId
+//         //         }
+//         //     }
+//         // }
+//         console.warn("relatedProjectId: ",todoData.relatedProject)
+//         console.warn("todoData: ", todoData)
+//         console.warn("todoData.id: ", todoData.id)
+//         console.warn(todoData.deadline)
+//         try {
+//             new Date(todoData.deadline)
+//             if (isNaN(todoData.deadline.valueOf())) {
+//                 console.warn("XXXXXXXXX:  deadline valueOf is not a number")
+//                 const defDate = new Date(1979, 7, 3, 12)
+//                 todoData.deadline = defDate
+//                 console.warn(todoData.deadline)
+//             } else {
+//                 console.warn("XXXXXXXXX:  deadline valueOf is a number")
+//             } 
+//         } catch (err) {
+//             alert(err)
+//         }
+//         try {
+//             const project = props.projectsManager.getProject(todoData.relatedProject)
+//             if (!project) {return <p>Project not found</p>}
+//             const todoCreated = new ToDo(todoData)
+//             project.todoList.push(todoCreated)
+//             newTodoForm.reset()
+//             if (!newTodoModal) {return(<p>newTodoModal does'nt exists</p>)}
+//             if (newTodoModal instanceof HTMLDialogElement) {
+//                 newTodoModal.close()
+//             }
+//             console.log(project.todoList)
+//             props.projectsManager.onTodoCreated(todoCreated)
+//         } catch {
+//             console.log("cannot execute push and toggle")
+//         }
+//         console.log("index.ts - when form submit: ", todoData.deadline, typeof todoData.deadline )
+//         console.log(todoData.deadline.valueOf())
+//         console.log(todoData.deadline.valueOf.length)
+//         // recallDetails(routeParams)
+//     }
+
+// -------------------------------------------------------------------------------------------------- 
+// GPT SUGGESTIONS
+// -------------------------------------------------------------------------------------------------- 
+
+
+    // ---------------------------------------------------------GPT suggestion
+    // const [newToDo, setNewTodo] = React.useState<IToDo>({
+    //     props.projectsManager.newTodo()
+    // })
+
+
+
+// ----------------------------------------------------------------from <GPT>
+    // const handleFormSubmit = (e: React.FormEvent) => {
+    //         e.preventDefault();
+    //         // Create new ToDo and update the state
+    //         const updatedToDos = [...toDos, new ToDo(newToDo)];
+    //         setToDos(updatedToDos);
+    //         project.todoList = updatedToDos; // Update the project's to-do list
+    //         if (routeParams.id) {
+    //         setNewTodo({
+    //         id: "",
+    //         name: "",
+    //         description: "",
+    //         status: "pending",
+    //         deadline: new Date(),
+    //         relatedProject: routeParams.id
+    //         })};
+    //     };
+

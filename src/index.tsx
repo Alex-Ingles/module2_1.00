@@ -37,6 +37,7 @@ appRoot.render(
         <Router.Routes>
             <Router.Route path="/" element={<ProjectsPage projectsManager={projectsManager}/>} />
             <Router.Route path="/project/:id" element={<ProjectDetailsPage projectsManager={projectsManager}/>} />
+            {/* <Router.Route path="/todo-form/:id" element={<TodoForm projectsManager={projectsManager}/>} /> */}
             {/* <Router.Route path="/project/:id" element={<ProjectToDos projectsManager={projectsManager}/>} /> */}
         </Router.Routes>
         {/* <TodoForm (props: Props)/> */}
@@ -239,6 +240,7 @@ if (editTodoForm && editTodoForm instanceof HTMLFormElement) {
                 deadline: new Date (formData.get("deadline") as string),
                 id: formData.get("id") as string,
                 relatedProject: formData.get("relatedProject") as string,
+                todocardcolor: ""
             }
             console.warn("relatedProjectId: ",todoData.relatedProject)
             console.warn("todoData: ", todoData)

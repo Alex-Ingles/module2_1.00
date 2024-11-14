@@ -6,6 +6,7 @@ export class ProjectsManager {
     onProjectCreated = (project: Project) => {}
     onProjectDeleted = () => {}
     onTodoCreated = (todo: ToDo) => {}
+    onTodoUpdated = (todo: ToDo) => {}
     onTodoDeleted = () => {}
 
 // -----------------------------------------------------------------------------
@@ -30,13 +31,14 @@ deleteDefaultProjectUI() {
     const child = document.getElementById("defaultId")
     const parent = document.getElementById("projects-list")
     if (child && parent) {
-        parent.removeChild(child)
+        // parent.removeChild(child)
         this.list.shift()
-        return(document)
+        // return(document)
     }
 }
-// ----------------------------------------------------------------------------- New Project
+// ---------------------------------------------------------------- New Project - to index / to ProjectsPage
 newProject(data: IProject) {
+    console.warn("PM - newProject is invoked")
     this.deleteDefaultProjectUI()
     const projectNames = this.list.map((project) => {
         return project.name
@@ -65,7 +67,7 @@ newProject(data: IProject) {
 // set Details Page -----------------------------------------------------------------------------
 // setDetailsPage(project: Project) {
 // } 
-//  ----------------------------------------------------------------------------- Id In Use
+//  --------------------------------------------------------------------Id In Use to index / to ProjectsPage
 idInUse(id: string) {
     console.warn("PM - idInUse invoked")
     const projectIds = this.list.map((project) => {
@@ -79,7 +81,7 @@ idInUse(id: string) {
         return false
     }
 }
-// Update Project -----------------------------------------------------------------------------
+//  ----------------------------------------------------------- Update Project - to index / to ProjectsPage
 updateProject(data: IProject) {
     console.warn("PM - updateProject invoked")
     if (data.name.length < 6){
@@ -267,7 +269,6 @@ deleteProjectFromList(id: string) {
         return
     }
 }
-
 // -----------------------------------------------------------------------------
 totalCost() {
     const total = this.list.reduce((total, project) => total + project.cost, 0)

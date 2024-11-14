@@ -104,9 +104,9 @@ export function ProjectDetailsPage(props: Props) {
                 </form>
             </dialog> */}
             {/* dialog -------------------------------------------------------*/}
-            <dialog id="edit-todo-modal">
+            {/* <dialog id="edit-todo-modal">
                 <form id="edit-todo-form">
-                <h2>Edit To-Do</h2>
+                <h2>Edit To-Do From Details Page</h2>
                 <div className="input-list">
                     <div className="form-field-container">
                     <input
@@ -184,7 +184,7 @@ export function ProjectDetailsPage(props: Props) {
                     </button>
                 </div>
                 </form>
-            </dialog>
+            </dialog> */}
             {/* header -------------------------------------------------------*/}
             <header className="page-header" id="project-details-page-header" style={{ 
                 height: "9%" 
