@@ -10,7 +10,7 @@ export interface IToDo {
     deadline: Date
     id: string
     relatedProject: string
-    todocardcolor: string
+    // todocardcolor: string
 }
 
 export class ToDo implements IToDo {

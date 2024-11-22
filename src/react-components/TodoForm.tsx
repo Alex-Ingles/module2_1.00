@@ -2,8 +2,9 @@ import * as React from "react"
 import { ToDo, IToDo, ToDoStatus } from "../classes/ToDo"
 import { Project, IProject } from "../classes/Project"
 import { ProjectsManager } from "../classes/ProjectsManager"
+import { ProjectTodos } from "./ProjectTodos"
 
-import { TodoCard } from "./ToDoCard"
+// import { TodoCard } from "./ToDoCard"
 
 interface Props {
     projectsManager: ProjectsManager; // In order to invoke onToDoCreated, onToDoDeleted...
@@ -11,54 +12,60 @@ interface Props {
     todo: ToDo;
 }
 
-export function TodoForm ({projectsManager, project, todo}: Props) {
+export function TodoForm (props: Props) {
+    // var [todotoset, setTodotoset] = React.useState<ToDo>(props.todo)
 
-    var [project, setProject] = React.useState<Project>(project)
-    const [todos, setTodos] = React.useState<ToDo[]>(project.todoList)
-    // var [todo, setTodo] = React.useState<ToDo>(todo)
-    var [inputs, setInputs] = React.useState<ToDo>(todo)
+    const [newTodo, setNewTodo] = React.useState<ToDo>(props.todo)
+    // React.useEffect(() => {setNewTodo(props.todo)})
+        // id: props.todo.id,
+        // name: props.todo.name,
+        // description: props.todo.description,
+        // status: props.todo.status,
+        // deadline: props.todo.deadline,
+        // relatedProject: props.todo.relatedProject,
+        // todocardcolor: props.todo.todocardcolor,
+        // shortdeadline: props.todo.shortdeadline,
+        // setTodoCardColor(),
+        // setShortDeadline(),
+        // todocardcolor: props.todo.todocardcolor,
 
-    projectsManager.onTodoCreated = () => {
-        
-    }
-    // var [inputs, setInputs] = React.useState<ToDo>({
-    //     name: todo.name,
-    //     description: todo.description,
-    //     status: todo.status,
-    //     deadline: todo.deadline,
-    //     relatedProject: todo.relatedProject,
-    //     todocardcolor: todo.todocardcolor,
-    //     id: todo.id || "",
-    //     shortdeadline: todo.shortdeadline,
-    //     setTodoCardColor(){},
-    //     setShortDeadline(){}
-    //     })
-    
-// LAST
-    // console.log("TodoForm -> inputs: ", inputs)
+    // setTodotoset(props.todo)
+    // const [inputs, setInputs] = React.useState<IToDo>({
+    //     id: todotoset.id,
+    //     name: todotoset.name,
+    //     description: todotoset.description,
+    //     status: todotoset.status,
+    //     deadline: todotoset.deadline,
+    //     relatedProject: todotoset.relatedProject,
+    //     // todocardcolor: props.todo.todocardcolor,
+    // })
+    // const [formData, setFormData] = React.useState({
+    //     id: inputs.id || "Name passed by setFormData",
+    //     name: inputs.name || "",
+    //     description: inputs.description || "Description passed by setFormData",
+    //     status: inputs.status || "pending",
+    //     deadline: inputs.deadline || new Date(),
+    //     relatedProject: inputs.relatedProject,
+    // })
 
+    console.log("TodoForm - NewTodo: ", newTodo)
 
-    
-    const [formData, setFormData] = React.useState<IToDo>({
-        id: inputs.id || "Name passed by setFormData",
-        name: inputs.name || "",
-        description: inputs.description || "Description passed by setFormData",
-        status: inputs.status || "pending",
-        deadline: inputs.deadline || new Date(),
-        relatedProject: inputs.relatedProject,
-        todocardcolor: inputs.todocardcolor || "",
-    });
+    const modal = document.getElementById("todo-modal-"+newTodo.id);
+    const form = document.getElementById("new-todo-form")
 
-
-
-    const modal = document.getElementById("todo-modal");
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        console.log("something to change: ",e.target)
+    const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        // console.log("something to change: ",e.target)
         let { name, value } = e.target;
-        setFormData((inputs) => ({...inputs, [name]: value}));
-        const newTodo = new ToDo (inputs)
-        setInputs(newTodo)
+        console.log(name,": ", value)
+        // newTodo[name] = value
+        
+        const todoWip = newTodo
+        todoWip[name] = value
+        setNewTodo(todoWip);
+
+// setTodotoset(new ToDo (inputs))
+        // const newTodo = new ToDo (todotoset)
+        // setTodotoset(newTodo)
 
 // LAST
         // console.log("new Inputs after handleInputChange: ", inputs)
@@ -77,47 +84,84 @@ export function TodoForm ({projectsManager, project, todo}: Props) {
     // };
     //---------------------------------------------------------------------------------
     const onFormSubmit = (e: React.FormEvent) => {
-        console.log("I listen thee click")
-        // e.preventDefault();
-        if (todo) {
-            console.log("todo exists")
-            const index = project.todoList.findIndex((t) => t.id === todo.id);
-            console.log(index)
-            if (index > -1) {
-                console.log("index > -1")
-                project.todoList[index] = new ToDo(inputs);
-                // setTodos(project.todoList)
-                // setProject(project)
+        e.preventDefault()
+        console.log("I listen the submit click")
+        console.warn ("updatedTodo: ", newTodo)
+        props.projectsManager.updateToDo(newTodo)
+        if (modal && modal instanceof HTMLDialogElement) { modal.close }
+        // if (form && form instanceof HTMLFormElement) { form.reset }
 
-                // project.todoList[index] = new ToDo(inputs);
-                console.log("handleFormSubmit Project todoList [index]: ", project.todoList[index])
-                projectsManager.onTodoUpdated(inputs)
-                // setFormData(formData)
-//LAST
-                // setInputs(inputs)
-                // setProject(project)
-                // projectsManager.updateProject(project)
-                if (modal && modal instanceof HTMLDialogElement) { modal.close() }
-        } else {
-            console.log("index !> -1")
-            const newToDo = new ToDo(formData);
-// LAST
-            // const newToDo = new ToDo(inputs);
-            project.todoList.push(newToDo);
-            projectsManager.onTodoCreated(newToDo)
-            console.warn("YOUR PM: ", projectsManager)
+    }
+        // setTodotoset(new ToDo(inputs))
+        // if (form && form instanceof HTMLFormElement) {
+        //     const formData = new FormData(form)
+        //     console.log("formData: ",formData.get("name"))
+        //     for (const key in inputs) {
+        //         inputs[key] = formData.get[key]
+        //         console.log(inputs, "onFormSubmit")
+        //     }
+        // setTodotoset(new ToDo(inputs))
+        // console.log("TodoToSet: ", todotoset)
+    
+        
+    //     const todoidmap = props.project.todoList.map((t) => {return(t.id)})
+    //     console.warn(todoidmap)
+    //     console.warn(todotoset.id)
+    //     console.warn(props.project.todoList)
 
-            if (modal && modal instanceof HTMLDialogElement) { modal.close() }
-        }
-        }
-        console.log("project.todolist: ", project.todoList)
-    };
+    //     if (todotoset.id in todoidmap) {
+    //         console.warn("todo.id IS in project.todoList")
+    //         // setTodotoset(new ToDo(inputs))
+    //         props.projectsManager.updateToDo(new ToDo(inputs))
+    //         console.log("PMList + editd after onFormSubmit: ", props.projectsManager.list)
+    //         // setTodotoset(todotoset)
+    //     } else {
+    //         console.warn("todo.id IS NOT in project.todoList")
+    //         props.projectsManager.newToDo(new ToDo(inputs))
+    //         console.log("PMList + new after onFormSubmit: ", props.projectsManager.list)
+
+    //     }
+    //     // const modal = document.getElementById("todo-modal");
+    //     if (modal && modal instanceof HTMLDialogElement) {modal.close()}
+    //     // form.reset
+    // }
+        
+
+
+
+
+    //     if (todotoset) {
+    //         console.log("todotoset exists")
+    //         const index = project.todoList.findIndex((t) => t.id === todo.id);
+    //         console.log(index)
+    //         if (index > -1) {
+    //             console.log("index > -1")
+    //             project.todoList[index] = new ToDo(todotoset);
+    //             console.log("handleFormSubmit Project todoList [index]: ", project.todoList[index])
+    //             projectsManager.onTodoUpdated(todotoset)
+    //             if (modal && modal instanceof HTMLDialogElement) { modal.close() }
+    //         } else {
+    //             console.log("index !> -1")
+    //             const newToDo = new ToDo(formData);
+    //             project.todoList.push(newToDo);
+    //             projectsManager.onTodoCreated(newToDo)
+    //             console.warn("YOUR PM: ", projectsManager)
+
+    //             if (modal && modal instanceof HTMLDialogElement) { modal.close() }
+    //     }
+    //     }
+    //     console.log("project.todolist: ", project.todoList)
+    // };
 
     //---------------------------------------------------------------------------------
-    const onCancel = () => {
-        if (modal && modal instanceof HTMLDialogElement) { modal.close() }
+    const onCancel = (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!(modal && modal instanceof HTMLDialogElement)) {
+            console.warn("todo-modal-",props.todo.id,": doesn't exist")
+        } else { modal.close }
+        if (form && form instanceof HTMLFormElement) { form.reset }
+
     }
-    
 // -----------------------------------------------------------------------  on form submit
     // const onFormSubmit = (e: React.FormEvent) => {
     //     console.log("To Do Form Submit Fired")
@@ -180,9 +224,9 @@ export function TodoForm ({projectsManager, project, todo}: Props) {
 
 // ------------------------------------------------------------- from GPT?
     return (
-        <div className="todo-form" id="todo-form" key={`${todo?.id}`+"-form"}>
-            <form id="new-todo-form" onSubmit={ onFormSubmit }>
-                <h2>{todo ? "Edit Todo" : " New Todo"}</h2>
+        <div className="todo-form" id="todo-form" key={`${props.todo?.id}`+"-form"}>
+            <form id="new-todo-form" onSubmit={(e) => {onFormSubmit(e)}}>
+                <h2>{props.todo ? "Edit Todo" : " New Todo"}</h2>
                 <div className="input-list">
                     <div className="form-field-container">
                         {/* <input data-todo-info="id" name="id" type="hidden" value={ todo? todo.id : formData.id }/> */}
@@ -190,11 +234,27 @@ export function TodoForm ({projectsManager, project, todo}: Props) {
                         <input 
                             data-todo-info="id" 
                             name="id" 
-                            type="hidden"
-                            defaultValue={ todo.id }
-                            onChange={ handleInputChange }
+                            // type="hidden"
+                            defaultValue={ newTodo.id }
+                            onChange={ onInputChange }
                         />
                     </div>
+                    <div className="form-field-container">
+                        <label htmlFor="name"><span className="material-icons-round">apartment</span>Name</label>
+                        {/* <input data-todo-info="name" name="name" type="text" placeholder="Enter To-Do name" value={ todo? todo.name : formData.name }/> */}
+                        {/* <input data-todo-info="name" name="name" type="text" placeholder="Enter To-Do name" value={ todo? todo.name : formData.name } required onChange={handleInputChange}/> */}
+                        <input 
+                            data-todo-info="relatedProject" 
+                            name="relatedProject" 
+                            type="text" 
+                            placeholder="Enter To-Do name" 
+                            // requiredx
+                            // {...project.todoList("name")}
+                            defaultValue={ newTodo.relatedProject }
+                            onChange={ onInputChange }
+                        />
+                    </div>
+
                     <div className="form-field-container">
                         <label htmlFor="name"><span className="material-icons-round">apartment</span>Name</label>
                         {/* <input data-todo-info="name" name="name" type="text" placeholder="Enter To-Do name" value={ todo? todo.name : formData.name }/> */}
@@ -204,10 +264,10 @@ export function TodoForm ({projectsManager, project, todo}: Props) {
                             name="name" 
                             type="text" 
                             placeholder="Enter To-Do name" 
-                            // required
+                            // requiredx
                             // {...project.todoList("name")}
-                            defaultValue={ todo.name }
-                            onChange={ handleInputChange }
+                            defaultValue={ newTodo.name }
+                            onChange={ onInputChange }
                         />
                     </div>
                     <div className="form-field-container">
@@ -220,8 +280,8 @@ export function TodoForm ({projectsManager, project, todo}: Props) {
                             rows={3} 
                             placeholder="Give your description here" 
                             // required 
-                            defaultValue={ todo.description }
-                            onChange={ handleInputChange }
+                            defaultValue={ newTodo.description }
+                            onChange={ onInputChange }
                         />
                     </div>
                     <div className="form-field-container">
@@ -231,8 +291,8 @@ export function TodoForm ({projectsManager, project, todo}: Props) {
                         <select 
                             data-todo-info="status" 
                             name="status"
-                            defaultValue={ todo.status }
-                            onChange={ handleInputChange }
+                            defaultValue={ newTodo.status }
+                            onChange={ onInputChange }
                         >
                             <option>pending</option>
                             <option>on going</option>
@@ -254,14 +314,15 @@ export function TodoForm ({projectsManager, project, todo}: Props) {
                             data-todo-info="deadline" 
                             name="shortdeadline" 
                             type="date"
-                            defaultValue={ todo.shortdeadline }
-                            onChange={ handleInputChange }
+                            defaultValue={ newTodo.shortdeadline }
+                            onChange={ onInputChange }
                         />
                     </div>
                 </div>
                 <div className="submit-buttons">
-                    <button type="button" onClick = { onCancel } id="new-todo-form-cancel-btn">Cancel</button>
-                    <button type="submit" onClick = { onFormSubmit } style={{ backgroundColor: "green" }} id="new-todo-form-submit-btn">Accept</button>
+                    <button type="button" onClick = {(e) => { onCancel(e) }} id="new-todo-form-cancel-btn">Cancel</button>
+                    <button type="submit" style={{ backgroundColor: "green" }} id="new-todo-form-submit-btn">Accept</button>
+                    {/* <button type="submit" onClick = { onFormSubmit } style={{ backgroundColor: "green" }} id="new-todo-form-submit-btn">Accept</button> */}
                     <button id="new-todo-form-delete-btn" type="button" style={{ backgroundColor: "red" }}>Delete</button>
                 </div>
             </form>

@@ -20,34 +20,56 @@ export function ProjectTodos(props: Props) {
     if (!project) { return (<p>The project with ID: {routeParams.id} wasnn't found. </p>)}
 
     const [toDos, setToDos] = React.useState<ToDo[]>( project.todoList )
-    // const [todo, setTodo] = React.useState<ToDo>([...project.todoList ])
+    // const [todo, setTodo] = React.useState<ToDo>()
     props.projectsManager.onTodoCreated = () => {setToDos([...project.todoList])}
+    props.projectsManager.onTodoUpdated = () => {setToDos([...project.todoList])}
     props.projectsManager.onTodoDeleted = () => {setToDos([...project.todoList])}
 
-    const [newToDo, setNewTodo] = React.useState<IToDo>({
+    const [newIToDo, setNewTodo] = React.useState<IToDo>({
         id: "",
-        name: "",
-        description: "",
+        name: "New ToDo",
+        description: "new ToDo",
         status: "pending",
         deadline: new Date(),
         relatedProject: project.id,
-        todocardcolor: ""
+        // todocardcolor: ""
     })
 
+    const [showForm, setShowForm] = React.useState(false)
+
     const toDosCards =  // Creating an array iterator to get all the TodoCards from each Todo in the todolist.
-        project.todoList.map((todo) => {
+        toDos.map((todo) => {
             console.log("toDos: ",toDos)
             console.log("todo: ", todo)
             return (
-                <TodoCard projectsManager={props.projectsManager} project={project} todo={todo} />
+                <TodoCard projectsManager={props.projectsManager} project={project} todo={todo} key={todo.id}/>
             )
         })
 
+    // const todoToPass = new ToDo({
+    //     id: "",
+    //     name: "New ToDo",
+    //     description: "new ToDo",
+    //     status: "pending",
+    //     deadline: new Date(),
+    //     relatedProject: project.id
+    // })
+    // const todoToPass = new ToDo({
+    //     id: "",
+    //     name: "New ToDo",
+    //     description: "new ToDo",
+    //     status: "pending",
+    //     deadline: new Date(),
+    //     relatedProject: project.id
+    // })
+    const [todoInForm, setTodoInForm] = React.useState<ToDo>(new ToDo(newIToDo))
+
+
 // -----------------------------------------------------------------from <GPT>
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setNewTodo((prevToDo) => ({...prevToDo, [name]: value}));
-    };
+    // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    //     const { name, value } = e.target;
+    //     setNewTodo((prevToDo) => ({...prevToDo, [name]: value}));
+    // };
 // -----------------------------------------------------------------------------------from <GPT>
     // const toDosCards = Array.isArray(toDos) && toDos.length > 0 ? (
     //  : (
@@ -71,27 +93,39 @@ export function ProjectTodos(props: Props) {
     //         todoForm.addEventListener("submit", (e) => {
 
 // ------------------------------------------------------------------------ on Form Cancel
-    const onFormCancel = (e) => {
-        const modal = document.getElementById("new-todo-modal")
-        if (!(modal && modal instanceof HTMLDialogElement)) { return <p>New To-do form doesnt exists</p> }
-        e.preventDefault()
-        // modal.reset()
-        modal.close()
-}
-// ------------------------------------------------------------------------ on Form Cancel
-    const onFormDelete = (e) => {
-        const modal = document.getElementById("new-todo-modal")
-        if (!(modal && modal instanceof HTMLDialogElement)) { return <p>New To-do form doesnt exists</p> }
-        e.preventDefault()
-        modal.close()
-    }
+//     const onFormCancel = (e) => {
+//         const modal = document.getElementById("new-todo-modal")
+//         if (!(modal && modal instanceof HTMLDialogElement)) { return <p>New To-do form doesnt exists</p> }
+//         e.preventDefault()
+//         // modal.reset()
+//         modal.close()
+// }
+// // ------------------------------------------------------------------------ on Form Cancel
+//     const onFormDelete = (e) => {
+//         const modal = document.getElementById("new-todo-modal")
+//         if (!(modal && modal instanceof HTMLDialogElement)) { return <p>New To-do form doesnt exists</p> }
+//         e.preventDefault()
+//         modal.close()
+//     }
     // ------------------------------------------------------------------------- on New Todo Click
     const onNewToDoClick = () => {
-        const modal = document.getElementById("todo-modal")
+        console.log("I listen onNewToDoClick")
+        setTodoInForm(new ToDo(newIToDo))
+        console.log("todo to pass: ", todoInForm)
+        // setTodoInForm(todoToPass)
+        props.projectsManager.updateToDo(todoInForm)
+        const modal = document.getElementById("todo-modal-"+todoInForm.id)
         if (!(modal && modal instanceof HTMLDialogElement)) {return}
+        console.warn(project.id, project.todoList)
+
+        // props.projectsManager.newToDo(todoToPass)
         // const todoToPass = setNewTodo(newToDo)
-        const todoToPass = new ToDo(newToDo)
-        setNewTodo(newToDo)
+
+        // props.projectsManager.newToDo(todoToPass)
+        // setNewTodo(todoToPass)
+        // setTodo(todoToPass)
+
+
         // const todoToPass = setNewTodo(({
         //     id: "",
         //     name: "",
@@ -102,15 +136,24 @@ export function ProjectTodos(props: Props) {
         //     todocardcolor: ""
         // }))
         modal.showModal()
-        return (
-            <TodoForm projectsManager={props.projectsManager} project={project} todo={todoToPass}/>
-        )
+        // setShowForm(false)
+
+
+        // return (
+        //     <TodoForm projectsManager={props.projectsManager} project={project} todo={todoToPass}/>
+        // )
     }
+
+    function setTodoForm(todo) {
+        console.log("setTodoForm function called from TodoForm")
+    }
+    // if (!todo) {return (<p>Todo doesn't exist</p>)}
     // ------------------------------------------------------------------------- return UI
     return (
         <div className="dashboard-card" id="project-todos">
-            <dialog id="todo-modal">
-                <TodoForm projectsManager={props.projectsManager} project={project} todo={new ToDo(newToDo)}/>
+            <dialog id={"todo-modal-"+todoInForm.id}>
+                <p className="todo-card" style={{color: "white"}}>{"todo-modal-"+todoInForm.id}</p>
+                <TodoForm projectsManager={props.projectsManager} project={project} todo={todoInForm} key={"todo-form"+todoInForm.id}/>
             </dialog>
             <div className="dashboard-card-header">
                 <h4>To-do</h4>

@@ -457,6 +457,11 @@ form .submit-buttons {
     width: 100%;
 }
 
+.todo-card:hover {
+outline: 2px solid var(--primary)
+}
+
+
 .todo-description {
     width: 70%;
     height:30px;

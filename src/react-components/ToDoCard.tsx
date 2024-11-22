@@ -3,6 +3,7 @@ import { Project } from "../classes/Project"
 import { ToDo, IToDo, ToDoStatus } from "../classes/ToDo"
 import { TodoForm } from "./TodoForm"
 import { ProjectsManager } from "../classes/ProjectsManager"
+import { ProjectTodos } from "./ProjectTodos"
 
 interface Props {
     projectsManager: ProjectsManager;
@@ -23,20 +24,42 @@ export function TodoCard(props: Props) {
     // })
 
     const [todotoset, SetTodo] = React.useState<ToDo>(props.todo)
+    React.useEffect(()=>{SetTodo(props.todo)})
+    // React.useEffect(() => {SetTodo(props.todo)})
     // todo.onTodoCreated = () => { SetTodo(todo) }
     // todo.onTodoDeleted = () => { SetTodo(todo) }
 
+    // const todoForm = {
+    //         <dialog id="todo-modal">
+    //             <TodoForm projectsManager={props.projectsManager} project={props.project} todo={ todotoset } key={"todo-form"+todotoset.id}/>
+    //         </dialog>
+
+    //         }    
+
+
     // -------------------------------------------------------------- Todo UI click
     const onClickUI = () => {
-        console.warn(todotoset)
-        const modal = document.getElementById("todo-modal")
+        console.log("I listen onClickUI")
+        // console.warn(todotoset)
+        const modal = document.getElementById("todo-modal-"+todotoset.id)
         if (!(modal && modal instanceof HTMLDialogElement)) {return}
         modal.showModal()
+        console.warn("props.todo: ",props.todo, "todotoset: ",todotoset)
+
+        // const todoForm = (() => {
+        //     return (
+        //         <dialog id={"todo-modal-"+todotoset.id}>
+        //             <TodoForm projectsManager={props.projectsManager} project={props.project} todo={ todotoset } key={"todo-form"+todotoset.id}/>
+        //         </dialog>
+    
+        //     )
+        // })
+    
         // if (todo) {
         //     console.log("todo: ",todo, "props.todo: ",props.todo)
-        return (
-            <TodoForm projectsManager={props.projectsManager} project={props.project} todo={todotoset}/>
-        )
+        // return (
+        //     <TodoForm projectsManager={props.projectsManager} project={props.project} todo={todotoset}/>
+        // )
         // } else {
         // return (
         //     <TodoForm projectsManager={props.projectsManager} project={props.project}/>
@@ -61,7 +84,13 @@ export function TodoCard(props: Props) {
     // ---------------------------------------------------------------- UI
 
     return (
-        <div className="todo-card" onClick={ onClickUI } id={todotoset.id} key={todotoset.id}>
+        <div className="todo-card" onClick={ onClickUI } id={todotoset.id} key={todotoset.id+"-card"}>
+            {/* {todoForm} */}
+            <dialog id={"todo-modal-"+todotoset.id}>
+                <p className="todo-card" style={{color: "white"}}>{"todo-modal-"+todotoset.id}</p>
+                {/* {todoForm} */}
+                <TodoForm projectsManager={props.projectsManager} project={props.project} todo={ todotoset } key={"todo-form"+todotoset.id}/>
+            </dialog>
             <div className="todo-card" key={"todo-card-" + todotoset.id} style={{ backgroundColor: `${ todotoset.todocardcolor }`}}>
             {/* <div onClick={ onClickUI } className="todo-card" key={"todo-card-" + props.todo.id} style={{ backgroundColor: `${ props.todo.todocardcolor }`}}> */}
                 <button hidden id={ todotoset.id + "-btn" }><span className="material-icons-round">edit</span></button>
