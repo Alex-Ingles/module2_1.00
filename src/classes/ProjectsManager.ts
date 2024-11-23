@@ -199,19 +199,78 @@ newToDo(data: ToDo) {
     // if (deadline) { deadline.textContent = finishDateAsString}
 }
 
+// Update ToDo -----------------------------------------------------------------------------
+updateToDo(data: ToDo) {
+    const newList: Project[] = []
+    const newToDoList: ToDo[] = [] 
+    for (const oldproject of this.list) {
+        const todosInOldproject = oldproject.todoList.map((item) => { return(item.id)})
+        let pcount = 0
+        let tdcount = 0
+
+        if (oldproject.id !== data.relatedProject) { // No es el proyecto
+            newList.push(oldproject)
+            pcount = pcount +1
+            console.log("pcount: ",pcount," tdcount: ",tdcount)
+        } else if (!(todosInOldproject.includes(data.id))) {
+                console.log("--------------------------------")
+                console.log("data.id: ",data.id)
+                console.log("todosInOldproject: ",todosInOldproject)
+                console.log("newToDoList: ",newToDoList)
+
+                console.log(data.id," is not in todosInOldProject")
+                oldproject.todoList.push(data)
+                tdcount = tdcount +1
+                newList.push(oldproject)
+                pcount = pcount +1
+                console.log("pcount: ",pcount," tdcount: ",tdcount)
+                this.onTodoCreated(data)
+                this.onProjectUpdated(oldproject)
+        } else {
+            console.log(data.id,"is in todosInOldProject", todosInOldproject)
+            for (let oldtodo of oldproject.todoList) {
+                if (oldtodo.id === data.id) {
+                    // for (let key in oldtodo) {
+                    //     oldtodo[key] = data[key]
+                    // }
+                    newToDoList.push(data)
+                    tdcount = tdcount +1
+                    console.log("pcount: ",pcount," tdcount: ",tdcount)
+                    this.onTodoUpdated(oldtodo)
+                } else {
+                    newToDoList.push(oldtodo)
+                    tdcount = tdcount +1
+                    console.log("pcount: ",pcount," tdcount: ",tdcount)
+                } 
+            }
+            console.log("--------------------------------")
+            console.log("oldproject.todoList: ",oldproject.todoList)
+            console.log("newToDoList: ",newToDoList)
+            oldproject.todoList = newToDoList
+            console.log("oldproject.todoList: ",oldproject.todoList)
+            this.onProjectUpdated(oldproject)
+            newList.push(oldproject)
+            pcount = pcount +1
+            console.log("pcount: ",pcount," tdcount: ",tdcount)
+        }
+    }
+    this.list = newList
+    console.warn("PM - this.list after updating: ", this.list)
+}
+
 
 
 // Update ToDo -----------------------------------------------------------------------------
-updateToDo(data: ToDo) {
-    console.warn("PM - updateToDo invoked")
-    console.warn("data: ",data)
+updateToDo2(data: ToDo) { // backup for update ToDo
+    // console.warn("PM - updateToDo invoked")
+    // console.warn("data: ",data)
 
     let newList: Project[] = []
     let newToDoList: ToDo[] = [] 
     // console.log(data)
     // console.log(this.list)
-    console.log("empty newList: ",newList)
-    console.log("newToDoList: ", newToDoList)
+    // console.log("empty newList: ",newList)
+    // console.log("newToDoList: ", newToDoList)
     for (let oldproject of this.list) {
         console.log("oldproject id: ",oldproject.id)
         if (oldproject.id !== data.relatedProject) {

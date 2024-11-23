@@ -91,9 +91,12 @@ export function TodoCard(props: Props) {
                 {/* {todoForm} */}
                 <TodoForm projectsManager={props.projectsManager} project={props.project} todo={ todotoset } key={"todo-form"+todotoset.id}/>
             </dialog>
+            <p style={{fontSize: "8px"}}>{todotoset.relatedProject}</p>
+            <p style={{fontSize: "8px"}}>{todotoset.id}</p>
+
             <div className="todo-card" key={"todo-card-" + todotoset.id} style={{ backgroundColor: `${ todotoset.todocardcolor }`}}>
             {/* <div onClick={ onClickUI } className="todo-card" key={"todo-card-" + props.todo.id} style={{ backgroundColor: `${ props.todo.todocardcolor }`}}> */}
-                <button hidden id={ todotoset.id + "-btn" }><span className="material-icons-round">edit</span></button>
+                <button  id={ todotoset.id + "-btn" }><span className="material-icons-round">edit</span></button>
                 <span className="material-icons-round" 
                 style={{ 
                     width: "30px", 
