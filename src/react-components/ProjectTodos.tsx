@@ -109,9 +109,10 @@ export function ProjectTodos(props: Props) {
 //         modal.close()
 //     }
     // ------------------------------------------------------------------------- on New Todo Click
-    const onNewToDoClick = () => {
+    const onNewToDoClick = (e: React.FormEvent) => {
+        e.preventDefault()
         console.log("I listen onNewToDoClick")
-        setTodoInForm(new ToDo(newIToDo))
+        // setTodoInForm(new ToDo(newIToDo))
         console.log("todo to pass: ", todoInForm)
         // setTodoInForm(todoToPass)
         props.projectsManager.updateToDo(todoInForm)
@@ -161,7 +162,7 @@ export function ProjectTodos(props: Props) {
                 <div className="dashboard-card-buttons">
                     <span className="material-icons-round">search</span>
                     <input className="search-box" type="text" placeholder="Search by name"/>
-                    <button onClick={ onNewToDoClick } id="new-todo-btn">
+                    <button onClick={(e) => {onNewToDoClick(e)}} id="new-todo-btn">
                         <span className="material-icons-round">add_circle_outline</span>
                     </button>
                 </div>
