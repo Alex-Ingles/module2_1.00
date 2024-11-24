@@ -47,60 +47,9 @@ export function ProjectTodos(props: Props) {
             )
         })
 
-    // const todoToPass = new ToDo({
-    //     id: "",
-    //     name: "New ToDo",
-    //     description: "new ToDo",
-    //     status: "pending",
-    //     deadline: new Date(),
-    //     relatedProject: project.id
-    // })
-    // const todoToPass = new ToDo({
-    //     id: "",
-    //     name: "New ToDo",
-    //     description: "new ToDo",
-    //     status: "pending",
-    //     deadline: new Date(),
-    //     relatedProject: project.id
-    // })
     const [todoInForm, setTodoInForm] = React.useState<ToDo>(new ToDo(newIToDo))
 
 
-// -----------------------------------------------------------------from <GPT>
-    // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    //     const { name, value } = e.target;
-    //     setNewTodo((prevToDo) => ({...prevToDo, [name]: value}));
-    // };
-// -----------------------------------------------------------------------------------from <GPT>
-    // const toDosCards = Array.isArray(toDos) && toDos.length > 0 ? (
-    //  : (
-    //     <p>No to-dos available</p>
-    // )
-
-    // ------------------------------------------------------------------
-
-    // const onFormSubmit = () => {
-
-
-    // const todoForm = document.getElementById("new-todo-form")
-    // const projectDetails = document.getElementById("project-details")
-    // if (projectDetails) {
-    // const projectIdElement = projectDetails.querySelector("[data-project-info='id']")
-    //     if (projectIdElement) {
-    //     const projectId = projectIdElement.innerHTML as string
-    //     }
-    //     if (todoForm && todoForm instanceof HTMLFormElement) {
-
-    //         todoForm.addEventListener("submit", (e) => {
-
-// ------------------------------------------------------------------------ on Form Cancel
-//     const onFormCancel = (e) => {
-//         const modal = document.getElementById("new-todo-modal")
-//         if (!(modal && modal instanceof HTMLDialogElement)) { return <p>New To-do form doesnt exists</p> }
-//         e.preventDefault()
-//         // modal.reset()
-//         modal.close()
-// }
 // // ------------------------------------------------------------------------ on Form Cancel
 //     const onFormDelete = (e) => {
 //         const modal = document.getElementById("new-todo-modal")

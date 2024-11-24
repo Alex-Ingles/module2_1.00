@@ -2,8 +2,6 @@
 import { v4 as uuidv4 } from "uuid"
 import { ToDo, IToDo } from "./ToDo"
 
-import {ProjectTodos} from "../react-components/ProjectTodos"
-
 export type ProjectStatus = "pending" | "active" | "finished"
 export type UserRole = "architect" | "engineer" | "developer"
 
@@ -31,15 +29,12 @@ export class Project implements IProject {
     cost: number
     progress: number = 0
     todoList: ToDo[] = []
-    // onToDoCreated = (todo: ToDo) => {}
-    // onToDoDeleted = (todo: ToDo) => {}
 
     // Class internals
     initials: string
     initialsColor: string
     id: string
     shortFinishDate: string
-
 
     constructor(data: IProject) {
         for (const key in data) {
@@ -51,7 +46,7 @@ export class Project implements IProject {
         this.findInitials()
         this.setShortFinishDate()
     }
-// --------------------------------------------------------------------- Find Initials
+
     findInitials() {
         console.warn("P - findInitials invoked")
         if (!this.name) { return }
@@ -70,7 +65,6 @@ export class Project implements IProject {
         const colors = Array.of("powderblue", "lightsteelblue", "lightblue", "darkseagreen", "palegoldenrod", "lightslategrey", "cadetblue", "rosybrown", "silver", "tan", "indianred")
         this.initialsColor = colors[random]
     }
-
 
     setShortFinishDate() {
         this.shortFinishDate = new Date (this.finishDate).toLocaleDateString("es-ES")

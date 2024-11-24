@@ -143,7 +143,6 @@ export function ProjectsPage(props: Props) {
                     alert(error)
                 }
             }
-    
         })
         input.addEventListener('change', () => {
             const filesList = input.files
