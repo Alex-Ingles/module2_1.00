@@ -13,7 +13,6 @@ export function ProjectCard(props: Props) {
     // projectsManager.onToDoCreated = () => {setToDos([...props.project.todoList])}
     // props.project.onToDoDeleted = () => {setToDos([...props.project.todoList])}
 
-
     return (
         <div className="project-card">
             <div className="card">

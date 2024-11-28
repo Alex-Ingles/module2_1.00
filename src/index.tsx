@@ -107,7 +107,7 @@ if (editProjectForm && editProjectForm instanceof HTMLFormElement) {
                 console.log(projectsManager.list)
             } else {
                 try {
-                    const project = projectsManager.newProject(projectData)
+                    const project = projectsManager.newProject2(projectData)
                     projectsManager.deleteDefaultProjectUI()
                     editProjectForm.reset()
                     // toggleModal("edit-project-modal", "close")

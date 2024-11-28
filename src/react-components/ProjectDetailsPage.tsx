@@ -4,6 +4,7 @@ import * as Router from "react-router-dom"
 import { ProjectsManager } from "../classes/ProjectsManager"
 import { ProjectTodos } from "./ProjectTodos"
 import { Project } from "../classes/Project"
+import { ProjectForm } from "./ProjectForm"
 
 interface Props {
     projectsManager: ProjectsManager
@@ -11,8 +12,9 @@ interface Props {
 
 export function ProjectDetailsPage(props: Props) {
 
-    const [projectDetails, setProjectDetails] = React.useState<Project>()
+    // const [projectDetails, setProjectDetails] = React.useState<Project>()
     // props.projectsManager.onProjectCreated = () => {setProjectDetails([...props.projectsManager.list])}
+
     // props.projectsManager.onProjectDeleted = () => {setProjectDetails([...props.projectsManager.list])}
 
     const routeParams = Router.useParams<{id: string}>()
@@ -21,14 +23,29 @@ export function ProjectDetailsPage(props: Props) {
     if (!routeParams.id) { return (<p>Project ID is needed to see this page</p>)} 
     let project = props.projectsManager.getProject(routeParams.id)
     if (!project) { return (<p>The project with ID: {routeParams.id} wasn't found. </p>)}
+
+    const [projectDetails, setProjectDetails] = React.useState<Project>(project)
+    props.projectsManager.onProjectUpdated = (projectUpdated) => {setProjectDetails(projectUpdated)}
+
     
+    const onEditProjectClick = ((e) => {
+        
+        const modal = document.getElementById("edit-project-modal")
+        if (modal && modal instanceof HTMLDialogElement) { modal.show }
+    })
+
     //-------------------------------------------
     // const idFromTodos = (todoId) => {
     // projectId = todoId
     // }
     //-------------------------------------------
+    if (!projectDetails) { return <p>Project Details doesn't found</p> }
+
     return (
         <div className="page" id="project-details">
+            <dialog id="edit-project-modal">
+                <ProjectForm projectsManager= { props.projectsManager } project={ project } key={"project-form"+projectDetails.id}/>
+            </dialog>
             <header className="page-header" id="project-details-page-header" style={{ 
                 height: "9%" 
                 }}>
@@ -40,7 +57,9 @@ export function ProjectDetailsPage(props: Props) {
                     display: "none" 
                     }}>
                     <button hidden={true}>
-                        <span className="material-icons-round">file_download</span>Download
+                        <span className="material-icons-round">
+                            file_download
+                        </span>Download
                     </button>
                     <button hidden={true} id="new-project-btn">
                         <span className="material-icons-round">add_circle_outline</span>New
@@ -91,10 +110,19 @@ export function ProjectDetailsPage(props: Props) {
                                 { project.id }
                             </p>
                             <div>
-                                <button id="edit-project-btn" type="button" className="btn-secondary" style={{
-                                    height: 30 
-                                }}>
-                                    <p style={{ width: 40, fontSize: "small" }}>Edit</p>
+                                <button 
+                                    id="edit-project-btn" 
+                                    type="button" 
+                                    className="btn-secondary" 
+                                    style={{
+                                        height: 30 
+                                    }}
+                                    onClick={(e) => onEditProjectClick(e)}
+                                >
+                                    <p style={{ width: 40, fontSize: "small" }}
+                                    >
+                                        Edit
+                                    </p>
                                 </button>
                                 <button id="delete-project-btn" className="btn-secondary" style={{
                                     height: 30 
@@ -160,9 +188,9 @@ export function ProjectDetailsPage(props: Props) {
                                 <div id="project-progress-bar" className="progress-bar-done" style={{
                                     backgroundColor: "rgb(158, 195, 158)",
                                     borderRadius: "10px 0 0 10px",
-                                    width: `"${project.progress.valueOf()}%"`,
+                                    width: `${project.progress * 100}%"`,
                                 }}>
-                                    <h5 data-project-info="progress">{ project.progress .valueOf() }%</h5>
+                                    <h5 data-project-info="progress">{ project.progress }%</h5>
                                 </div>
                             </div>
                         </div>
@@ -205,4 +233,5 @@ export function ProjectDetailsPage(props: Props) {
         </div>
     )
 }
+
 

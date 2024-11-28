@@ -3,6 +3,7 @@ import * as Router from "react-router-dom"
 import { IProject, Project, ProjectStatus, UserRole} from "../classes/Project"
 import { ProjectsManager } from "../classes/ProjectsManager"
 import { ProjectCard } from "./ProjectCard"
+import { ProjectForm } from "./ProjectForm"
 import { Route } from "react-router-dom"
 
 interface Props {
@@ -11,6 +12,10 @@ interface Props {
 
 export function ProjectsPage(props: Props) {
     // const [projectsManager] = React.useState(new ProjectsManager())
+// In the class @Juan is creating the line above and after creating the projects and setProjects state below. Why?
+// In my case is wotking without doing this...?!?
+// Ok, lesson after, projectsManager is not initializes here, but passed as a prop to the function
+
     const [projects, setProjects] = React.useState<Project[]>(props.projectsManager.list)
     props.projectsManager.onProjectCreated = () => {
         setProjects([...props.projectsManager.list])
@@ -30,8 +35,26 @@ export function ProjectsPage(props: Props) {
         console.log("Projects state updated", projects)
     })
 
-    const onNewProjectClick = () => {
-        const modal = document.getElementById("new-project-modal")
+    const [newIProject, setNewIProject] = React.useState<IProject>({
+        name: "name",
+        description: "description",
+        status: "active",
+        userRole: "developer",
+        finishDate: new Date,
+        cost: 0,
+        initials: "",
+        progress: 0,
+        id: "",
+        todoList: [],
+    })
+
+    const [projectInForm, setProjectInForm] = React.useState<Project>(new Project(newIProject))
+
+
+    const onNewProjectClick = (e) => {
+        const projectToSet = props.projectsManager.getProject(e.target.id)
+        setProjectInForm(projectToSet)
+        const modal = document.getElementById("new-new-project-modal")
         if (!(modal && modal instanceof HTMLDialogElement)) {return}
         modal.showModal()
     }
@@ -100,7 +123,7 @@ export function ProjectsPage(props: Props) {
                 props.projectsManager.totalCost()
             } else {
                 try {
-                    props.projectsManager.newProject(projectData)
+                    props.projectsManager.newProject2(projectData)
                     props.projectsManager.deleteDefaultProjectUI()
                     projectForm.reset()
                     const modal = document.getElementById("new-project-modal")
@@ -136,7 +159,7 @@ export function ProjectsPage(props: Props) {
             for (const project of projects) {
                 const count = 0
                 try {
-                    props.projectsManager.newProject(project)
+                    props.projectsManager.newProject2(project)
                     console.log(count+1)
                 }
                 catch (error) {
@@ -166,6 +189,9 @@ export function ProjectsPage(props: Props) {
 
     return (
         <div className="page" id="projects-page" style={{ display: "block" }}>
+            <dialog id="new-new-project-modal">
+                <ProjectForm projectsManager= { props.projectsManager } project= { projectInForm } key={"todo-form"+projectInForm.id}/> 
+            </dialog>
             <dialog id="new-project-modal"> {/* New Project Modal ---------------------------------------  */}
                 <form onSubmit={(e) => {onFormSubmit(e)}} id="new-project-form">
                 <h2>New Project</h2>

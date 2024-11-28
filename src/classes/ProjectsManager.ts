@@ -12,7 +12,7 @@ export class ProjectsManager {
 
 // -----------------------------------------------------------------------------
 constructor() {
-    const project = this.newProject({
+    const project = this.newProject2({
         name: "default project",
         description: "This is just a default app project",
         status: "pending",
@@ -37,8 +37,13 @@ deleteDefaultProjectUI() {
         // return(document)
     }
 }
+
+newProject(data: Project) {
+    console.log("PM New Project launched")
+}
+
 // ---------------------------------------------------------------- New Project - to index / to ProjectsPage
-newProject(data: IProject) {
+newProject2(data: IProject) {
     console.warn("PM - newProject is invoked")
     this.deleteDefaultProjectUI()
     const projectNames = this.list.map((project) => {
