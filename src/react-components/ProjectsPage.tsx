@@ -5,6 +5,7 @@ import { ProjectsManager } from "../classes/ProjectsManager"
 import { ProjectCard } from "./ProjectCard"
 import { ProjectForm } from "./ProjectForm"
 import { Route } from "react-router-dom"
+import { SearchBox } from "./SearchBox"
 
 interface Props {
     projectsManager: ProjectsManager
@@ -185,6 +186,10 @@ export function ProjectsPage(props: Props) {
             a.download = fileName
             a.click()
             URL.revokeObjectURL(url)
+    }
+
+    const onProjectSearch = (value: string) => {
+        setProjects(props.projectsManager.filterProjects(value))
     }
 
     return (
@@ -408,31 +413,37 @@ export function ProjectsPage(props: Props) {
                 style={{ height: "9%" }}
             >
                 <h2>Projects</h2>
+                <SearchBox onChange={(value) => onProjectSearch(value)}/>
                 <div className="page-header-buttons">
-                <button id="export-projects-btn">
-                    <span onClick= { onExportClick } className="material-icons-round action-icon">file_download</span>
-                </button>
-                <button id="import-projects-btn">
-                    <span onClick= { onImportClick } className="material-icons-round action-icon">file_upload</span>
-                </button>
-                <button onClick= { onNewProjectClick } id="new-project-btn">
-                    <span className="material-icons-round">add_circle_outline</span>New
-                    Project
-                </button>
+                    <button id="export-projects-btn">
+                        <span onClick= { onExportClick } className="material-icons-round action-icon">file_download</span>
+                    </button>
+                    <button id="import-projects-btn">
+                        <span onClick= { onImportClick } className="material-icons-round action-icon">file_upload</span>
+                    </button>
+                    <button onClick= { onNewProjectClick } id="new-project-btn">
+                        <span className="material-icons-round">add_circle_outline</span>New
+                        Project
+                    </button>
                 </div>
             </header>
             {/* project list -------------------------------------------------------*/}
-            <div
-                id="projects-list"
-                style={{
-                padding: "15px 20px",
-                alignItems: "center",
-                justifyItems: "center",
-                overflowY: "auto",
-                maxHeight: "95vh"
-                }}
-            >{ projectCards }
-            </div>
+            {
+                projects.length > 0? 
+                    <div
+                        id="projects-list"
+                        style={{
+                        padding: "15px 20px",
+                        alignItems: "center",
+                        justifyItems: "center",
+                        overflowY: "auto",
+                        maxHeight: "95vh"
+                        }}
+                    >{ projectCards }
+                    </div>
+                :
+                    <p>No projects found</p>
+            }
         </div>
         )
 }

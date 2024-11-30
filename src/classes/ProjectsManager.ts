@@ -26,6 +26,14 @@ constructor() {
     })
     console.log(project)
 }
+
+filterProjects(value: string) {
+    const filteredProjects = this.list.filter((project) => {
+        return project.name.includes(value)
+    })
+    return filteredProjects
+}
+
 // -----------------------------------------------------------------------------
 deleteDefaultProjectUI() {
     console.warn("PM - deleteDefaultProjectUI invoked")

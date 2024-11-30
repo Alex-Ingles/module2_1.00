@@ -5,6 +5,7 @@ import { ProjectsManager } from "../classes/ProjectsManager"
 import { ProjectTodos } from "./ProjectTodos"
 import { Project } from "../classes/Project"
 import { ProjectForm } from "./ProjectForm"
+import { ThreeViewer } from "./ThreeViewer"
 
 interface Props {
     projectsManager: ProjectsManager
@@ -190,7 +191,7 @@ export function ProjectDetailsPage(props: Props) {
                                     borderRadius: "10px 0 0 10px",
                                     width: `${project.progress * 100}%"`,
                                 }}>
-                                    <h5 data-project-info="progress">{ project.progress }%</h5>
+                                    <h5 data-project-info="progress">{ project.progress .valueOf() }%</h5>
                                 </div>
                             </div>
                         </div>
@@ -204,33 +205,26 @@ export function ProjectDetailsPage(props: Props) {
                     </div>
                 </div>
                 <div
-                id="viewer-container-section"
-                className="dashboard-card"
-                // display="flex"
-                style={{ minWidth: 0, display: "flex" }}
-                >
-                <div
-                    id="viewer-container-header"
-                    className="dashboard-card-header"
-                    style={{
-                    height: "9%"
-                    }}
-                    // height="9%"
-                >
-                    Title
-                </div>
-                <div id="viewer-container" style={{
-                    minWidth: 0,
-                    flexDirection: "column",
-                    height: "100%",
-                    width: "100%",
-                    display: "flex"
-                 }}
+                    id="viewer-container-section"
+                    className="dashboard-card"
                     // display="flex"
-                />
+                    style={{ minWidth: 0, display: "flex" }}
+                    >
+                    <div
+                        id="viewer-container-header"
+                        className="dashboard-card-header"
+                        style={{
+                        height: "9%"
+                        }}
+                        // height="9%"
+                    >
+                        Title
+                    </div>
+                    <ThreeViewer />
                 </div>
             </div>
         </div>
+
     )
 }
 
