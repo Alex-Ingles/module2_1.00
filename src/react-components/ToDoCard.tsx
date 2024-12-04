@@ -28,7 +28,7 @@ export function TodoCard(props: Props) {
     return (
         <div className="todo-card" onClick={ onClickUI } id={todotoset.id} key={todotoset.id+"-card"}>
             <dialog id={"todo-modal-"+todotoset.id}>
-                <p className="todo-card" style={{color: "white"}}>{"todo-modal-"+todotoset.id}</p>
+                {/* <p className="todo-card" style={{color: "white"}}>{"todo-modal-"+todotoset.id}</p> */}
                 <TodoForm projectsManager={props.projectsManager} project={props.project} todo={ todotoset } key={"todo-form"+todotoset.id}/>
             </dialog>
             <p style={{fontSize: "8px"}}>{todotoset.relatedProject}</p>

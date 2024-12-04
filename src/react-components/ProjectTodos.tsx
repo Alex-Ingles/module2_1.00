@@ -103,7 +103,7 @@ export function ProjectTodos(props: Props) {
     return (
         <div className="dashboard-card" id="project-todos">
             <dialog id={"todo-modal-"+todoInForm.id}>
-                <p className="todo-card" style={{color: "white"}}>{"todo-modal-"+todoInForm.id}</p>
+                {/* <p className="todo-card" style={{color: "white"}}>{"todo-modal-"+todoInForm.id}</p> */}
                 <TodoForm projectsManager={props.projectsManager} project={project} todo={todoInForm} key={"todo-form"+todoInForm.id}/>
             </dialog>
             <div className="dashboard-card-header">
