@@ -12,19 +12,6 @@ export class ProjectsManager {
 
 // -----------------------------------------------------------------------------
 constructor() {
-    const project = this.newProject2({
-        name: "default project",
-        description: "This is just a default app project",
-        status: "pending",
-        userRole: "architect",
-        finishDate: new Date(),
-        cost: 10,
-        initials: "",
-        progress: 0,
-        id: "default id",
-        todoList: [],
-    })
-    console.log(project)
 }
 
 filterProjects(value: string) {
@@ -51,7 +38,7 @@ newProject(data: Project) {
 }
 
 // ---------------------------------------------------------------- New Project - to index / to ProjectsPage
-newProject2(data: IProject) {
+newProject2(data: IProject, id?: string) {
     console.warn("PM - newProject is invoked")
     this.deleteDefaultProjectUI()
     const projectNames = this.list.map((project) => {
@@ -72,7 +59,7 @@ newProject2(data: IProject) {
             }
         }
         data.todoList = newTodoList
-        const project = new Project(data)
+        const project = new Project(data, id)
         this.list.push(project)
         this.onProjectCreated(project)
         return project
