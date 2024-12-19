@@ -40,7 +40,6 @@ export function ProjectsPage(props: Props) {
             } catch (error) {
                 props.projectsManager.updateProject(project)
             }
-
         }
     }
     
@@ -61,7 +60,7 @@ export function ProjectsPage(props: Props) {
     })
 
     const [newIProject, setNewIProject] = React.useState<IProject>({
-        name: "name",
+        name: "name+6",
         description: "description",
         status: "active",
         userRole: "developer",
@@ -73,12 +72,15 @@ export function ProjectsPage(props: Props) {
         todoList: [],
     })
 
-    const [projectInForm, setProjectInForm] = React.useState<Project>(new Project(newIProject))
+    const projectInForm = new Project(newIProject)
+    // const [projectInForm, setProjectInForm] = React.useState<Project>(new Project(newIProject))
+    console.log("ProjectsPage projectInForm: ", projectInForm)
 
 
     const onNewProjectClick = (e) => {
-        const projectToSet = props.projectsManager.getProject(e.target.id)
-        setProjectInForm(projectToSet)
+        // const projectToSet = props.projectsManager.getProject(e.target.id)
+        // setProjectInForm(projectToSet)
+        props.projectsManager.newProject2(projectInForm)
         const modal = document.getElementById("new-new-project-modal")
         if (!(modal && modal instanceof HTMLDialogElement)) {return}
         modal.showModal()
@@ -91,7 +93,7 @@ export function ProjectsPage(props: Props) {
         // if(handler == "new-project-form-submit-btn") {
         const projectForm = document.getElementById("new-project-form")
         if (!(projectForm && projectForm instanceof HTMLFormElement)) {return} // To avoid complainning
-            e.preventDefault()
+            e.preventDefault() // What is the default behaviour we want to avoid?
             const formData = new FormData(projectForm)
             // console.warn(formData)
             const projectData: IProject = {
@@ -147,7 +149,21 @@ export function ProjectsPage(props: Props) {
 
                 props.projectsManager.totalCost()
             } else {
+                // if (isNaN(projectData.cost)) {
+                //     projectData.cost = 20 as number
+                // }
+                // if (isNaN(projectData.progress)) {
+                //     projectData.progress = 20 as number
+                // }
+
                 try {
+                    const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
+                    if (!projectData.name || !projectData.id || isNaN(projectData.cost) || isNaN(projectData.progress)) {
+                        console.log(projectData.cost, projectData.progress)
+                        alert("Formulario incompleto o datos inválidos.");
+                        return;
+                    }
+                    Firestore.addDoc(projectsCollection, projectData)
                     props.projectsManager.newProject2(projectData)
                     props.projectsManager.deleteDefaultProjectUI()
                     projectForm.reset()
@@ -219,7 +235,7 @@ export function ProjectsPage(props: Props) {
     return (
         <div className="page" id="projects-page" style={{ display: "block" }}>
             <dialog id="new-new-project-modal">
-                <ProjectForm projectsManager= { props.projectsManager } project= { projectInForm } key={"todo-form"+projectInForm.id}/> 
+                <ProjectForm projectsManager= { props.projectsManager } project= { projectInForm } key={"projet-form"+projectInForm.id}/> 
             </dialog>
             <dialog id="new-project-modal"> {/* New Project Modal ---------------------------------------  */}
                 <form onSubmit={(e) => {onFormSubmit(e)}} id="new-project-form">

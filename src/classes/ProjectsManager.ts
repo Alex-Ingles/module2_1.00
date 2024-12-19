@@ -84,6 +84,7 @@ idInUse(id: string) {
 }
 //  ----------------------------------------------------------- Update Project - to index / to ProjectsPage
 updateProject(data: IProject) {
+    console.log("PM updateProject upcoming data: ", data)
     console.warn("PM - updateProject invoked")
     if (data.name.length < 6){
         throw new Error(`Project name "${data.name}" must contain at least 6 characters`)
@@ -105,6 +106,8 @@ updateProject(data: IProject) {
         }
     }
     this.list = newList
+    this.onProjectUpdated(this.getProject(data.id))
+    console.log("PM this.list after update: ", this.list)
 }
 
 // Update ToDo -----------------------------------------------------------------------------

@@ -2,6 +2,8 @@ import * as React from "react"
 import { Project, IProject } from "../classes/Project"
 import { ToDo } from "../classes/ToDo"
 import { ProjectsManager } from "../classes/ProjectsManager"
+import { firebaseDB } from "../firebase"
+
 
 interface Props {
     project: Project
@@ -13,7 +15,7 @@ export function ProjectForm (props: Props) {
     console.log("showing the new Form")
 
     const [newProject, setNewProject] = React.useState<Project>(props.project)
-    const modal = document.getElementById("edit-project-modal")
+    const modal = document.getElementById("new-new-project-modal")
 
     // const [newIProject, setNewIProject] = React.useState<IProject>({
     //     name: "name",
@@ -28,13 +30,24 @@ export function ProjectForm (props: Props) {
     //     todoList: [],
     // })
 
-    const onFormSubmit = (e: React.FormEvent) => {
+    const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        let { name, value } = e.target;
+        console.log("something to change: ",name,": ", value)
+        const projectWip = newProject
+        projectWip[name] = value
+        setNewProject(projectWip);
+    };
+
+    const onProjectFormSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         console.log("I listen the submit")
-        // props.projectsManager.newProject(newProject)
+        props.projectsManager.updateProject(newProject)
+        if (modal && modal instanceof HTMLDialogElement) {
+            modal.close()
+        }
     }
 
-    const onFormCancel = (e: React.FormEvent) => {
+    const onProjectFormCancel = (e: React.FormEvent) => {
         e.preventDefault()
         if (modal && modal instanceof HTMLDialogElement) {
             modal.close()
@@ -44,8 +57,8 @@ export function ProjectForm (props: Props) {
     return (
         // <dialog id="new-project-modal"> {/* New Project Modal ---------------------------------------  */}
         // <form onSubmit={(e) => {onFormSubmit(e)}} id="new-project-form">
-        <form id="new-project-form" onSubmit={(e) => { onFormSubmit }}>
-            <h2>New Project</h2>
+        <form id="new-new-project-form" onSubmit={(e) =>  onProjectFormSubmit(e) }>
+            <h2>New Project - ProjectForm</h2>
             <div className="input-list">
                 <div className="form-field-container">
                 <input
@@ -65,6 +78,8 @@ export function ProjectForm (props: Props) {
                         type="string"
                         placeholder="Enter your project name here"
                         defaultValue= { newProject.name }
+                        onChange={ onInputChange }
+
                     />
                 </div>
                 <div className="form-field-container">
@@ -78,6 +93,8 @@ export function ProjectForm (props: Props) {
                         rows={5}
                         placeholder="Give your description here"
                         defaultValue= { newProject.description }
+                        onChange={ onInputChange }
+
                     />
                 </div>
                 <div className="form-field-container">
@@ -90,6 +107,8 @@ export function ProjectForm (props: Props) {
                         type="string"
                         placeholder="Give the project cost here"
                         defaultValue= { newProject.cost }
+                        onChange={ onInputChange }
+
                     />
                 </div>
                 <div className="form-field-container">
@@ -102,6 +121,8 @@ export function ProjectForm (props: Props) {
                         type="string"
                         placeholder="Give the progression %"
                         defaultValue= { newProject.progress }
+                        onChange={ onInputChange }
+
                     />
                 </div>
                 <div className="form-field-container">
@@ -112,6 +133,8 @@ export function ProjectForm (props: Props) {
                         data-project-info="userRole" 
                         name="userRole"
                         defaultValue= {newProject.userRole }
+                        onChange={ onInputChange }
+
                     >
                         <option>Architect</option>
                         <option>Engineer</option>
@@ -127,6 +150,8 @@ export function ProjectForm (props: Props) {
                         data-project-info="status" 
                         name="status"
                         defaultValue= { newProject.status }
+                        onChange={ onInputChange }
+
                     >
                         <option>Pending</option>
                         <option>Active</option>
@@ -143,6 +168,8 @@ export function ProjectForm (props: Props) {
                         name="finishDate"
                         type="date"
                         defaultValue= {newProject.shortFinishDate }
+                        onChange={ onInputChange }
+
                     />
                 </div>
             </div>
@@ -150,6 +177,8 @@ export function ProjectForm (props: Props) {
                 <button 
                     id="new-project-form-cancel-btn" 
                     type="button"
+                    onClick={(e) => onProjectFormCancel(e) }
+
                 >
                     Cancel
                 </button>
