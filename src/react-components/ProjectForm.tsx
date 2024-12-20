@@ -35,13 +35,14 @@ export function ProjectForm (props: Props) {
         console.log("something to change: ",name,": ", value)
         const projectWip = newProject
         projectWip[name] = value
-        setNewProject(projectWip);
-    };
+        setNewProject(projectWip)
+        console.log("newProject after change: ", newProject)
+    }
 
     const onProjectFormSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         console.log("I listen the submit")
-        props.projectsManager.updateProject(newProject)
+        props.projectsManager.newProject2(newProject, newProject.id)
         if (modal && modal instanceof HTMLDialogElement) {
             modal.close()
         }

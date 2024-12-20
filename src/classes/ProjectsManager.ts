@@ -1,5 +1,8 @@
 import { Project, IProject, UserRole, ProjectStatus } from "./Project"
 import { ToDo, IToDo, ToDoStatus } from "./ToDo"
+import * as Firestore from "firebase/firestore"
+import { firebaseDB } from "../firebase"
+
 
 export class ProjectsManager {
     list: Project[] = []
@@ -12,7 +15,37 @@ export class ProjectsManager {
 
 // -----------------------------------------------------------------------------
 constructor() {
+    this.getProjects();
+    // console.log("firebaseProjects: ",firebaseProjects)
+    console.log("PM this.list: ", this.list)
 }
+
+async getProjects() {
+    try {
+    // const getFirestoreProjects = async () => {
+        const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
+        const firebaseProjects = await Firestore.getDocs(projectsCollection)
+        for (const doc of firebaseProjects.docs) {
+            const data = doc.data()
+            const project: IProject = {
+                ...data,
+                finishDate: (data.finishDate as unknown as Firestore.Timestamp).toDate()
+            }
+            try {
+                this.newProject2(project, doc.id)
+            } catch (error) {
+                this.updateProject(project)
+            }
+        }
+        console.log("firebaseProjects: ",firebaseProjects)
+        console.log("PM this.list: ", this.list)
+    } catch (error) {
+        console.error("Error loading projects from Firestore: ", error)
+        // return getFirestoreProjects
+
+    }
+}
+
 
 filterProjects(value: string) {
     const filteredProjects = this.list.filter((project) => {
@@ -48,21 +81,21 @@ newProject2(data: IProject, id?: string) {
     if (data.name.length < 6) { throw new Error(`Project name "${data.name}" must contain at least 6 characters`) }
     if (this.idInUse(data.id)) { this.updateProject(data) }
     else {
-    const newTodoList = [] as ToDo[]
-        for (const toDo of data.todoList) {
-            try { 
-                const newTodo = new ToDo(toDo)
-                newTodoList.push(newTodo)
-                // this.onTodoCreated(newTodo)
-            } catch (error) {
-                    alert (error)
+        const newTodoList = [] as ToDo[]
+            for (const toDo of data.todoList) {
+                try { 
+                    const newTodo = new ToDo(toDo)
+                    newTodoList.push(newTodo)
+                    // this.onTodoCreated(newTodo)
+                } catch (error) {
+                        alert (error)
+                }
             }
-        }
-        data.todoList = newTodoList
-        const project = new Project(data, id)
-        this.list.push(project)
-        this.onProjectCreated(project)
-        return project
+            data.todoList = newTodoList
+            const project = new Project(data, id)
+            this.list.push(project)
+            this.onProjectCreated(project)
+            return project
     }
 }
 // set Details Page -----------------------------------------------------------------------------

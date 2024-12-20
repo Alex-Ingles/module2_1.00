@@ -26,26 +26,26 @@ export function ProjectsPage(props: Props) {
     }
     props.projectsManager.onProjectDeleted = () => {setProjects([...props.projectsManager.list])}
 
-    const getFirestoreProjects = async () => {
-        const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
-        const firebaseProjects = await Firestore.getDocs(projectsCollection)
-        for (const doc of firebaseProjects.docs) {
-            const data = doc.data()
-            const project: IProject = {
-                ...data,
-                finishDate: (data.finishDate as unknown as Firestore.Timestamp).toDate()
-            }
-            try {
-                props.projectsManager.newProject2(project, doc.id)
-            } catch (error) {
-                props.projectsManager.updateProject(project)
-            }
-        }
-    }
+    // const getFirestoreProjects = async () => {
+    //     const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
+    //     const firebaseProjects = await Firestore.getDocs(projectsCollection)
+    //     for (const doc of firebaseProjects.docs) {
+    //         const data = doc.data()
+    //         const project: IProject = {
+    //             ...data,
+    //             finishDate: (data.finishDate as unknown as Firestore.Timestamp).toDate()
+    //         }
+    //         try {
+    //             props.projectsManager.newProject2(project, doc.id)
+    //         } catch (error) {
+    //             props.projectsManager.updateProject(project)
+    //         }
+    //     }
+    // }
     
-    React.useEffect(() => {
-        getFirestoreProjects()
-    }, [])
+    // React.useEffect(() => {
+    //     getFirestoreProjects()
+    // }, [])
 
     const projectCards = projects.map((project) => {
         return (
