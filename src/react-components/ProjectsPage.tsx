@@ -26,6 +26,9 @@ export function ProjectsPage(props: Props) {
     }
     props.projectsManager.onProjectDeleted = () => {setProjects([...props.projectsManager.list])}
 
+// ----------------------------------------------------------------------------
+//  -- Get Firestore Projects as explained by @Juan -------------------------
+
     // const getFirestoreProjects = async () => {
     //     const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
     //     const firebaseProjects = await Firestore.getDocs(projectsCollection)
@@ -46,6 +49,8 @@ export function ProjectsPage(props: Props) {
     // React.useEffect(() => {
     //     getFirestoreProjects()
     // }, [])
+
+
 
     const projectCards = projects.map((project) => {
         return (
@@ -80,7 +85,7 @@ export function ProjectsPage(props: Props) {
     const onNewProjectClick = (e) => {
         // const projectToSet = props.projectsManager.getProject(e.target.id)
         // setProjectInForm(projectToSet)
-        props.projectsManager.newProject2(projectInForm)
+        // props.projectsManager.newProject2(projectInForm)
         const modal = document.getElementById("new-new-project-modal")
         if (!(modal && modal instanceof HTMLDialogElement)) {return}
         modal.showModal()

@@ -93,9 +93,26 @@ newProject2(data: IProject, id?: string) {
             }
             data.todoList = newTodoList
             const project = new Project(data, id)
+            // const projectsCollection2 = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<Project>
+
+            // Firestore.addDoc(projectsCollection2, project)
+
             this.list.push(project)
             this.onProjectCreated(project)
+            console.log(project)
+            this.storeProjectInFirestore(project)
             return project
+    }
+}
+
+async storeProjectInFirestore(project: IProject) {
+    try {
+        const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
+        await Firestore.addDoc(projectsCollection, project)
+
+    } catch (error) {
+        console.error("Error adding projects to Firestore: ", error)
+        console.log(project)
     }
 }
 // set Details Page -----------------------------------------------------------------------------
