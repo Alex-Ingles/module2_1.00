@@ -38,14 +38,33 @@ export function ProjectTodos(props: Props) {
 
     const [showForm, setShowForm] = React.useState(false)
 
-    const toDosCards =  // Creating an array iterator to get all the TodoCards from each Todo in the todolist.
-        toDos.map((todo) => {
-            console.log("toDos: ",toDos)
-            console.log("todo: ", todo)
-            return (
-                <TodoCard projectsManager={props.projectsManager} project={project} todo={todo} key={todo.id}/>
-            )
-        })
+// --------------------------------
+
+    // let toDosCards: React.JSX.Element[] = []
+
+    // React.useEffect(() => {
+    
+    //     toDosCards =  // Creating an array iterator to get all the TodoCards from each Todo in the todolist.
+    //         toDos.map((todo) => {
+    //             console.log("toDos: ",toDos)
+    //             console.log("todo: ", todo)
+    //             return (
+    //                 <TodoCard projectsManager={props.projectsManager} project={project} todo={todo} key={todo.id}/>
+    //             )
+    //         })}, toDos)
+
+    // const [todoInForm, setTodoInForm] = React.useState<ToDo>(new ToDo(newIToDo))
+
+// ------------------------------
+
+        const toDosCards =  // Creating an array iterator to get all the TodoCards from each Todo in the todolist.
+            toDos.map((todo: ToDo) => {
+                console.log("toDos: ",toDos)
+                console.log("todo: ", todo)
+                return (
+                    <TodoCard projectsManager={props.projectsManager} project={project} todo={todo} key={todo.id}/>
+                )
+            })
 
     const [todoInForm, setTodoInForm] = React.useState<ToDo>(new ToDo(newIToDo))
 
