@@ -13,27 +13,93 @@ interface Props {
 
 export function ProjectDetailsPage(props: Props) {
 
-    // const [projectDetails, setProjectDetails] = React.useState<Project>()
-    // props.projectsManager.onProjectCreated = () => {setProjectDetails([...props.projectsManager.list])}
-
-    // props.projectsManager.onProjectDeleted = () => {setProjectDetails([...props.projectsManager.list])}
-
     const routeParams = Router.useParams<{id: string}>()
-    // let projectId = routeParams.id
     console.log("I`m the ID ma boys: ", routeParams.id)
-    if (!routeParams.id) { return (<p>Project ID is needed to see this page</p>)} 
+
+    // Validar si no existe el ID
+    if (!routeParams.id) { return (<p>Project ID is needed to see this page</p>)}
+
+    // Obtener el proyecto
     let project = props.projectsManager.getProject(routeParams.id)
     if (!project) { return (<p>The project with ID: {routeParams.id} wasn't found. </p>)}
 
+    // Estado para almacenar los detalles del proyecto
     const [projectDetails, setProjectDetails] = React.useState<Project>(project)
-    props.projectsManager.onProjectUpdated = (projectUpdated) => {setProjectDetails(projectUpdated)}
-
+    console.warn(" 0000-0000 : projectDetails: ",projectDetails)
     
-    const onEditProjectClick = ((e) => {
-        
-        const modal = document.getElementById("edit-project-modal")
-        if (modal && modal instanceof HTMLDialogElement) { modal.show }
-    })
+    if (!props.projectsManager.onProjectUpdated) {
+        props.projectsManager.onProjectUpdated = (projectUpdated) => {
+            // const projectToSet = props.projectsManager.getProject(projectUpdated.id)
+            if (projectUpdated) {
+                setProjectDetails(projectUpdated)
+                console.log("onProjectUpdate -> ",projectUpdated," -> ",projectDetails)
+            } else {
+                console.log("DetailsPage, onProjectUpdated -> projectToSet(",project.id,") not found")
+            }
+        }
+    }
+
+    // Manejar actualizaciones del proyecto
+    // React.useEffect(() => {
+    //     const handleProjectUpdated = (updatedProject: Project) => {
+    //         console.warn("onProjectUpdated: ", updatedProject);
+
+    //         // Actualizar los detalles del proyecto si coincide el ID
+    //         if (updatedProject.id === projectDetails.id) {
+    //             setProjectDetails(updatedProject);
+    //         }
+    //     };
+    //     // Asignar el método a onProjectUpdated
+    //     props.projectsManager.onProjectUpdated = handleProjectUpdated;
+
+    //     // Limpiar al desmontar el componente
+    //     return () => {
+    //         // props.projectsManager.onProjectUpdated = undefined;
+            
+    //         // Asigno una función vacía para que no haya problemas de tipo
+    //         props.projectsManager.onProjectUpdated = () => {};
+
+    //     };
+    // }, [props.projectsManager, projectDetails]);
+
+    // if (!projectDetails) {
+    //     return <p>Loading project details...</p>;
+    // }
+
+
+    // Antiguo onProjectUpdated
+
+    // props.projectsManager.onProjectUpdated = (updatedProject: Project) => {
+    //     console.warn("onProjectUpdated: ", updatedProject)
+    //     setProjectDetails(props.projectsManager.filterProjects(projectDetails.id)[0])
+    // }
+
+
+
+    // React.useEffect(( ) => {
+    //     console.log("Applying the useEffect on DetailsPage")
+    //     // return (<p>{ projectDetails.description }</p>)
+    // }, [projectDetails])
+
+    // let showDialog = true
+
+        const onEditProjectClick = ((e) => {
+            // showDialog = true
+            
+            const modal = document.getElementById("edit-project-modal")
+            if (modal && modal instanceof HTMLDialogElement) { modal.showModal() }
+        })
+
+    // function showForm(visible: boolean) {
+    //     if (visible) {
+    //         return <ProjectForm projectsManager= { props.projectsManager } project={ projectDetails } key={"project-form"+projectDetails.id}/>
+    //     }
+    //     return <p>Cannot open the form</p>
+    // }
+
+    // const onFormSubmit = ((e) => {
+    //     showDialog = false
+    // })
 
     //-------------------------------------------
     // const idFromTodos = (todoId) => {
@@ -43,16 +109,20 @@ export function ProjectDetailsPage(props: Props) {
     if (!projectDetails) { return <p>Project Details doesn't found</p> }
 
     return (
-        <div className="page" id="project-details">
-            <dialog id="edit-project-modal">
-                <ProjectForm projectsManager= { props.projectsManager } project={ project } key={"project-form"+projectDetails.id}/>
+        <div className="page" id="project-details" key={"details-"+projectDetails.id}>
+        {/* <div className="page" id="project-details"> */}
+
+            <dialog id="edit-project-modal" >
+                <ProjectForm projectsManager= { props.projectsManager } project={ projectDetails } key={"project-form"+projectDetails.id}/>
             </dialog>
+            {/* <ProjectForm projectsManager= { props.projectsManager } project={ projectDetails } key={"project-form"+projectDetails.id}/> */}
+
             <header className="page-header" id="project-details-page-header" style={{ 
                 height: "9%" 
                 }}>
                 <div id="page-title">
-                    <h2 data-project-info="name">{ project.name }</h2>
-                    <h5 data-project-info="description" style={{ color: "#969696" }}>{ project.description }</h5>
+                    <h2 data-project-info="name">{ projectDetails.name }</h2>
+                    <h5 data-project-info="description" style={{ color: "#969696" }}>{ projectDetails.description }</h5>
                 </div>
                 <div className="page-header-buttons" style={{
                     display: "none" 
@@ -60,11 +130,12 @@ export function ProjectDetailsPage(props: Props) {
                     <button hidden={true}>
                         <span className="material-icons-round">
                             file_download
-                        </span>Download
+                        </span>
+                        Download
                     </button>
                     <button hidden={true} id="new-project-btn">
-                        <span className="material-icons-round">add_circle_outline</span>New
-                        Project
+                        <span className="material-icons-round">add_circle_outline</span>
+                        New Project
                     </button>
                 </div>
             </header>
@@ -101,14 +172,14 @@ export function ProjectDetailsPage(props: Props) {
                                 borderRadius: 15,
                                 padding: 7
                                 }}>
-                                { project.initials }
+                                { projectDetails.initials }
                             </p>
                             <p data-project-info="id"  style={{
                                 fontSize: 8, 
                                 width: 200, 
                                 height: 30, 
                                 display: "none" }}>
-                                { project.id }
+                                { projectDetails.id }
                             </p>
                             <div>
                                 <button 
@@ -134,12 +205,12 @@ export function ProjectDetailsPage(props: Props) {
                         </div>
                         <div style={{ padding: "30 0px" }}>
                             <div style={{ left: 0 }}>
-                                <h5 data-project-info="name2">{ project.name }</h5>
+                                <h5 data-project-info="name2">{ projectDetails.name }</h5>
                                 <p data-project-info="description2" style={{
                                     fontSize: "small", 
                                     fontWeight: "lighter" 
                                     }}>
-                                { project.description }
+                                { projectDetails.description }
                                 </p>
                             </div>
                             <div
@@ -153,24 +224,24 @@ export function ProjectDetailsPage(props: Props) {
                             >
                                 <div>
                                     <h5 style={{ color: "#969696" }}>Status</h5>
-                                    <h5 data-project-info="status">{ project.status }</h5>
+                                    <h5 data-project-info="status">{ projectDetails.status }</h5>
                                 </div>
                                 <div>
                                     <h5 style={{ color: "#969696" }}>Cost</h5>
                                     <h5 data-project-info="cost" style={{ color: "white" }}>
-                                    { project.cost.valueOf() }
+                                    { projectDetails.cost.valueOf() }
                                     </h5>
                                 </div>
                                 <div>
                                     <h5 style={{ color: "#969696" }}>User Role</h5>
                                     <h5 data-project-info="userRole" style={{ color: "white" }}>
-                                    { project.userRole }
+                                    { projectDetails.userRole }
                                     </h5>
                                 </div>
                                 <div hidden={true}>
                                     <h5 style={{ color: "#969696" }}>Finish Date</h5>
                                     <h5 data-project-info="finishDate" style={{ color: "white" }}>
-                                        { project.finishDate.toString() }
+                                        { projectDetails.finishDate.toString() }
                                     </h5>
                                 </div>
                                 <div>
@@ -179,7 +250,7 @@ export function ProjectDetailsPage(props: Props) {
                                         data-project-info="shortFinishDate"
                                         style={{ color: "white" }}
                                     >
-                                        { project.shortFinishDate.toString() }
+                                        { projectDetails.shortFinishDate.toString() }
                                     </h5>
                                 </div>
                             </div>
@@ -189,9 +260,9 @@ export function ProjectDetailsPage(props: Props) {
                                 <div id="project-progress-bar" className="progress-bar-done" style={{
                                     backgroundColor: "rgb(158, 195, 158)",
                                     borderRadius: "10px 0 0 10px",
-                                    width: `${project.progress * 100}%"`,
+                                    width: `${projectDetails.progress * 100}%"`,
                                 }}>
-                                    <h5 data-project-info="progress">{ project.progress .valueOf() }%</h5>
+                                    <h5 data-project-info="progress">{ projectDetails.progress .valueOf() }%</h5>
                                 </div>
                             </div>
                         </div>

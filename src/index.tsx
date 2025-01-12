@@ -39,11 +39,11 @@ appRoot.render(
     </>
 )
 
-
-
-
-
 // Edit Project Form Submit -----------------------------------------------------------------------------
+// Edit Project Form Submit -----------------------------------------------------------------------------
+// Edit Project Form Submit -----------------------------------------------------------------------------
+// Edit Project Form Submit -----------------------------------------------------------------------------
+
 const editProjectForm = document.getElementById("edit-project-form")
 if (editProjectForm && editProjectForm instanceof HTMLFormElement) {
     editProjectForm.addEventListener("submit", (e) => {
@@ -125,6 +125,12 @@ if (editProjectForm && editProjectForm instanceof HTMLFormElement) {
 } else {
     console.warn("The editProjectForm wasn't found. Check the ID!")
 }
+
+// Edit Project Form Submit -----------------------------------------------------------------------------
+// Edit Project Form Submit -----------------------------------------------------------------------------
+// Edit Project Form Submit -----------------------------------------------------------------------------
+// Edit Project Form Submit -----------------------------------------------------------------------------
+
 // New ToDo Btn -----------------------------------------------------------------------------
 // const newToDoBtn = document.getElementById("new-todo-btn")
 // if (newToDoBtn) {

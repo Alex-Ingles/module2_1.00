@@ -8,6 +8,8 @@ export class ProjectsManager {
     list: Project[] = []
     onProjectCreated = (project: Project) => {}
     onProjectUpdated = (project: Project) => {}
+    // onProjectUpdated?: (project: Project) => void
+
     onProjectDeleted = () => {}
     onTodoCreated = (todo: ToDo) => {}
     onTodoUpdated = (todo: ToDo) => {}
@@ -46,7 +48,6 @@ async getProjects() {
     }
 }
 
-
 filterProjects(value: string) {
     const filteredProjects = this.list.filter((project) => {
         return project.name.includes(value)
@@ -79,12 +80,13 @@ newProject2(data: IProject, id?: string) {
     })
     const nameInUse = projectNames.includes(data.name)
     if (data.name.length < 6) { throw new Error(`Project name "${data.name}" must contain at least 6 characters`) }
-    if (this.idInUse(data.id)) { this.updateProject(data) }
-    else {
+    if (this.idInUse(data.id)) { 
+        this.updateProject(data)
+    } else {
         const newTodoList = [] as ToDo[]
             for (const toDo of data.todoList) {
                 try { 
-                    const newTodo = new ToDo(toDo)
+                    const newTodo = new ToDo(toDo) // no entiendo por que no hace push directamente.
                     newTodoList.push(newTodo)
                     // this.onTodoCreated(newTodo)
                 } catch (error) {
@@ -99,16 +101,33 @@ newProject2(data: IProject, id?: string) {
 
             this.list.push(project)
             this.onProjectCreated(project)
+            console.warn("newProject2 I reach this point")
+            this.onProjectUpdated(project)
+            console.warn("newProject2 and this one")
             console.log(project)
             this.storeProjectInFirestore(project)
-            return project
+            // return project
     }
 }
 
-async storeProjectInFirestore(project: IProject) {
+async storeProjectInFirestore(project: Project) {
     try {
         const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
-        await Firestore.addDoc(projectsCollection, project)
+        const projectToFirestore = {
+            id: project.id as string,
+            name: project.name as string,
+            description: project.description as string,
+            status: project.status as string,
+            userRole: project.userRole as string,
+            finishDate: project.finishDate as Date,
+            cost: project.cost as number,
+            progress: project.progress as number,
+            todoList: project.todoList as [],
+            initials: project.initials as string,
+            initialsColor: project.initialsColor as string,
+            shortFinishDate: project.shortFinishDate as string,
+        }
+        await Firestore.addDoc(projectsCollection, projectToFirestore)
 
     } catch (error) {
         console.error("Error adding projects to Firestore: ", error)
@@ -134,8 +153,8 @@ idInUse(id: string) {
 }
 //  ----------------------------------------------------------- Update Project - to index / to ProjectsPage
 updateProject(data: IProject) {
-    console.log("PM updateProject upcoming data: ", data)
     console.warn("PM - updateProject invoked")
+    console.log("PM updateProject upcoming data: ", data)
     if (data.name.length < 6){
         throw new Error(`Project name "${data.name}" must contain at least 6 characters`)
     }
@@ -153,11 +172,18 @@ updateProject(data: IProject) {
             }
             oldproject.todoList = newToDoList
             newList.push(oldproject)
+            // this.onProjectUpdated(oldproject)
         }
     }
     this.list = newList
-    this.onProjectUpdated(this.getProject(data.id))
+    const projectUpdated = this.getProject(data.id)
+    if (projectUpdated) {
+        this.onProjectUpdated(projectUpdated)
+    } else {
+        console.log("projectUpdated.id not found. Cannot complete the onProjectUpdated")
+    }
     console.log("PM this.list after update: ", this.list)
+    console.log("onProjectUpdated(",projectUpdated,")")
 }
 
 // Update ToDo -----------------------------------------------------------------------------
@@ -268,9 +294,10 @@ getProject(id: string) {
     const project = this.list.find((project) => {
         return project.id as string === id as string
     })
-    if (project)
-    console.log(project as Project)
-    return project as Project
+    if (project) {
+        console.log(project as Project)
+        return project as Project
+    }
 }
 // ----------------------------------------------------------------------------- Get Project By Name 
 getProjectbyName(name: string) {

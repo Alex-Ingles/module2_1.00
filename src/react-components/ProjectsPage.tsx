@@ -51,7 +51,7 @@ export function ProjectsPage(props: Props) {
     // }, [])
 
 
-
+    // Crear el set de Cards de proyectos
     const projectCards = projects.map((project) => {
         return (
             <Router.Link to={`/project/${project.id}`} key={project.id}>
@@ -60,6 +60,7 @@ export function ProjectsPage(props: Props) {
         )
     })
     
+
     React.useEffect(() => {
         console.log("Projects state updated", projects)
     })
@@ -81,7 +82,6 @@ export function ProjectsPage(props: Props) {
     // const [projectInForm, setProjectInForm] = React.useState<Project>(new Project(newIProject))
     console.log("ProjectsPage projectInForm: ", projectInForm)
 
-
     const onNewProjectClick = (e) => {
         // const projectToSet = props.projectsManager.getProject(e.target.id)
         // setProjectInForm(projectToSet)
@@ -92,102 +92,99 @@ export function ProjectsPage(props: Props) {
     }
 
 // ----------------------------------------------------------------------------------------------------
-    const onFormSubmit = (e: React.FormEvent) => {
-        // let submitter = e.submitter as HTMLElement
-        // let handler = submitter.id
-        // if(handler == "new-project-form-submit-btn") {
-        const projectForm = document.getElementById("new-project-form")
-        if (!(projectForm && projectForm instanceof HTMLFormElement)) {return} // To avoid complainning
-            e.preventDefault() // What is the default behaviour we want to avoid?
-            const formData = new FormData(projectForm)
-            // console.warn(formData)
-            const projectData: IProject = {
-                name: formData.get("name") as string,
-                description: formData.get("description") as string,
-                status: formData.get("status") as ProjectStatus,
-                userRole: formData.get("userRole") as UserRole,
-                finishDate: new Date (formData.get("finishDate") as string),
-                cost: new Number(formData.get("cost")) as number,
-                progress: new Number(formData.get("progress")) as number,
-                todoList: [],
-                id: formData.get("id") as string,
-                initials: "" as string
-            }
-            // console.warn(projectData)
-            // console.warn("PM - NewProjectSubmit projectData.finishDate - projectData.progress: ", projectData.finishDate, projectData.progress)
+    // const onFormSubmit = (e: React.FormEvent) => {
+    //     // let submitter = e.submitter as HTMLElement
+    //     // let handler = submitter.id
+    //     // if(handler == "new-project-form-submit-btn") {
+    //     const projectForm = document.getElementById("new-project-form")
+    //     if (!(projectForm && projectForm instanceof HTMLFormElement)) {return} // To avoid complainning
+    //         e.preventDefault() // What is the default behaviour we want to avoid?
+    //         const formData = new FormData(projectForm)
+    //         // console.warn(formData)
+    //         const projectData: IProject = {
+    //             name: formData.get("name") as string,
+    //             description: formData.get("description") as string,
+    //             status: formData.get("status") as ProjectStatus,
+    //             userRole: formData.get("userRole") as UserRole,
+    //             finishDate: new Date (formData.get("finishDate") as string),
+    //             cost: new Number(formData.get("cost")) as number,
+    //             progress: new Number(formData.get("progress")) as number,
+    //             todoList: [],
+    //             id: formData.get("id") as string,
+    //             initials: "" as string
+    //         }
+    //         // console.warn(projectData)
+    //         // console.warn("PM - NewProjectSubmit projectData.finishDate - projectData.progress: ", projectData.finishDate, projectData.progress)
 
-            try {
-                new Date(projectData.finishDate)
-                if (isNaN(projectData.finishDate.valueOf())) {
-                    // console.warn("PM - NewProjectSubmit projectData.finishDate: isNan")
-                    // console.warn("XXXXXXXXX:  finishDate valueOf is not a number")
-                    const defDate = new Date(1979, 7, 3, 12)
-                    projectData.finishDate = defDate
-                    // console.warn("PM - NewProjectSubmit finishDate after function: ", projectData.finishDate)
-                } else {
-                    // console.warn("XXXXXXXXX:  finishDate valueOf is a number")
-                } 
-            } catch (err) {
-                alert(err)
-            }
+    //         try {
+    //             new Date(projectData.finishDate)
+    //             if (isNaN(projectData.finishDate.valueOf())) {
+    //                 // console.warn("PM - NewProjectSubmit projectData.finishDate: isNan")
+    //                 // console.warn("XXXXXXXXX:  finishDate valueOf is not a number")
+    //                 const defDate = new Date(1979, 7, 3, 12)
+    //                 projectData.finishDate = defDate
+    //                 // console.warn("PM - NewProjectSubmit finishDate after function: ", projectData.finishDate)
+    //             } else {
+    //                 // console.warn("XXXXXXXXX:  finishDate valueOf is a number")
+    //             } 
+    //         } catch (err) {
+    //             alert(err)
+    //         }
 
-            // console.log("index.ts when form submit: ", projectData.finishDate, typeof projectData.finishDate)
-            // console.log(projectData.finishDate.valueOf())
-            // console.log(projectData.finishDate.valueOf.length)
+    //         // console.log("index.ts when form submit: ", projectData.finishDate, typeof projectData.finishDate)
+    //         // console.log(projectData.finishDate.valueOf())
+    //         // console.log(projectData.finishDate.valueOf.length)
 
-            if (props.projectsManager && props.projectsManager.idInUse(projectData.id)) {
-                // console.warn("id provided is already in use, existing Project will be updated")
-                props.projectsManager.updateProject(projectData)
-                projectForm.reset()
+    //         if (props.projectsManager && props.projectsManager.idInUse(projectData.id)) {
+    //             // console.warn("id provided is already in use, existing Project will be updated")
+    //             props.projectsManager.updateProject(projectData)
+    //             projectForm.reset()
 
-                const modal = document.getElementById("new-project-modal")
-                if (!(modal && modal instanceof HTMLDialogElement)) {return}
-                modal.close()
-        
+    //             const modal = document.getElementById("new-project-modal")
+    //             if (!(modal && modal instanceof HTMLDialogElement)) {return}
+    //             modal.close()
+    //             // toggleModal("new-project-modal", "close")
 
+    //             // console.warn("submit is fired!")
+    //             // console.log(projectData)
+    //             // console.log(props.projectsManager.list)
 
-                // toggleModal("new-project-modal", "close")
+    //             props.projectsManager.totalCost()
+    //         } else {
+    //             // if (isNaN(projectData.cost)) {
+    //             //     projectData.cost = 20 as number
+    //             // }
+    //             // if (isNaN(projectData.progress)) {
+    //             //     projectData.progress = 20 as number
+    //             // }
 
-                // console.warn("submit is fired!")
-                // console.log(projectData)
-                // console.log(props.projectsManager.list)
-
-                props.projectsManager.totalCost()
-            } else {
-                // if (isNaN(projectData.cost)) {
-                //     projectData.cost = 20 as number
-                // }
-                // if (isNaN(projectData.progress)) {
-                //     projectData.progress = 20 as number
-                // }
-
-                try {
-                    const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
-                    if (!projectData.name || !projectData.id || isNaN(projectData.cost) || isNaN(projectData.progress)) {
-                        console.log(projectData.cost, projectData.progress)
-                        alert("Formulario incompleto o datos inválidos.");
-                        return;
-                    }
-                    Firestore.addDoc(projectsCollection, projectData)
-                    props.projectsManager.newProject2(projectData)
-                    props.projectsManager.deleteDefaultProjectUI()
-                    projectForm.reset()
-                    const modal = document.getElementById("new-project-modal")
-                    if (!(modal && modal instanceof HTMLDialogElement)) {return}
-                    modal.close()
+    //             try {
+    //                 const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
+    //                 if (!projectData.name || !projectData.id || isNaN(projectData.cost) || isNaN(projectData.progress)) {
+    //                     console.log(projectData.cost, projectData.progress)
+    //                     alert("Formulario incompleto o datos inválidos.");
+    //                     return;
+    //                 }
+    //                 Firestore.addDoc(projectsCollection, projectData)
+    //                 props.projectsManager.newProject2(projectData)
+    //                 props.projectsManager.deleteDefaultProjectUI()
+    //                 projectForm.reset()
+    //                 const modal = document.getElementById("new-project-modal")
+    //                 if (!(modal && modal instanceof HTMLDialogElement)) {return}
+    //                 modal.close()
     
-                    // toggleModal("new-project-modal", "close")
-                    props.projectsManager.totalCost()
+    //                 // toggleModal("new-project-modal", "close")
+    //                 props.projectsManager.totalCost()
 
-                    // console.warn("submit is fired!")
-                    // console.log(projectData)
-                    console.log("PM List: ",props.projectsManager.list)
+    //                 // console.warn("submit is fired!")
+    //                 // console.log(projectData)
+    //                 console.log("PM List: ",props.projectsManager.list)
 
-                } catch (err) {
-                    alert(err)
-                }
-            }
-    }
+    //             } catch (err) {
+    //                 alert(err)
+    //             }
+    //         }
+    // }
     // ---------------------------------------------------------------- on Import Click
     const onImportClick = () => {
         console.log("I listen the onImportClick")
@@ -242,7 +239,52 @@ export function ProjectsPage(props: Props) {
             <dialog id="new-new-project-modal">
                 <ProjectForm projectsManager= { props.projectsManager } project= { projectInForm } key={"projet-form"+projectInForm.id}/> 
             </dialog>
-            <dialog id="new-project-modal"> {/* New Project Modal ---------------------------------------  */}
+            <header
+                className="page-header"
+                id="projects-page-header"
+                style={{ height: "9%" }}
+            >
+                <h2>Projects</h2>
+                <SearchBox onChange={(value) => onProjectSearch(value)}/>
+                <div className="page-header-buttons">
+                    <button id="export-projects-btn">
+                        <span onClick= { onExportClick } className="material-icons-round action-icon">file_download</span>
+                    </button>
+                    <button id="import-projects-btn">
+                        <span onClick= { onImportClick } className="material-icons-round action-icon">file_upload</span>
+                    </button>
+                    <button onClick= { onNewProjectClick } id="new-project-btn">
+                        <span className="material-icons-round">add_circle_outline</span>New
+                        Project
+                    </button>
+                </div>
+            </header>
+            {/* projectS list -------------------------------------------------------*/}
+            {
+                projects.length > 0? 
+                    <div
+                        id="projects-list"
+                        style={{
+                        padding: "15px 20px",
+                        alignItems: "center",
+                        justifyItems: "center",
+                        overflowY: "auto",
+                        maxHeight: "95vh"
+                        }}
+                    >{ projectCards }
+                    </div>
+                :
+                    <p>No projects found</p>
+            }
+        </div>
+        )
+}
+
+
+
+// ------------------------------------------
+
+            {/* <dialog id="new-project-modal"> 
                 <form onSubmit={(e) => {onFormSubmit(e)}} id="new-project-form">
                 <h2>New Project</h2>
                 <div className="input-list">
@@ -347,7 +389,7 @@ export function ProjectsPage(props: Props) {
                 </div>
                 </form>
             </dialog>
-            <dialog id="edit-project-modal"> {/* Edit Project Modal ---------------------------------------  */}
+            <dialog id="edit-project-modal"> 
                 <form id="edit-project-form">
                 <h2>Edit Project</h2>
                 <div className="input-list">
@@ -451,44 +493,4 @@ export function ProjectsPage(props: Props) {
                     </div>
                 </div>
                 </form>
-            </dialog>
-            <header
-                className="page-header"
-                id="projects-page-header"
-                style={{ height: "9%" }}
-            >
-                <h2>Projects</h2>
-                <SearchBox onChange={(value) => onProjectSearch(value)}/>
-                <div className="page-header-buttons">
-                    <button id="export-projects-btn">
-                        <span onClick= { onExportClick } className="material-icons-round action-icon">file_download</span>
-                    </button>
-                    <button id="import-projects-btn">
-                        <span onClick= { onImportClick } className="material-icons-round action-icon">file_upload</span>
-                    </button>
-                    <button onClick= { onNewProjectClick } id="new-project-btn">
-                        <span className="material-icons-round">add_circle_outline</span>New
-                        Project
-                    </button>
-                </div>
-            </header>
-            {/* project list -------------------------------------------------------*/}
-            {
-                projects.length > 0? 
-                    <div
-                        id="projects-list"
-                        style={{
-                        padding: "15px 20px",
-                        alignItems: "center",
-                        justifyItems: "center",
-                        overflowY: "auto",
-                        maxHeight: "95vh"
-                        }}
-                    >{ projectCards }
-                    </div>
-                :
-                    <p>No projects found</p>
-            }
-        </div>
-        )
-}
+            </dialog> */}
