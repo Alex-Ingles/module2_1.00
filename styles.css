@@ -23,8 +23,8 @@
 }
 
 * {
-    font-family: "Inter", sans-serif;
-    /* font-family: "Courier", sans-serif; */
+    /* font-family: "Inter", sans-serif; */
+    font-family: "Courier", sans-serif;
     /* font-family: "Times-Roman", sans-serif; */
     /* font-family: "Times", sans-serif; */
     margin: 0;
@@ -32,9 +32,9 @@
     box-sizing: border-box;
 }
 
-#project-todos {
+/* #project-todos {
     border: 1px solid red
-}
+} */
 
 #app {
 
@@ -121,8 +121,12 @@ h4 {
 h5 {
     font-size: var(--font-sm);
     align-content: center;
+    aspect-ratio:unset;
 }
 
+h6 {
+    font-size: 6px;
+}
 
 button {
     padding: 5px 5px;
@@ -255,16 +259,48 @@ header button {
 }
 
 #projects-list {
-    display: grid;
+    display: flex;
+    flex-direction:row;
+    align-items:flex-start;
+    /* justify-content:space-around; */
+    /* overflow-x:visible; */
+    flex-wrap:wrap;
     /* grid-template-columns: 1fr 1fr 1fr; */
 
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    grid-template-rows: 1fr 1fr;
+    /* grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    grid-template-rows: 1fr 1fr 1fr 1fr; */
+    height: 93vh;
+    padding-left: 35px;
+    overflow-y: scroll;
+    row-gap: 10px;
+    column-gap: 10px;
+    align-items:normal;
+}
+
+
+/* #projects-list {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     height: 93vh;
     padding-left: 35px;
     overflow-y: scroll;
     row-gap: 20px;
-}
+} */
+
+    /* grid-template-columns: 1fr 1fr 1fr; */
+
+
+/* -------------------------------------------------------------------------------------------------
+      PROJECT CARD 
+------------------------------------------------------------------------------------------------- */
+
+/* #new-project-btn {
+    height: 300px;
+    width: 300px;
+    font-size: 40px;
+} */
 
 .project-card {
     background-color: var(--background-100);
@@ -272,7 +308,7 @@ header button {
     cursor: pointer;
     width: 90%;
     height: 90%;
-    min-height: 250px;
+    min-height: 220px;
     min-width: 200px;
 }
 
@@ -296,9 +332,22 @@ header button {
     flex-direction: column;
     row-gap: 10px;
     align-items: start;
+    justify-content: flex-start;
     font-size: var(--font-sm);
     height: 100px;
 }
+
+.card-content-center {
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    align-items: center;
+    justify-content:safe;
+    font-size: var(--font-sm);
+    height: 100px;
+}
+
 
 .card-property {
     display: flex;
@@ -412,11 +461,17 @@ form .submit-buttons {
     align-items: center;
 }
 
+.dashboard-card-title {
+    /* overflow-x: visible; */
+    min-width: 25%;
+}
+
 .dashboard-card-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .search-box {

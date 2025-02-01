@@ -76,9 +76,12 @@ export function ProjectsPage(props: Props) {
         progress: 0,
         id: "",
         todoList: [],
+        firebaseId: ""
     })
 
     const projectInForm = new Project(newIProject)
+
+    //  const [projectInForm, setProjectInForm] = React.useState<Project>(new Project(newIProject))
     // const [projectInForm, setProjectInForm] = React.useState<Project>(new Project(newIProject))
     console.log("ProjectsPage projectInForm: ", projectInForm)
 
@@ -86,6 +89,9 @@ export function ProjectsPage(props: Props) {
         // const projectToSet = props.projectsManager.getProject(e.target.id)
         // setProjectInForm(projectToSet)
         // props.projectsManager.newProject2(projectInForm)
+
+        // projectInForm = new Project(newIProject)
+        
         const modal = document.getElementById("new-new-project-modal")
         if (!(modal && modal instanceof HTMLDialogElement)) {return}
         modal.showModal()
@@ -230,6 +236,12 @@ export function ProjectsPage(props: Props) {
             URL.revokeObjectURL(url)
     }
 
+// WIP ----------------------------------------
+
+    // const onUploadClick = (e) = {
+    //     props.projectsManager.storeProjectsInFirestore()
+    // }
+
     const onProjectSearch = (value: string) => {
         setProjects(props.projectsManager.filterProjects(value))
     }
@@ -247,6 +259,12 @@ export function ProjectsPage(props: Props) {
                 <h2>Projects</h2>
                 <SearchBox onChange={(value) => onProjectSearch(value)}/>
                 <div className="page-header-buttons">
+                    <button id="upload-projects-btn">
+                        <span onClick= { onExportClick } className="material-icons-round action-icon">cloud_upload</span>
+                    </button>
+                    <button id="download-projects-btn">
+                        <span onClick= { onExportClick } className="material-icons-round action-icon">cloud_download</span>
+                    </button>
                     <button id="export-projects-btn">
                         <span onClick= { onExportClick } className="material-icons-round action-icon">file_download</span>
                     </button>
@@ -271,7 +289,58 @@ export function ProjectsPage(props: Props) {
                         overflowY: "auto",
                         maxHeight: "95vh"
                         }}
-                    >{ projectCards }
+                    >
+                        {/* New Project Card --------------------------------------------*/}
+                        <div>
+                            <div className="project-card">
+                                <div className="card">
+                                    <div className="card-header">
+                                        <p
+                                        data-project-info="initials"
+                                        style={{
+                                            // backgroundColor: "${this.initialsColor}",
+                                            backgroundColor:`transparent` ,
+                                            padding: 10,
+                                            border: "1px solid white", 
+                                            // borderColor: "white",
+                                            borderRadius: 8,
+                                            aspectRatio: 1,
+                                            fontSize: "1rem",
+                                        }}
+                                        >+</p>
+                                        <div>
+                                            <h5 data-project-info="name">Nuevo Proyecto</h5>
+                                            <h5 
+                                                data-project-info="description" 
+                                                className="description"
+                                            >
+                                            {/* Describe el proyecto  */}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div className="card-content-center">
+                                        <button id="new-project-btn">
+                                            <span  onClick= { onNewProjectClick } className="material-icons-round action-icon">add</span>
+                                        </button>
+                                        <h5
+                                            data-project-info="initials"
+                                            style={{
+                                                // backgroundColor: "${this.initialsColor}",
+                                                backgroundColor:`transparent` ,
+                                                padding: 10,
+                                                // border: "1px dashed white", 
+                                                // borderColor: "white",
+                                                // borderRadius: 8,
+                                                aspectRatio: 1
+                                            }}
+                                        >
+                                        Crear un nuevo proyecto
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        { projectCards }
                     </div>
                 :
                     <p>No projects found</p>

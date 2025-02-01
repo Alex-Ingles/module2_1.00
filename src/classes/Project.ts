@@ -1,6 +1,7 @@
 
 import { v4 as uuidv4 } from "uuid"
 import { ToDo, IToDo } from "./ToDo"
+import { Timestamp } from "firebase/firestore"
 
 export type ProjectStatus = "pending" | "active" | "finished"
 export type UserRole = "architect" | "engineer" | "developer"
@@ -11,11 +12,12 @@ export interface IProject {
     description: string
     status: ProjectStatus
     userRole: UserRole
-    finishDate: Date
+    finishDate: Date | Timestamp;
     cost: number
     initials: string
     progress: number
     id: string
+    firebaseId: string
     todoList: ToDo[]
 }
 
@@ -29,12 +31,14 @@ export class Project implements IProject {
     cost: number
     progress: number = 0
     todoList: ToDo[] = []
+    id: string
+
 
     // Class internals
     initials: string
     initialsColor: string
-    id: string
     shortFinishDate: string
+    firebaseId: string
 
     constructor(data: IProject, id = uuidv4()) {
         for (const key in data) {

@@ -49,7 +49,7 @@ export function ProjectForm (props: Props) {
     // const onProjectFormSubmit = (e: React.FormEvent<FormData>) => {
     const onProjectFormSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        props.projectsManager.newProject2(newProject, newProject.id)
+        props.projectsManager.newProjectFromForm(newProject)
 
         console.log("I listen the submit")
         console.log("newProject2 is invoked: newProject: ",newProject,"newProject.id: ",newProject.id)

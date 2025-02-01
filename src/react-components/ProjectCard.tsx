@@ -21,20 +21,33 @@ export function ProjectCard(props: Props) {
                     data-project-info="initials"
                     style={{
                         // backgroundColor: "${this.initialsColor}",
-                        backgroundColor: props.project.initialsColor ,
+                        backgroundColor:`${ props.project.initialsColor }` ,
                         padding: 10,
                         borderRadius: 8,
                         aspectRatio: 1
                     }}
-                    >P1</p>
+                    >
+                        {props.project.initials}
+                    </p>
                     <div>
-                        <h5 data-project-info="name">{ props.project.name }</h5>
+                        <h5
+                            data-project-info="name"
+                            className="name"
+                        >                        
+                            { props.project.name } 
+                        </h5>
+                        {/* { props.project.name }  */}
+                        {/* <h5 data-project-info="name">{ props.project.name }</h5> */}
+                        {/* <input data-project-info="name">{ props.project.name }</input> */}
                         <h5 
                             data-project-info="description" 
                             className="description"
                         >
                                 { props.project.description }
                         </h5>
+                        <h6>
+                            {props.project.id}
+                        </h6>
                     </div>
                 </div>
                 <div className="card-content">

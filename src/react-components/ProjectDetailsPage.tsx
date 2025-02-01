@@ -3,6 +3,8 @@ import * as Router from "react-router-dom"
 
 import { ProjectsManager } from "../classes/ProjectsManager"
 import { ProjectTodos } from "./ProjectTodos"
+import { ProjectTodos2 } from "./ProjectTodos2"
+
 import { Project } from "../classes/Project"
 import { ProjectForm } from "./ProjectForm"
 import { ThreeViewer } from "./ThreeViewer"
@@ -85,10 +87,24 @@ export function ProjectDetailsPage(props: Props) {
 
         const onEditProjectClick = ((e) => {
             // showDialog = true
-            
+            e.preventDefault()
             const modal = document.getElementById("edit-project-modal")
             if (modal && modal instanceof HTMLDialogElement) { modal.showModal() }
         })
+
+        const onDeleteProjectClick = ((e) => {
+            // showDialog = true
+            e.preventDefault()
+            // const modal = document.getElementById("edit-project-modal")
+            console.log("projectsManager.deleteProject invoked")
+            props.projectsManager.deleteProject(project)
+
+            // props.projectsManager.deleteProjectFromList(project.id)
+            // props.projectsManager.deleteProjectFromFirestore(project)
+
+            // if (modal && modal instanceof HTMLDialogElement) { modal.showModal() }
+        })
+
 
     // function showForm(visible: boolean) {
     //     if (visible) {
@@ -167,6 +183,7 @@ export function ProjectDetailsPage(props: Props) {
                             <p data-project-info="initials" style={{
                                 fontSize: 12,
                                 backgroundColor: "#969696",
+                                // backgroundColor: `${projectDetails.initialsColor}`,
                                 width: 30,
                                 height: 30,
                                 borderRadius: 15,
@@ -196,9 +213,14 @@ export function ProjectDetailsPage(props: Props) {
                                         Edit
                                     </p>
                                 </button>
-                                <button id="delete-project-btn" className="btn-secondary" style={{
-                                    height: 30 
-                                }}>
+                                <button 
+                                    id="delete-project-btn2" 
+                                    className="btn-secondary" 
+                                    onClick = {(e) => onDeleteProjectClick(e)}
+                                    style={{
+                                        height: 30 
+                                    }}
+                                >
                                     <p style={{ width: 40, fontSize: "small" }}>Delete</p>
                                 </button>
                             </div>
@@ -267,12 +289,13 @@ export function ProjectDetailsPage(props: Props) {
                             </div>
                         </div>
                     </div>
-                    <div>
+                    {/* <div>
                         <h5>Esto si lo veo</h5>
-                    </div>
+                    </div> */}
                     <div id="project-todos" className="dashboard-card">
-                        <p>Después de esto los ProjectTodos</p>
-                        <ProjectTodos projectsManager = {props.projectsManager}/>
+                        {/* <p>ToDo List</p> */}
+                        {/* <ProjectTodos projectsManager = {props.projectsManager}/> */}
+                        <ProjectTodos2 projectsManager = {props.projectsManager}/>
                     </div>
                 </div>
                 <div

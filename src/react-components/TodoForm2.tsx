@@ -3,16 +3,13 @@ import { ToDo, IToDo, ToDoStatus } from "../classes/ToDo"
 import { Project, IProject } from "../classes/Project"
 import { ProjectsManager } from "../classes/ProjectsManager"
 import { ProjectTodos } from "./ProjectTodos"
-
-// import { TodoCard } from "./ToDoCard"
-
 interface Props {
     projectsManager: ProjectsManager; // In order to invoke onToDoCreated, onToDoDeleted...
     project: Project;
     todo: ToDo;
 }
 //---------------------------------------------------------------------------------
-export function TodoForm (props: Props) {
+export function TodoForm2 (props: Props) {
     console.log("TodoForm - NewTodo: ", props.todo)
 
     const modal = document.getElementById("todo-modal");
@@ -59,7 +56,7 @@ export function TodoForm (props: Props) {
                             name="name" 
                             type="text" 
                             placeholder="Enter To-Do name" 
-                            // requiredx
+                            // required
                             // {...project.todoList("name")}
                             defaultValue={ props.todo.name }
                             // onChange={ onInputChange }
@@ -101,7 +98,7 @@ export function TodoForm (props: Props) {
                         <input 
                             data-todo-info="deadline" 
                             name="shortdeadline" 
-                            type="date"
+                            type="date" 
                             defaultValue={ props.todo.shortdeadline }
                             // onChange={ onInputChange }
                         />
@@ -119,126 +116,3 @@ export function TodoForm (props: Props) {
 
 }
 
-// --------------------------------------------------- All commentend after GPT proposal ---------
-// --------------------------------------------------- All commentend after GPT proposal ---------
-
-
-
-    //     setNewTodo((prevToDo) => ({...prevToDo, [name]: value}));
-    // };
-
-
-        // props.todo)
-
-    // const [newToDo, setNewTodo] = React.useState<IToDo>({
-    //     id: "",
-    //     name: "",
-    //     description: "",
-    //     status: "pending",
-    //     deadline: new Date(),
-    //     relatedProject: "",
-    //     todocardcolor: ""
-    // })
-// ------------------------------------------------------------- from GPT?
-    // const onFormSubmit = () => {
-    // }
-    // ------------------------------------------------------------- from GPT?
-    // const onFormCancel = () => {
-    //     const modal = document.getElementById("todo-form")
-    //     if (modal && modal instanceof HTMLFormElement)
-    //         modal.reset(),
-    //         modal.close()
-    // }
-// ------------------------------------------------------------- from GPT?
-    // const handleFormSubmit = (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     // Create new ToDo and update the state
-    //     const updatedToDos = [...toDos, new ToDo(newToDo)];
-    //     setToDos(updatedToDos);
-    //     project.todoList = updatedToDos; // Update the project's to-do list
-    //     if (routeParams.id) {
-    //     setNewTodo({
-    //     id: "",
-    //     name: "",
-    //     description: "",
-    //     status: "pending",
-    //     deadline: new Date(),
-    //     relatedProject: routeParams.id
-    //     todocardcolor: ""
-    //     })};
-    // };
-
-// INPUTS, SETINPUTS 
-
-    // const [inputs, setInputs] = React.useState<ToDo>({
-    //     name: todo?.name || "",
-    //     description: todo?.description || "",
-    //     status: todo?.status || "pending",
-    //     deadline: todo?.deadline || new Date(),
-    //     relatedProject: project.id || "",
-    //     todocardcolor: todo?.todocardcolor || "",
-    //     id: todo?.id || "",
-    //     shortdeadline: todo?.shortdeadline || "",
-    //     setTodoCardColor(){},
-    //     setShortDeadline(){}
-            
-    //     }
-    // )
-
-    // ------------------------------------------------------------- from GPT?
-    // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    //         const { name, value } = e.target;
-    //         setInputs((prevInput) => ({...prevInput, [name]: value}));
-
-    //         // setInput((todo) => ({...todo, [name]: value}));
-    //         setNewTodo((prevToDo) => ({...prevToDo, [name]: value}));
-    //     };
-
-// --------------------
-// CODE BEFORE THE COMMIT ------------------
-//------------------
-
-
-
-    // interface Props {
-    //     // project: Project
-    //     todo: ToDo
-    // }
-    
-    // export function TodoForm (props: Props) {
-    
-    //     const [newInput, setInput] = React.useState<ToDo>(
-    //     )
-    
-    
-    //     const onFormSubmit = () => {
-    
-    //     }
-    
-    //     const handleFormSubmit = (e: React.FormEvent) => {
-    //         e.preventDefault();
-    //         // Create new ToDo and update the state
-    //         const updatedToDos = [...toDos, new ToDo(newToDo)];
-    //         setToDos(updatedToDos);
-    //         project.todoList = updatedToDos; // Update the project's to-do list
-    //         if (routeParams.id) {
-    //         setNewTodo({
-    //         id: "",
-    //         name: "",
-    //         description: "",
-    //         status: "pending",
-    //         deadline: new Date(),
-    //         relatedProject: routeParams.id
-    //         })};
-    //     };
-    
-    
-    //     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    //         const { name, value } = e.target;
-    
-    //         setNewTodo((prevToDo) => ({...prevToDo, [name]: value}));
-    //     };
-    
-    
-    //     return (
-    
