@@ -15,7 +15,7 @@
     "@types/three": "0.156.0",
     "@vitejs/plugin-react": "4.0.3",
     "typescript": "^5.4.5",
-    "vite": "^4.5.5"
+    "vite": "^4.5.9"
   },
   "dependencies": {
     "firebase": "10.5.2",

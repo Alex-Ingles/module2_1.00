@@ -40,7 +40,7 @@ export function TodoForm (props: Props) {
     const onCancel = (e: React.FormEvent) => {
         e.preventDefault()
         if (!(modal && modal instanceof HTMLDialogElement)) {
-            console.warn("todo-modal-",newTodo.id,": doesn't exist")
+            console.warn("todo-modal-",newTodwo.id,": doesn't exist")
         } if (modal && modal instanceof HTMLDialogElement) { modal.close() }
     }
     // ------------------------------------------------------------------------ on Form Delete

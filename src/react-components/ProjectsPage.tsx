@@ -290,8 +290,9 @@ export function ProjectsPage(props: Props) {
                         maxHeight: "95vh"
                         }}
                     >
-                        {/* New Project Card --------------------------------------------*/}
-                        <div>
+                        {/* New Project Card HIDDEN --------------------------------------------*/}
+
+                        <div hidden>
                             <div className="project-card">
                                 <div className="card">
                                     <div className="card-header">
@@ -340,6 +341,8 @@ export function ProjectsPage(props: Props) {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Project Cards -----------------------------*/}
                         { projectCards }
                     </div>
                 :

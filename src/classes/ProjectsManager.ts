@@ -20,15 +20,15 @@ export class ProjectsManager {
 
 // -----------------------------------------------------------------------------
 constructor() {
-    this.getProjects();
+    this.getProjectsFromFirestore();
+    this.getToDosFromFirestore()
     // this.getToDos();
     // console.log("firebaseProjects: ",firebaseProjects)
     console.log("PM this.list: ", this.list)
 }
-
-async getProjects() {
+// -----------------------------------------------------------------------------
+async getProjectsFromFirestore() {
     try {
-    // const getFirestoreProjects = async () => {
         const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
         const firebaseProjects = await Firestore.getDocs(projectsCollection)
         for (const doc of firebaseProjects.docs) {
@@ -46,19 +46,16 @@ async getProjects() {
             } catch (error) {
                 console.log("Error creating ProjectFromFirebase. project.id: ",project.id," doc.id: ", doc.id)
                 throw(error)
-                // this.updateProject(project)
             }
         }
         console.log("firebaseProjects: ",firebaseProjects)
         console.log("PM this.list: ", this.list)
     } catch (error) {
         console.error("Error loading projects from Firestore: ", error)
-        // return getFirestoreProjects
-
     }
 }
-
-async getToDos() {
+// -----------------------------------------------------------------------------
+async getToDosFromFirestore() {
     try {
         // const getFirestoreProjects = async () => {
             const todosCollection = Firestore.collection(firebaseDB, "/todos") as Firestore.CollectionReference<IToDo>
@@ -82,11 +79,10 @@ async getToDos() {
         } catch (error) {
             console.error("Error loading todos from Firestore: ", error)
             // return getFirestoreProjects
-
         }
 }
 
-
+// -----------------------------------------------------------------------------
 filterProjects(value: string) {
     const filteredProjects = this.list.filter((project) => {
         return project.name.includes(value)
@@ -105,7 +101,7 @@ deleteDefaultProjectUI() {
         // return(document)
     }
 }
-
+// -----------------------------------------------------------------------------
 newProjectFromFirestore(data: IProject, id?: string) {
     console.log("PM New Project From Firestore launched")
     if (this.idInUse(data.id)) {
@@ -121,7 +117,7 @@ newProjectFromFirestore(data: IProject, id?: string) {
         // this.storeProjectInFirestore(newProject)
     }
 }
-
+// -----------------------------------------------------------------------------
 async newProjectFromForm(data: IProject) {
     console.log("PM New Project From Form launched")
     if (this.idInUse(data.id)) {
@@ -130,10 +126,18 @@ async newProjectFromForm(data: IProject) {
         const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
         const firebaseProjects = await Firestore.getDocs(projectsCollection)
         const idsInFirestore = firebaseProjects.docs.map((doc) => {return(doc.id)})
-        if (project && idsInFirestore.includes(data.id)) {
-            this.deleteProjectFromFirestore(project)
-            await this.storeProjectInFirestore(project)
-            await this.onProjectUpdated(project)
+        console.log("ids in Firestore:", idsInFirestore)
+        console.log("data.id: ", data.id)
+        if (!data || !idsInFirestore) { return }
+        if (project && idsInFirestore.includes(data.firebaseId)) {
+            try {
+                // await this.deleteProjectFromFirestore(project)
+                await this.updateProjectInFirestore(project)
+                await this.onProjectUpdated(project)
+            }
+            catch (error) {
+                alert(error)
+            }
         } else {
             throw("project doesn't exists or its id is not found in FireBase")
         }
@@ -168,7 +172,7 @@ newProject2(data: IProject, id?: string) {
                 }
             }
             data.todoList = newTodoList
-            const project = new Project(data, id)
+            const project = new Project(data)
             // const projectsCollection2 = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<Project>
 
             // Firestore.addDoc(projectsCollection2, project)
@@ -183,7 +187,7 @@ newProject2(data: IProject, id?: string) {
             // return project
     }
 }
-
+// -----------------------------------------------------------------------------
 async storeProjectInFirestore(project: Project): Promise<void> {
     try {
         const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference
@@ -209,6 +213,36 @@ async storeProjectInFirestore(project: Project): Promise<void> {
         console.error("Error adding projects to Firestore: ", error)
         console.log(project)
     }
+}
+
+async updateProjectInFirestore(project: Project): Promise<void> {
+    try {
+        const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference
+        // const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
+        const projectToFirestore = {
+            id: project.id as string,
+            name: project.name as string,
+            description: project.description as string,
+            status: project.status as string,
+            userRole: project.userRole.valueOf() as string,
+            finishDate: Firestore.Timestamp.fromDate(project.finishDate) as Timestamp,
+            cost: project.cost as number,
+            progress: project.progress as number,
+            todoList: project.todoList as [],
+            initials: project.initials as string,
+            initialsColor: project.initialsColor as string,
+            shortFinishDate: project.shortFinishDate as string,
+            firebaseId: project.firebaseId as string,
+        }
+        const docRef = doc(firebaseDB, "projects", project.firebaseId)
+
+        await Firestore.updateDoc(docRef, projectToFirestore)
+
+    } catch (error) {
+        console.error("Error adding projects to Firestore: ", error)
+        console.log(project)
+    }
+
 }
 
 async storeTodoInFirestore(todo: ToDo): Promise<void> {
@@ -239,7 +273,7 @@ async deleteTodoFromFirestore(todo: ToDo): Promise<void> {
             throw new Error("El todo no tiene un ID válido");
         }
         const docRef = doc(firebaseDB, "todos", todo.id)
-        await Firestore. deleteDoc(docRef)
+        await Firestore.deleteDoc(docRef)
     } catch (error) {
         console.error("Error deleting todos from Firestore: ", error)
         console.log(todo)
@@ -252,7 +286,7 @@ async deleteTodoFromFirestore(todo: ToDo): Promise<void> {
 deleteProject(project: Project) {
     // this.deleteProjectFromList(project.id)
     this.deleteProjectFromFirestore(project)
-    this.deleteProjectFromList(project.id)
+            this.deleteProjectFromList(project.id)
 
     console.log(this.list)
 }
@@ -264,6 +298,8 @@ async deleteProjectFromFirestore(project: Project): Promise<void> {
         if (!project.id) {
             throw new Error("El proyecto no tiene un ID válido");
         }
+        const firebaseRef = "" as string
+
         const docRef = doc(firebaseDB, "projects", project.firebaseId)
         console.log("Firebase docRef: ",docRef)
         // const docRef: Firestore.DocumentReference = project.id as 

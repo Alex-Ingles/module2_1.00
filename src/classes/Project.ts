@@ -40,12 +40,12 @@ export class Project implements IProject {
     shortFinishDate: string
     firebaseId: string
 
-    constructor(data: IProject, id = uuidv4()) {
+    constructor(data: IProject) {
         for (const key in data) {
             this[key] = data[key]
         }
         if (this.id == "") {
-            this.id = id
+            this.id = uuidv4()
         }
         this.findInitials()
         this.setShortFinishDate()

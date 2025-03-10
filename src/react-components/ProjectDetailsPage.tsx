@@ -28,18 +28,25 @@ export function ProjectDetailsPage(props: Props) {
     // Estado para almacenar los detalles del proyecto
     const [projectDetails, setProjectDetails] = React.useState<Project>(project)
     console.warn(" 0000-0000 : projectDetails: ",projectDetails)
-    
-    if (!props.projectsManager.onProjectUpdated) {
-        props.projectsManager.onProjectUpdated = (projectUpdated) => {
-            // const projectToSet = props.projectsManager.getProject(projectUpdated.id)
-            if (projectUpdated) {
-                setProjectDetails(projectUpdated)
-                console.log("onProjectUpdate -> ",projectUpdated," -> ",projectDetails)
-            } else {
-                console.log("DetailsPage, onProjectUpdated -> projectToSet(",project.id,") not found")
-            }
-        }
+
+    props.projectsManager.onProjectUpdated = (project) => {
+        setProjectDetails(project)
+
+        // setProjectDetails([...props.projectsManager.list])
+        console.log("Project Is Updated")
     }
+    
+    // if (!props.projectsManager.onProjectUpdated) {
+    //     props.projectsManager.onProjectUpdated = (projectUpdated) => {
+    //         // const projectToSet = props.projectsManager.getProject(projectUpdated.id)
+    //         if (projectUpdated) {
+    //             setProjectDetails(projectUpdated)
+    //             console.log("onProjectUpdate -> ",projectUpdated," -> ",projectDetails)
+    //         } else {
+    //             console.log("DetailsPage, onProjectUpdated -> projectToSet(",project.id,") not found")
+    //         }
+    //     }
+    // }
 
     // Manejar actualizaciones del proyecto
     // React.useEffect(() => {
@@ -139,6 +146,8 @@ export function ProjectDetailsPage(props: Props) {
                 <div id="page-title">
                     <h2 data-project-info="name">{ projectDetails.name }</h2>
                     <h5 data-project-info="description" style={{ color: "#969696" }}>{ projectDetails.description }</h5>
+                    <h5 data-project-info="id">{ projectDetails.id }</h5>
+                    <h5 data-project-info="fireBaseId">{ projectDetails.firebaseId }</h5>
                 </div>
                 <div className="page-header-buttons" style={{
                     display: "none" 
