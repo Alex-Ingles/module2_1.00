@@ -20,34 +20,17 @@ export function ProjectDetailsPage(props: Props) {
 
     if (!routeParams.id) { return (<p>Project ID is needed to see this page</p>)}
 
-    let projectFromParams = props.projectsManager.getProject(routeParams.id)
-    if (!projectFromParams) { return (<p>The project with ID: {routeParams.id} wasn't found. </p>)}
+    const [projectDetails, setProjectDetails] = React.useState<Project>(props.projectsManager.getProject(routeParams.id) as Project)
+    console.log("this are the projectDetails: ", projectDetails)
+    
 
-    const [projectDetails, setProjectDetails] = React.useState<Project>(projectFromParams)
-    console.warn(" 0000-0000 : projectDetails: ",projectDetails)
+    // previous onProjectUpdated definiton 2
 
     props.projectsManager.onProjectUpdated = (project: Project) => {
         console.log("-------  projectUpdate Detected! ---------")
-        const projectUpdated = props.projectsManager.getProject(project.id)
-        if (projectUpdated) {
-        setProjectDetails(projectUpdated)
+        setProjectDetails(project)
         console.log("Project Is Updated")
-        }
     }
-
-    // onProjectUpdated dentro de UseEffect -> Propuesta GPT, no mejora
-    // React.useEffect(() => {
-    //     props.projectsManager.onProjectUpdated = (project) => {
-    //         console.log("onProjectUpdated triggered:", project);
-    //         const projectUpdated = props.projectsManager.getProject(project.id);
-    //         if (projectUpdated) {
-    //             setProjectDetails(projectUpdated);
-    //         }
-    //     };
-    // }, []); // Se ejecuta solo una vez al montar el componente
-
-
-
 
     const onEditProjectClick = ((e) => {
         // showDialog = true
@@ -61,16 +44,9 @@ export function ProjectDetailsPage(props: Props) {
         e.preventDefault()
         // const modal = document.getElementById("edit-project-modal")
         console.log("projectsManager.deleteProject invoked")
-        props.projectsManager.deleteProject(projectFromParams)
+        props.projectsManager.deleteProject(projectDetails)
 
     })
-// onDeleteProjectClick de GPT, propone enviar a setProjectDetails un null para que no quede perdido si se elimina. Da error.
-    // const onDeleteProjectClick = (e) => {
-    //     e.preventDefault();
-    //     console.log("projectsManager.deleteProject invoked");
-    //     props.projectsManager.deleteProject(projectFromParams);
-    //     setProjectDetails(null); // Esto forzará la actualización de la UI
-    // };
 
     if (!projectDetails) { return <p>Project Details doesn't found</p> }
 
@@ -203,7 +179,9 @@ export function ProjectDetailsPage(props: Props) {
                                 <div>
                                     <h5 style={{ color: "#969696" }}>Cost</h5>
                                     <h5 data-project-info="cost" style={{ color: "white" }}>
+                                    {/* { projectDetails.cost.valueOf() } */}
                                     { projectDetails.cost.valueOf() }
+
                                     </h5>
                                 </div>
                                 <div>
@@ -363,3 +341,44 @@ export function ProjectDetailsPage(props: Props) {
 
             // if (modal && modal instanceof HTMLDialogElement) { modal.showModal() }
 
+// previous State definition
+
+    // let projectFromParams = props.projectsManager.getProject(routeParams.id)
+    // if (!projectFromParams) { return (<p>The project with ID: {routeParams.id} wasn't found. </p>)}
+
+    // const [projectDetails, setProjectDetails] = React.useState<Project>(projectFromParams)
+    // console.warn(" 0000-0000 : projectDetails: ",projectDetails)
+
+    // -------------------------
+
+
+    // previous onProjectUpdated definition
+
+    //     const projectUpdated = props.projectsManager.getProject(project.id)
+    //     if (projectUpdated) {
+    //     setProjectDetails(projectUpdated)
+    //     console.log("Project Is Updated")
+    //     }
+    // }
+
+    // ---------------------------
+
+    // onProjectUpdated dentro de UseEffect -> Propuesta GPT, no mejora
+    // React.useEffect(() => {
+    //     props.projectsManager.onProjectUpdated = (project) => {
+    //         console.log("onProjectUpdated triggered:", project);
+    //         const projectUpdated = props.projectsManager.getProject(project.id);
+    //         if (projectUpdated) {
+    //             setProjectDetails(projectUpdated);
+    //         }
+    //     };
+    // }, []); // Se ejecuta solo una vez al montar el componente
+
+
+    // onDeleteProjectClick de GPT, propone enviar a setProjectDetails un null para que no quede perdido si se elimina. Da error.
+    // const onDeleteProjectClick = (e) => {
+    //     e.preventDefault();
+    //     console.log("projectsManager.deleteProject invoked");
+    //     props.projectsManager.deleteProject(projectFromParams);
+    //     setProjectDetails(null); // Esto forzará la actualización de la UI
+    // };
