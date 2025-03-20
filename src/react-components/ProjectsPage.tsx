@@ -14,44 +14,25 @@ interface Props {
 }
 
 export function ProjectsPage(props: Props) {
-    // const [projectsManager] = React.useState(new ProjectsManager())
-// In the class @Juan is creating the line above and after creating the projects and setProjects state below. Why?
-// In my case is wotking without doing this...?!?
-// Ok, lesson after, projectsManager is not initializes here, but passed as a prop to the function
+
+// ----------------------------------------------------------------------------
+// State    
 
     const [projects, setProjects] = React.useState<Project[]>(props.projectsManager.list)
+
+// ----------------------------------------------------------------------------
+// Eventos de ProjectsManager
+
     props.projectsManager.onProjectCreated = () => {
         setProjects([...props.projectsManager.list])
         console.log("New Project Is Created")
     }
-    props.projectsManager.onProjectDeleted = () => {setProjects([...props.projectsManager.list])}
+    props.projectsManager.onProjectDeleted = () => {
+        setProjects([...props.projectsManager.list])}
 
 // ----------------------------------------------------------------------------
-//  -- Get Firestore Projects as explained by @Juan -------------------------
+// Crear el set de Cards de proyectos
 
-    // const getFirestoreProjects = async () => {
-    //     const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
-    //     const firebaseProjects = await Firestore.getDocs(projectsCollection)
-    //     for (const doc of firebaseProjects.docs) {
-    //         const data = doc.data()
-    //         const project: IProject = {
-    //             ...data,
-    //             finishDate: (data.finishDate as unknown as Firestore.Timestamp).toDate()
-    //         }
-    //         try {
-    //             props.projectsManager.newProject2(project, doc.id)
-    //         } catch (error) {
-    //             props.projectsManager.updateProject(project)
-    //         }
-    //     }
-    // }
-    
-    // React.useEffect(() => {
-    //     getFirestoreProjects()
-    // }, [])
-
-
-    // Crear el set de Cards de proyectos
     const projectCards = projects.map((project) => {
         return (
             <Router.Link to={`/project/${project.id}`} key={project.id}>
@@ -66,8 +47,8 @@ export function ProjectsPage(props: Props) {
     })
 
     const [newIProject, setNewIProject] = React.useState<IProject>({
-        name: "name+6",
-        description: "description",
+        name: "new Project",
+        description: "Project description",
         status: "active",
         userRole: "developer",
         finishDate: new Date,

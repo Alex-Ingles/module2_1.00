@@ -2,6 +2,12 @@ import * as React from "react";
 import * as Router from "react-router-dom";
 
 export function Sidebar() {
+
+const sidebarStyle: React.CSSProperties = [
+    
+
+]
+
     return (
         <aside id="sidebar" className="sidebar">
             <div id="company-logo-box">

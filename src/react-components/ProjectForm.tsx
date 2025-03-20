@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useEffect } from "react"
 import * as Router from "react-router-dom"
 import { Project, IProject } from "../classes/Project"
 import { ToDo } from "../classes/ToDo"
@@ -6,14 +7,11 @@ import { ProjectsManager } from "../classes/ProjectsManager"
 import { firebaseDB } from "../firebase"
 import { Route } from "react-router-dom"
 
-
-
 interface Props {
     project: Project
     projectsManager: ProjectsManager
 }
 
-// export function ProjectForm (props: Props) {
 export function ProjectForm (props: Props) {
     console.log("showing the new Form")
 
@@ -57,7 +55,6 @@ export function ProjectForm (props: Props) {
         const modalNew = document.getElementById("new-new-project-modal")
         const modalEdit = document.getElementById("edit-project-modal")
 
-
         if (modalNew && modalNew instanceof HTMLDialogElement) {
             console.log("I check this")
             modalNew.close()
@@ -68,8 +65,26 @@ export function ProjectForm (props: Props) {
             console.log("I reach this point too")
             modalEdit.close()
         }
-        <Router.Link to={`/project/${newProject.id}`} key={newProject.id}></Router.Link>
     }
+
+
+    // const FormSubmitBtn = () => {
+    //     // const projectCards = projects.map((project) => {
+    //         return (
+    //             <Router.Link to={`/project/${newProject.id}`} key={newProject.id}>
+    //                 <button
+    //                     id="new-project-form-submit-btn"
+    //                     type="submit"
+    //                     style={{ backgroundColor: "green" }}
+    //                     onClick={(e) => onProjectFormSubmit(e) }
+    //                 >
+    //                     Accept
+    //                 </button>
+    //             </Router.Link>
+    //         )
+    //     }
+    
+
 
     const onProjectFormCancel = (e: React.FormEvent) => {
         e.preventDefault()
@@ -84,11 +99,24 @@ export function ProjectForm (props: Props) {
         }
     }
 
+    useEffect(() => { // Solución GPT para que la tecla Scape no minimice la ventana de Safari
+        const handleKeyDown = (event) => {
+          if (event.key === "Escape") {
+            event.preventDefault(); // Evita que Safari salga de pantalla completa
+            onProjectFormCancel(event); // Cierra el formulario
+          }
+        };
+    
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+      }, [onProjectFormCancel]);
+
     return (
-        // <dialog id="new-project-modal"> {/* New Project Modal ---------------------------------------  */}
-        // <form onSubmit={(e) => {onFormSubmit(e)}} id="new-project-form">
-        // <dialog id="project-modal">
-            <form id="new-new-project-form" onSubmit={(e) =>  onProjectFormSubmit(e) }>
+            <form 
+                id="new-new-project-form"
+                key={"new-new-project-form-"+newProject.id}
+                onSubmit={(e) =>  onProjectFormSubmit(e)}
+            >
                 <h2>New Project - ProjectForm</h2>
                 <div className="input-list">
                     <div className="form-field-container">
@@ -110,14 +138,13 @@ export function ProjectForm (props: Props) {
                             placeholder="Enter your project name here"
                             defaultValue= { newProject.name }
                             onChange={ onInputChange }
-
                         />
                     </div>
                     <div className="form-field-container">
                         <label>
                         <span className="material-icons-round">notes</span>Description
                         </label>
-                        <textarea
+                        <textarea 
                             data-project-info="description"
                             name="description"
                             cols={30}
@@ -125,7 +152,11 @@ export function ProjectForm (props: Props) {
                             placeholder="Give your description here"
                             defaultValue= { newProject.description }
                             onChange={ onInputChange }
-
+                            onFocus={(e) => { // Solución GPT para seleccionar contenido del textarea
+                                setTimeout(() => {
+                                  e.target.select();
+                                }, 0);
+                              }}
                         />
                     </div>
                     <div className="form-field-container">
@@ -139,7 +170,6 @@ export function ProjectForm (props: Props) {
                             placeholder="Give the project cost here"
                             defaultValue= { newProject.cost }
                             onChange={ onInputChange }
-
                         />
                     </div>
                     <div className="form-field-container">
@@ -153,7 +183,6 @@ export function ProjectForm (props: Props) {
                             placeholder="Give the progression %"
                             defaultValue= { newProject.progress }
                             onChange={ onInputChange }
-
                         />
                     </div>
                     <div className="form-field-container">
@@ -165,7 +194,6 @@ export function ProjectForm (props: Props) {
                             name="userRole"
                             defaultValue= {newProject.userRole }
                             onChange={ onInputChange }
-
                         >
                             <option>Architect</option>
                             <option>Engineer</option>
@@ -182,7 +210,6 @@ export function ProjectForm (props: Props) {
                             name="status"
                             defaultValue= { newProject.status }
                             onChange={ onInputChange }
-
                         >
                             <option>Pending</option>
                             <option>Active</option>
@@ -200,7 +227,6 @@ export function ProjectForm (props: Props) {
                             type="date"
                             defaultValue= {newProject.shortFinishDate }
                             onChange={ onInputChange }
-
                         />
                     </div>
                 </div>
@@ -212,22 +238,27 @@ export function ProjectForm (props: Props) {
                         >
                             Cancel
                         </button>
-                        {/* <Router.Link to={`/project/${newProject.id}`} key={newProject.id}> */}
+                        <Router.Link to={`/project/${newProject.id}`} key={newProject.id}>
                             <button
                                 id="new-project-form-submit-btn"
                                 type="submit"
                                 style={{ backgroundColor: "green" }}
                                 onClick={(e) => onProjectFormSubmit(e) }
-                                >
+                            >
                                 Accept
                             </button>
-                        {/* </Router.Link> */}
-
+                        </Router.Link>
+                        <button
+                            id="new-project-form-submit-btn"
+                            type="submit"
+                            style={{ backgroundColor: "green" }}
+                            onClick={(e) => onProjectFormSubmit(e) }
+                        >
+                            Accept
+                        </button>
 
                     </div>
                 </div>
             </form>
-        // </dialog>
-
     )
 }

@@ -39,7 +39,7 @@
 #app {
 
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 150px 1fr;
     grid-template-areas: "sidebar content";
     height: 100vh;
     background-color: var(--background);
@@ -245,6 +245,7 @@ header button {
     align-items: center;
     justify-content: space-between;
     border-bottom: 3px solid var(--background-100);
+    
 
 }
 
@@ -427,6 +428,7 @@ input, textarea, select {
     border-radius: 8px;
     border: none;
     font-size: var(--font-base);
+    resize: none;
 }
 
 input:focus, textarea:focus, select:focus {

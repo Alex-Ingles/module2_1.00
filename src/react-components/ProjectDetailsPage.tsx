@@ -18,117 +18,60 @@ export function ProjectDetailsPage(props: Props) {
     const routeParams = Router.useParams<{id: string}>()
     console.log("I`m the ID ma boys: ", routeParams.id)
 
-    // Validar si no existe el ID
     if (!routeParams.id) { return (<p>Project ID is needed to see this page</p>)}
 
-    // Obtener el proyecto
-    let project = props.projectsManager.getProject(routeParams.id)
-    if (!project) { return (<p>The project with ID: {routeParams.id} wasn't found. </p>)}
+    let projectFromParams = props.projectsManager.getProject(routeParams.id)
+    if (!projectFromParams) { return (<p>The project with ID: {routeParams.id} wasn't found. </p>)}
 
-    // Estado para almacenar los detalles del proyecto
-    const [projectDetails, setProjectDetails] = React.useState<Project>(project)
+    const [projectDetails, setProjectDetails] = React.useState<Project>(projectFromParams)
     console.warn(" 0000-0000 : projectDetails: ",projectDetails)
 
-    props.projectsManager.onProjectUpdated = (project) => {
-        setProjectDetails(project)
-
-        // setProjectDetails([...props.projectsManager.list])
+    props.projectsManager.onProjectUpdated = (project: Project) => {
+        console.log("-------  projectUpdate Detected! ---------")
+        const projectUpdated = props.projectsManager.getProject(project.id)
+        if (projectUpdated) {
+        setProjectDetails(projectUpdated)
         console.log("Project Is Updated")
+        }
     }
-    
-    // if (!props.projectsManager.onProjectUpdated) {
-    //     props.projectsManager.onProjectUpdated = (projectUpdated) => {
-    //         // const projectToSet = props.projectsManager.getProject(projectUpdated.id)
-    //         if (projectUpdated) {
-    //             setProjectDetails(projectUpdated)
-    //             console.log("onProjectUpdate -> ",projectUpdated," -> ",projectDetails)
-    //         } else {
-    //             console.log("DetailsPage, onProjectUpdated -> projectToSet(",project.id,") not found")
-    //         }
-    //     }
-    // }
 
-    // Manejar actualizaciones del proyecto
+    // onProjectUpdated dentro de UseEffect -> Propuesta GPT, no mejora
     // React.useEffect(() => {
-    //     const handleProjectUpdated = (updatedProject: Project) => {
-    //         console.warn("onProjectUpdated: ", updatedProject);
-
-    //         // Actualizar los detalles del proyecto si coincide el ID
-    //         if (updatedProject.id === projectDetails.id) {
-    //             setProjectDetails(updatedProject);
+    //     props.projectsManager.onProjectUpdated = (project) => {
+    //         console.log("onProjectUpdated triggered:", project);
+    //         const projectUpdated = props.projectsManager.getProject(project.id);
+    //         if (projectUpdated) {
+    //             setProjectDetails(projectUpdated);
     //         }
     //     };
-    //     // Asignar el método a onProjectUpdated
-    //     props.projectsManager.onProjectUpdated = handleProjectUpdated;
-
-    //     // Limpiar al desmontar el componente
-    //     return () => {
-    //         // props.projectsManager.onProjectUpdated = undefined;
-            
-    //         // Asigno una función vacía para que no haya problemas de tipo
-    //         props.projectsManager.onProjectUpdated = () => {};
-
-    //     };
-    // }, [props.projectsManager, projectDetails]);
-
-    // if (!projectDetails) {
-    //     return <p>Loading project details...</p>;
-    // }
-
-
-    // Antiguo onProjectUpdated
-
-    // props.projectsManager.onProjectUpdated = (updatedProject: Project) => {
-    //     console.warn("onProjectUpdated: ", updatedProject)
-    //     setProjectDetails(props.projectsManager.filterProjects(projectDetails.id)[0])
-    // }
+    // }, []); // Se ejecuta solo una vez al montar el componente
 
 
 
-    // React.useEffect(( ) => {
-    //     console.log("Applying the useEffect on DetailsPage")
-    //     // return (<p>{ projectDetails.description }</p>)
-    // }, [projectDetails])
 
-    // let showDialog = true
+    const onEditProjectClick = ((e) => {
+        // showDialog = true
+        e.preventDefault()
+        const modal = document.getElementById("edit-project-modal")
+        if (modal && modal instanceof HTMLDialogElement) { modal.showModal() }
+    })
 
-        const onEditProjectClick = ((e) => {
-            // showDialog = true
-            e.preventDefault()
-            const modal = document.getElementById("edit-project-modal")
-            if (modal && modal instanceof HTMLDialogElement) { modal.showModal() }
-        })
+    const onDeleteProjectClick = ((e) => {
+        // showDialog = true
+        e.preventDefault()
+        // const modal = document.getElementById("edit-project-modal")
+        console.log("projectsManager.deleteProject invoked")
+        props.projectsManager.deleteProject(projectFromParams)
 
-        const onDeleteProjectClick = ((e) => {
-            // showDialog = true
-            e.preventDefault()
-            // const modal = document.getElementById("edit-project-modal")
-            console.log("projectsManager.deleteProject invoked")
-            props.projectsManager.deleteProject(project)
+    })
+// onDeleteProjectClick de GPT, propone enviar a setProjectDetails un null para que no quede perdido si se elimina. Da error.
+    // const onDeleteProjectClick = (e) => {
+    //     e.preventDefault();
+    //     console.log("projectsManager.deleteProject invoked");
+    //     props.projectsManager.deleteProject(projectFromParams);
+    //     setProjectDetails(null); // Esto forzará la actualización de la UI
+    // };
 
-            // props.projectsManager.deleteProjectFromList(project.id)
-            // props.projectsManager.deleteProjectFromFirestore(project)
-
-            // if (modal && modal instanceof HTMLDialogElement) { modal.showModal() }
-        })
-
-
-    // function showForm(visible: boolean) {
-    //     if (visible) {
-    //         return <ProjectForm projectsManager= { props.projectsManager } project={ projectDetails } key={"project-form"+projectDetails.id}/>
-    //     }
-    //     return <p>Cannot open the form</p>
-    // }
-
-    // const onFormSubmit = ((e) => {
-    //     showDialog = false
-    // })
-
-    //-------------------------------------------
-    // const idFromTodos = (todoId) => {
-    // projectId = todoId
-    // }
-    //-------------------------------------------
     if (!projectDetails) { return <p>Project Details doesn't found</p> }
 
     return (
@@ -143,8 +86,8 @@ export function ProjectDetailsPage(props: Props) {
             <header className="page-header" id="project-details-page-header" style={{ 
                 height: "9%" 
                 }}>
+                <h2 data-project-info="name">{ projectDetails.name }</h2>
                 <div id="page-title">
-                    <h2 data-project-info="name">{ projectDetails.name }</h2>
                     <h5 data-project-info="description" style={{ color: "#969696" }}>{ projectDetails.description }</h5>
                     <h5 data-project-info="id">{ projectDetails.id }</h5>
                     <h5 data-project-info="fireBaseId">{ projectDetails.firebaseId }</h5>
@@ -298,12 +241,7 @@ export function ProjectDetailsPage(props: Props) {
                             </div>
                         </div>
                     </div>
-                    {/* <div>
-                        <h5>Esto si lo veo</h5>
-                    </div> */}
                     <div id="project-todos" className="dashboard-card">
-                        {/* <p>ToDo List</p> */}
-                        {/* <ProjectTodos projectsManager = {props.projectsManager}/> */}
                         <ProjectTodos2 projectsManager = {props.projectsManager}/>
                     </div>
                 </div>
@@ -331,4 +269,97 @@ export function ProjectDetailsPage(props: Props) {
     )
 }
 
+
+    // if (!props.projectsManager.onProjectUpdated) {
+    //     props.projectsManager.onProjectUpdated = (projectUpdated) => {
+    //         // const projectToSet = props.projectsManager.getProject(projectUpdated.id)
+    //         if (projectUpdated) {
+    //             setProjectDetails(projectUpdated)
+    //             console.log("onProjectUpdate -> ",projectUpdated," -> ",projectDetails)
+    //         } else {
+    //             console.log("DetailsPage, onProjectUpdated -> projectToSet(",project.id,") not found")
+    //         }
+    //     }
+    // }
+
+    // Manejar actualizaciones del proyecto
+    // React.useEffect(() => {
+    //     const handleProjectUpdated = (updatedProject: Project) => {
+    //         console.warn("onProjectUpdated: ", updatedProject);
+
+    //         // Actualizar los detalles del proyecto si coincide el ID
+    //         if (updatedProject.id === projectDetails.id) {
+    //             setProjectDetails(updatedProject);
+    //         }
+    //     };
+    //     // Asignar el método a onProjectUpdated
+    //     props.projectsManager.onProjectUpdated = handleProjectUpdated;
+
+    //     // Limpiar al desmontar el componente
+    //     return () => {
+    //         // props.projectsManager.onProjectUpdated = undefined;
+            
+    //         // Asigno una función vacía para que no haya problemas de tipo
+    //         props.projectsManager.onProjectUpdated = () => {};
+
+    //     };
+    // }, [props.projectsManager, projectDetails]);
+
+    // if (!projectDetails) {
+    //     return <p>Loading project details...</p>;
+    // }
+
+
+
+
+
+
+        // Antiguo onProjectUpdated
+
+    // props.projectsManager.onProjectUpdated = (updatedProject: Project) => {
+    //     console.warn("onProjectUpdated: ", updatedProject)
+    //     setProjectDetails(props.projectsManager.filterProjects(projectDetails.id)[0])
+    // }
+
+
+
+    // React.useEffect(( ) => {
+    //     console.log("Applying the useEffect on DetailsPage")
+    //     // return (<p>{ projectDetails.description }</p>)
+    // }, [projectDetails])
+
+    // let showDialog = true
+
+
+    
+
+            // setProjectDetails([...props.projectsManager.list])
+
+
+
+
+
+    // function showForm(visible: boolean) {
+    //     if (visible) {
+    //         return <ProjectForm projectsManager= { props.projectsManager } project={ projectDetails } key={"project-form"+projectDetails.id}/>
+    //     }
+    //     return <p>Cannot open the form</p>
+    // }
+
+    // const onFormSubmit = ((e) => {
+    //     showDialog = false
+    // })
+
+    //-------------------------------------------
+    // const idFromTodos = (todoId) => {
+    // projectId = todoId
+    // }
+    //-------------------------------------------
+
+
+
+                // props.projectsManager.deleteProjectFromList(project.id)
+            // props.projectsManager.deleteProjectFromFirestore(project)
+
+            // if (modal && modal instanceof HTMLDialogElement) { modal.showModal() }
 

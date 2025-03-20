@@ -133,7 +133,8 @@ async newProjectFromForm(data: IProject) {
             try {
                 // await this.deleteProjectFromFirestore(project)
                 await this.updateProjectInFirestore(project)
-                await this.onProjectUpdated(project)
+                console.log("onProjectUpdated to be triggered")
+                this.onProjectUpdated(project)
             }
             catch (error) {
                 alert(error)
@@ -189,6 +190,8 @@ newProject2(data: IProject, id?: string) {
 }
 // -----------------------------------------------------------------------------
 async storeProjectInFirestore(project: Project): Promise<void> {
+    console.log("projectToFirestoreToCheckFinishDate", project)
+    const parsedDate = new Date(project.finishDate)
     try {
         const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference
         // const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
@@ -198,7 +201,7 @@ async storeProjectInFirestore(project: Project): Promise<void> {
             description: project.description as string,
             status: project.status as string,
             userRole: project.userRole.valueOf() as string,
-            finishDate: Firestore.Timestamp.fromDate(project.finishDate) as Timestamp,
+            finishDate: Firestore.Timestamp.fromDate(parsedDate) as Timestamp,
             cost: project.cost as number,
             progress: project.progress as number,
             todoList: project.todoList as [],
