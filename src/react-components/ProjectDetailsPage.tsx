@@ -4,6 +4,7 @@ import * as Router from "react-router-dom"
 import { ProjectsManager } from "../classes/ProjectsManager"
 import { ProjectTodos } from "./ProjectTodos"
 import { ProjectTodos2 } from "./ProjectTodos2"
+import { ProjectsPage } from "./ProjectsPage"
 
 import { Project } from "../classes/Project"
 import { ProjectForm } from "./ProjectForm"
@@ -52,6 +53,9 @@ export function ProjectDetailsPage(props: Props) {
         // const modal = document.getElementById("edit-project-modal")
         console.log("projectsManager.deleteProject invoked")
         props.projectsManager.deleteProject(projectDetails)
+        // return (
+        // )
+
 
     })
 
@@ -156,8 +160,11 @@ export function ProjectDetailsPage(props: Props) {
                                         height: 30 
                                     }}
                                 >
-                                    <p style={{ width: 40, fontSize: "small" }}>Delete</p>
+                                    <Router.Link to="/">
+                                        <p style={{ width: 40, fontSize: "small" }}>Delete</p>
+                                    </Router.Link>
                                 </button>
+
                             </div>
                         </div>
                         <div style={{ padding: "30 0px" }}>

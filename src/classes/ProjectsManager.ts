@@ -27,7 +27,7 @@ constructor() {
 }
 // -----------------------------------------------------------------------------
 async getProjectsFromFirestore() {
-    console.warn("getting all projects from Firestore...")
+    console.warn("Getting all projects from Firestore...")
     try {
         const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
         const firebaseProjects = await Firestore.getDocs(projectsCollection)
@@ -55,7 +55,7 @@ async getProjectsFromFirestore() {
     }
 }
 // -----------------------------------------------------------------------------
-async getFirebaseId(id: string) {
+async updateFirebaseId(id: string) {
     console.warn("syncing FirebaseId...")
     try {
         const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
@@ -64,10 +64,27 @@ async getFirebaseId(id: string) {
         for (const doc of firebaseProjects.docs) {
             // if (doc.id === id) {
                 const data = doc.data()
-                if (data.id !== id) {break}
-                else {
+                if (data.id === id) {
                     console.warn("firebaseId: ",doc.id)
+                    const project: IProject = {
+                        ...data,
+                        finishDate: (data.finishDate as unknown as Firestore.Timestamp).toDate()
+                    }
+                    project.firebaseId = doc.id
+                    try {
+                        this.updateProjectInList(project)
+                    } catch (error) {
+                        console.log("Error creating ProjectFromFirebase. project.id: ",project.id," doc.id: ", doc.id)
+                        throw(error)
+                    }
+        
+
+
+
+
                     return doc.id
+                } else {
+                    console.error("Project with id: ", id, " not found in Firebase docs")
                 }
     //                 const project: IProject = {
     //                     ...data,
@@ -98,10 +115,9 @@ async getFirebaseId(id: string) {
         console.log(error)
     }
 }
-
 // -----------------------------------------------------------------------------
 async getToDosFromFirestore() {
-    console.warn("getting todos from Firestore...")
+    console.warn("Getting all todos from Firestore...")
     try {
         // const getFirestoreProjects = async () => {
             const todosCollection = Firestore.collection(firebaseDB, "/todos") as Firestore.CollectionReference<IToDo>
@@ -127,16 +143,14 @@ async getToDosFromFirestore() {
             // return getFirestoreProjects
         }
 }
-
 // -----------------------------------------------------------------------------
 filterProjects(value: string) {
-    console.warn("filtering projects by name...")
+    console.warn("Filtering projects by name...")
     const filteredProjects = this.list.filter((project) => {
         return project.name.includes(value)
     })
     return filteredProjects
 }
-
 // -----------------------------------------------------------------------------
 async newProjectFromForm(data: IProject) {
     console.warn("Processing Project From Form...")
@@ -148,15 +162,16 @@ async newProjectFromForm(data: IProject) {
     } else {
         console.warn("id not found in List -> creating new project")
         const newProject = new Project(data)
+        this.newProjectToList(newProject)
         await this.newProjectToFirestore(newProject)
-        const firebaseId = await this.getFirebaseId(newProject.id)
-        // console.log("firebaseId: ",firebaseId)
-        if (firebaseId) {
-            newProject.firebaseId = firebaseId
-            this.newProjectToList(newProject)
-        } else {
-            console.warn("ireBaseId doesn't exists: "!)
-        }
+        await this.updateFirebaseId(newProject.id)
+        // const firebaseId = await this.updateFirebaseId(newProject.id)
+        // // console.log("firebaseId: ",firebaseId)
+        // if (firebaseId) {
+        //     newProject.firebaseId = firebaseId
+        // } else {
+        //     console.warn("ireBaseId doesn't exists: !")
+        // }
         // this.list.push(newProject)
         // this.storeProjectInFirestore(newProject)
         // this.onProjectCreated(newProject)
@@ -275,7 +290,6 @@ deleteProject(project: Project) {
     // this.deleteProjectFromList(project.id)
     this.deleteProjectFromFirestore(project)
     this.deleteProjectFromList(project.id)
-
     console.log(this.list)
 }
 

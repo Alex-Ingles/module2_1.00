@@ -7,9 +7,9 @@ import { ProjectDetailsPage } from "./react-components/ProjectDetailsPage"
 
 import { ProjectsManager } from "./classes/ProjectsManager"
 
-console.log("I start at this point")
+console.warn("Starting...")
+console.warn("Creating ProjectsManager...")
 const projectsManager = new ProjectsManager()
-console.log("Projects Manager Created")
 
 const rootElement = document.getElementById("app") as HTMLDivElement
 const appRoot = ReactDOM.createRoot(rootElement)

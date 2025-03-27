@@ -262,7 +262,10 @@ header button {
 #projects-list {
     display: flex;
     flex-direction:row;
-    align-items:flex-start;
+    /* align-items:start;
+    justify-items:auto; */
+    align-content: flex-start;
+    /* align-items: flex-start; */
     /* justify-content:space-around; */
     /* overflow-x:visible; */
     flex-wrap:wrap;
@@ -273,9 +276,9 @@ header button {
     height: 93vh;
     padding-left: 35px;
     overflow-y: scroll;
-    row-gap: 10px;
-    column-gap: 10px;
-    align-items:normal;
+    row-gap: 1%;
+    column-gap: 1%;
+    /* align-items:normal; */
 }
 
 
@@ -303,14 +306,20 @@ header button {
     font-size: 40px;
 } */
 
+.project-card-place {
+    display: block;
+    width: 19%;
+    height: 30%;
+}
+
 .project-card {
     background-color: var(--background-100);
     border-radius: 8px;
     cursor: pointer;
     width: 90%;
     height: 90%;
-    min-height: 220px;
-    min-width: 200px;
+    /* min-height: 220px;
+    min-width: 200px; */
 }
 
 .project-card:hover {

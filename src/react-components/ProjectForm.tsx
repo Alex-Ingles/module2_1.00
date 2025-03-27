@@ -260,9 +260,9 @@ export function ProjectForm (props: Props) {
                             id="new-project-form-submit-btn"
                             type="submit"
                             style={{ backgroundColor: "green" }}
-                            onClick={(e) => onProjectFormSubmit(e) }
+                            onClick={(e) => onProjectFormCancel(e) }
                         >
-                            Accept
+                            Cancel
                         </button>
 
                     </div>
