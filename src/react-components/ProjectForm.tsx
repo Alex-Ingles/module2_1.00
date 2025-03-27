@@ -6,6 +6,7 @@ import { ToDo } from "../classes/ToDo"
 import { ProjectsManager } from "../classes/ProjectsManager"
 import { firebaseDB } from "../firebase"
 import { Route } from "react-router-dom"
+import { ProjectDetailsPage } from "./ProjectDetailsPage"
 
 interface Props {
     project: Project
@@ -46,11 +47,12 @@ export function ProjectForm (props: Props) {
 
     // const onProjectFormSubmit = (e: React.FormEvent<FormData>) => {
     const onProjectFormSubmit = (e: React.FormEvent) => {
+        console.warn("processing projectForm submit...")
         e.preventDefault()
         props.projectsManager.newProjectFromForm(newProject)
 
         console.log("I listen the submit")
-        console.log("newProject2 is invoked: newProject: ",newProject,"newProject.id: ",newProject.id)
+        console.log("newProjectFromForm is invoked: newProject: ",newProject,"newProject.id: ",newProject.id)
 
         const modalNew = document.getElementById("new-new-project-modal")
         const modalEdit = document.getElementById("edit-project-modal")
@@ -65,6 +67,12 @@ export function ProjectForm (props: Props) {
             console.log("I reach this point too")
             modalEdit.close()
         }
+
+        return (
+            <Router.Link to={`/project/${newProject.id}`} key={newProject.id}>
+                <ProjectDetailsPage projectsManager={props.projectsManager}/>
+            </Router.Link>
+        )
     }
 
 

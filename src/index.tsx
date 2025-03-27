@@ -15,13 +15,13 @@ const rootElement = document.getElementById("app") as HTMLDivElement
 const appRoot = ReactDOM.createRoot(rootElement)
 appRoot.render(
     <>
-    <Router.BrowserRouter>
-        <Sidebar />
-        <Router.Routes>
-            <Router.Route path="/" element={<ProjectsPage projectsManager={projectsManager}/>} />
-            <Router.Route path="/project/:id" element={<ProjectDetailsPage projectsManager={projectsManager}/>} />
-        </Router.Routes>
-    </Router.BrowserRouter>
+        <Router.BrowserRouter>
+            <Sidebar />
+            <Router.Routes>
+                <Router.Route path="/" element={<ProjectsPage projectsManager={projectsManager}/>} />
+                <Router.Route path="/project/:id" element={<ProjectDetailsPage projectsManager={projectsManager}/>} />
+            </Router.Routes>
+        </Router.BrowserRouter>
     </>
 )
 
@@ -35,7 +35,8 @@ if (projectsBtn && projectsPage) {
         projectsPage.style.display = "flex"
     })
 }
-// Nav Users Btn -----------------------------------------------------------------------------
+
+// Nav Users Btn --------------------------------------------------------------------------------
 const usersBtn = document.getElementById("nav-users-btn")
 const usersPage = document.getElementById("users-page")
 if (usersBtn && usersPage) {

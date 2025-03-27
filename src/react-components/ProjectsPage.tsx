@@ -40,7 +40,6 @@ export function ProjectsPage(props: Props) {
             </Router.Link>
         )
     })
-    
 
     React.useEffect(() => {
         console.log("Projects state updated", projects)
@@ -60,13 +59,28 @@ export function ProjectsPage(props: Props) {
         firebaseId: ""
     })
 
-    const projectInForm = new Project(newIProject)
+    const newIProject2: IProject = {
+        name: "new Project",
+        description: "Project description",
+        status: "active",
+        userRole: "developer",
+        finishDate: new Date,
+        cost: 0,
+        initials: "",
+        progress: 0,
+        id: "",
+        todoList: [],
+        firebaseId: ""
+    } as IProject
+
+    let projectInForm = new Project(newIProject2)
 
     //  const [projectInForm, setProjectInForm] = React.useState<Project>(new Project(newIProject))
     // const [projectInForm, setProjectInForm] = React.useState<Project>(new Project(newIProject))
-    console.log("ProjectsPage projectInForm: ", projectInForm)
 
     const onNewProjectClick = (e) => {
+        setNewIProject(newIProject2)
+        const projectInForm = new Project(newIProject)
         // const projectToSet = props.projectsManager.getProject(e.target.id)
         // setProjectInForm(projectToSet)
         // props.projectsManager.newProject2(projectInForm)
@@ -78,100 +92,6 @@ export function ProjectsPage(props: Props) {
         modal.showModal()
     }
 
-// ----------------------------------------------------------------------------------------------------
-    // const onFormSubmit = (e: React.FormEvent) => {
-    //     // let submitter = e.submitter as HTMLElement
-    //     // let handler = submitter.id
-    //     // if(handler == "new-project-form-submit-btn") {
-    //     const projectForm = document.getElementById("new-project-form")
-    //     if (!(projectForm && projectForm instanceof HTMLFormElement)) {return} // To avoid complainning
-    //         e.preventDefault() // What is the default behaviour we want to avoid?
-    //         const formData = new FormData(projectForm)
-    //         // console.warn(formData)
-    //         const projectData: IProject = {
-    //             name: formData.get("name") as string,
-    //             description: formData.get("description") as string,
-    //             status: formData.get("status") as ProjectStatus,
-    //             userRole: formData.get("userRole") as UserRole,
-    //             finishDate: new Date (formData.get("finishDate") as string),
-    //             cost: new Number(formData.get("cost")) as number,
-    //             progress: new Number(formData.get("progress")) as number,
-    //             todoList: [],
-    //             id: formData.get("id") as string,
-    //             initials: "" as string
-    //         }
-    //         // console.warn(projectData)
-    //         // console.warn("PM - NewProjectSubmit projectData.finishDate - projectData.progress: ", projectData.finishDate, projectData.progress)
-
-    //         try {
-    //             new Date(projectData.finishDate)
-    //             if (isNaN(projectData.finishDate.valueOf())) {
-    //                 // console.warn("PM - NewProjectSubmit projectData.finishDate: isNan")
-    //                 // console.warn("XXXXXXXXX:  finishDate valueOf is not a number")
-    //                 const defDate = new Date(1979, 7, 3, 12)
-    //                 projectData.finishDate = defDate
-    //                 // console.warn("PM - NewProjectSubmit finishDate after function: ", projectData.finishDate)
-    //             } else {
-    //                 // console.warn("XXXXXXXXX:  finishDate valueOf is a number")
-    //             } 
-    //         } catch (err) {
-    //             alert(err)
-    //         }
-
-    //         // console.log("index.ts when form submit: ", projectData.finishDate, typeof projectData.finishDate)
-    //         // console.log(projectData.finishDate.valueOf())
-    //         // console.log(projectData.finishDate.valueOf.length)
-
-    //         if (props.projectsManager && props.projectsManager.idInUse(projectData.id)) {
-    //             // console.warn("id provided is already in use, existing Project will be updated")
-    //             props.projectsManager.updateProject(projectData)
-    //             projectForm.reset()
-
-    //             const modal = document.getElementById("new-project-modal")
-    //             if (!(modal && modal instanceof HTMLDialogElement)) {return}
-    //             modal.close()
-    //             // toggleModal("new-project-modal", "close")
-
-    //             // console.warn("submit is fired!")
-    //             // console.log(projectData)
-    //             // console.log(props.projectsManager.list)
-
-    //             props.projectsManager.totalCost()
-    //         } else {
-    //             // if (isNaN(projectData.cost)) {
-    //             //     projectData.cost = 20 as number
-    //             // }
-    //             // if (isNaN(projectData.progress)) {
-    //             //     projectData.progress = 20 as number
-    //             // }
-
-    //             try {
-    //                 const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
-    //                 if (!projectData.name || !projectData.id || isNaN(projectData.cost) || isNaN(projectData.progress)) {
-    //                     console.log(projectData.cost, projectData.progress)
-    //                     alert("Formulario incompleto o datos inválidos.");
-    //                     return;
-    //                 }
-    //                 Firestore.addDoc(projectsCollection, projectData)
-    //                 props.projectsManager.newProject2(projectData)
-    //                 props.projectsManager.deleteDefaultProjectUI()
-    //                 projectForm.reset()
-    //                 const modal = document.getElementById("new-project-modal")
-    //                 if (!(modal && modal instanceof HTMLDialogElement)) {return}
-    //                 modal.close()
-    
-    //                 // toggleModal("new-project-modal", "close")
-    //                 props.projectsManager.totalCost()
-
-    //                 // console.warn("submit is fired!")
-    //                 // console.log(projectData)
-    //                 console.log("PM List: ",props.projectsManager.list)
-
-    //             } catch (err) {
-    //                 alert(err)
-    //             }
-    //         }
-    // }
     // ---------------------------------------------------------------- on Import Click
     const onImportClick = () => {
         console.log("I listen the onImportClick")
@@ -189,7 +109,7 @@ export function ProjectsPage(props: Props) {
             for (const project of projects) {
                 const count = 0
                 try {
-                    props.projectsManager.newProject2(project)
+                    props.projectsManager.newProjectFromForm(project)
                     console.log(count+1)
                 }
                 catch (error) {
@@ -259,8 +179,7 @@ export function ProjectsPage(props: Props) {
                 </div>
             </header>
             {/* projectS list -------------------------------------------------------*/}
-            {
-                projects.length > 0? 
+                {projects.length > 0? 
                     <div
                         id="projects-list"
                         style={{
@@ -330,7 +249,7 @@ export function ProjectsPage(props: Props) {
                     <p>No projects found</p>
             }
         </div>
-        )
+    )
 }
 
 
@@ -547,3 +466,107 @@ export function ProjectsPage(props: Props) {
                 </div>
                 </form>
             </dialog> */}
+
+
+// ----------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------
+
+
+// ----------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------
+
+
+    // const onFormSubmit = (e: React.FormEvent) => {
+    //     // let submitter = e.submitter as HTMLElement
+    //     // let handler = submitter.id
+    //     // if(handler == "new-project-form-submit-btn") {
+    //     const projectForm = document.getElementById("new-project-form")
+    //     if (!(projectForm && projectForm instanceof HTMLFormElement)) {return} // To avoid complainning
+    //         e.preventDefault() // What is the default behaviour we want to avoid?
+    //         const formData = new FormData(projectForm)
+    //         // console.warn(formData)
+    //         const projectData: IProject = {
+    //             name: formData.get("name") as string,
+    //             description: formData.get("description") as string,
+    //             status: formData.get("status") as ProjectStatus,
+    //             userRole: formData.get("userRole") as UserRole,
+    //             finishDate: new Date (formData.get("finishDate") as string),
+    //             cost: new Number(formData.get("cost")) as number,
+    //             progress: new Number(formData.get("progress")) as number,
+    //             todoList: [],
+    //             id: formData.get("id") as string,
+    //             initials: "" as string
+    //         }
+    //         // console.warn(projectData)
+    //         // console.warn("PM - NewProjectSubmit projectData.finishDate - projectData.progress: ", projectData.finishDate, projectData.progress)
+
+    //         try {
+    //             new Date(projectData.finishDate)
+    //             if (isNaN(projectData.finishDate.valueOf())) {
+    //                 // console.warn("PM - NewProjectSubmit projectData.finishDate: isNan")
+    //                 // console.warn("XXXXXXXXX:  finishDate valueOf is not a number")
+    //                 const defDate = new Date(1979, 7, 3, 12)
+    //                 projectData.finishDate = defDate
+    //                 // console.warn("PM - NewProjectSubmit finishDate after function: ", projectData.finishDate)
+    //             } else {
+    //                 // console.warn("XXXXXXXXX:  finishDate valueOf is a number")
+    //             } 
+    //         } catch (err) {
+    //             alert(err)
+    //         }
+
+    //         // console.log("index.ts when form submit: ", projectData.finishDate, typeof projectData.finishDate)
+    //         // console.log(projectData.finishDate.valueOf())
+    //         // console.log(projectData.finishDate.valueOf.length)
+
+    //         if (props.projectsManager && props.projectsManager.idInUse(projectData.id)) {
+    //             // console.warn("id provided is already in use, existing Project will be updated")
+    //             props.projectsManager.updateProject(projectData)
+    //             projectForm.reset()
+
+    //             const modal = document.getElementById("new-project-modal")
+    //             if (!(modal && modal instanceof HTMLDialogElement)) {return}
+    //             modal.close()
+    //             // toggleModal("new-project-modal", "close")
+
+    //             // console.warn("submit is fired!")
+    //             // console.log(projectData)
+    //             // console.log(props.projectsManager.list)
+
+    //             props.projectsManager.totalCost()
+    //         } else {
+    //             // if (isNaN(projectData.cost)) {
+    //             //     projectData.cost = 20 as number
+    //             // }
+    //             // if (isNaN(projectData.progress)) {
+    //             //     projectData.progress = 20 as number
+    //             // }
+
+    //             try {
+    //                 const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
+    //                 if (!projectData.name || !projectData.id || isNaN(projectData.cost) || isNaN(projectData.progress)) {
+    //                     console.log(projectData.cost, projectData.progress)
+    //                     alert("Formulario incompleto o datos inválidos.");
+    //                     return;
+    //                 }
+    //                 Firestore.addDoc(projectsCollection, projectData)
+    //                 props.projectsManager.newProject2(projectData)
+    //                 props.projectsManager.deleteDefaultProjectUI()
+    //                 projectForm.reset()
+    //                 const modal = document.getElementById("new-project-modal")
+    //                 if (!(modal && modal instanceof HTMLDialogElement)) {return}
+    //                 modal.close()
+    
+    //                 // toggleModal("new-project-modal", "close")
+    //                 props.projectsManager.totalCost()
+
+    //                 // console.warn("submit is fired!")
+    //                 // console.log(projectData)
+    //                 console.log("PM List: ",props.projectsManager.list)
+
+    //             } catch (err) {
+    //                 alert(err)
+    //             }
+    //         }
+    // }
+

@@ -28,8 +28,15 @@ export function ProjectDetailsPage(props: Props) {
 
     props.projectsManager.onProjectUpdated = (project: Project) => {
         console.log("-------  projectUpdate Detected! ---------")
-        setProjectDetails(project)
-        console.log("Project Is Updated")
+        if (project.id === routeParams.id) {
+
+            const clonedProject = { ...project };
+            setProjectDetails(new Project(clonedProject));
+
+            // setProjectDetails(project)
+            console.log("Project Is Updated")
+            console.log("projectDetails after onProjectUpdated: ", projectDetails)
+        }
     }
 
     const onEditProjectClick = ((e) => {

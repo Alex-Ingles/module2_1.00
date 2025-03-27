@@ -21,7 +21,7 @@ export function ProjectTodos(props: Props) {
 
     const [toDos, setToDos] = React.useState<ToDo[]>( project.todoList )
     // const [todo, setTodo] = React.useState<ToDo>()
-    props.projectsManager.onProjectUpdated = () => {setToDos([...project.todoList])}
+    // props.projectsManager.onProjectUpdated = () => {setToDos([...project.todoList])}
     props.projectsManager.onTodoCreated = () => {setToDos([...project.todoList])}
     props.projectsManager.onTodoUpdated = () => {setToDos([...project.todoList])}
     props.projectsManager.onTodoDeleted = () => {setToDos([...project.todoList])}

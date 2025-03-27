@@ -4,7 +4,6 @@ import * as Router from "react-router-dom";
 export function Sidebar() {
 
 const sidebarStyle: React.CSSProperties = [
-    
 
 ]
 
@@ -20,8 +19,22 @@ const sidebarStyle: React.CSSProperties = [
                 <Router.Link to="/project">
                     <li id="nav-users-btn"><span className="material-icons-round">account_circle</span>Users</li>
                 </Router.Link>
-                <li><a href="#"><span className="material-icons-round">account_circle</span>Section 1</a></li>
-                <li><a href="#section2"></a><span className="material-icons-round">account_circle</span>Section 2</li> 
+                <a href="#">
+                    <li>
+                        <span 
+                            className="material-icons-round">account_circle
+                        </span>
+                        Section 1
+                    </li>
+                </a>
+                <a href="#section2">
+                    <li>
+                        <span 
+                            className="material-icons-round">account_circle
+                        </span>
+                        Section 2
+                    </li> 
+                </a>
             </ul>
         </aside>
 
