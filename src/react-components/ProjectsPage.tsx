@@ -15,14 +15,8 @@ interface Props {
 
 export function ProjectsPage(props: Props) {
 
-// ----------------------------------------------------------------------------
-// State    
-
     const [projects, setProjects] = React.useState<Project[]>(props.projectsManager.list)
-
-// ----------------------------------------------------------------------------
-// Eventos de ProjectsManager
-
+    
     props.projectsManager.onProjectCreated = () => {
         setProjects([...props.projectsManager.list])
         console.log("New Project Is Created")

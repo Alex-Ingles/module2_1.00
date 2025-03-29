@@ -33,6 +33,7 @@ export function ProjectTodos(props: Props) {
         status: "pending",
         deadline: new Date(),
         relatedProject: project.id,
+        firebaseId: project.firebaseId,
         // todocardcolor: ""
     })
 
@@ -84,7 +85,7 @@ export function ProjectTodos(props: Props) {
         console.log("todo to pass: ", todoInForm)
         // setTodoInForm(todoToPass)
         props.projectsManager.updateToDo(todoInForm)
-        const modal = document.getElementById("todo-modal-"+todoInForm.id)
+        const modal = document.getElementById("todo-modal-nv-"+todoInForm.id)
         if (!(modal && modal instanceof HTMLDialogElement)) {return}
         console.warn(project.id, project.todoList)
 
@@ -121,7 +122,7 @@ export function ProjectTodos(props: Props) {
     // ------------------------------------------------------------------------- return UI
     return (
         <div className="dashboard-card" id="project-todos">
-            <dialog id={"todo-modal-"+todoInForm.id}>
+            <dialog id={"todo-modal-nv-"+todoInForm.id}>
                 {/* <p className="todo-card" style={{color: "white"}}>{"todo-modal-"+todoInForm.id}</p> */}
                 <TodoForm projectsManager={props.projectsManager} project={project} todo={todoInForm} key={"todo-form"+todoInForm.id}/>
             </dialog>

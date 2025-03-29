@@ -6,7 +6,7 @@ import { ToDo, IToDo, ToDoStatus } from "../classes/ToDo"
 import { TodoCard } from "./ToDoCard"
 import { ProjectDetailsPage } from "./ProjectDetailsPage"
 import { TodoForm } from "./TodoForm"
-import { TodoForm2 } from "./TodoForm2"
+import { TodoForm2 } from "./TodoForm2_nv"
 
 
 interface Props {
@@ -14,33 +14,61 @@ interface Props {
 }
 
 export function ProjectTodos2(props: Props) {
+    console.warn("mounting ProjectTodos2 component...")
 
-    const routeParams = Router.useParams<{id: string}>() // getting id parameter from the Route
+    const routeParams = Router.useParams<{id: string}>()
     // console.log("I`m the ID ma boys: ", routeParams.id)
     if (!routeParams.id) { return (<p>Project ID is needed to see this page</p>)} 
-    const project = props.projectsManager.getProject(routeParams.id) // getting the project by id from projectsManager
+    const project = props.projectsManager.getProject(routeParams.id)
     if (!project) { return (<p>The project with ID: {routeParams.id} wasnn't found. </p>)}
 
     // const [toDos, setToDos] = React.useState<ToDo[]>( project.todoList )
 
-    const [toDos, setToDos] = React.useState<ToDo[]>( props.projectsManager.todoList.filter((todo) => todo.relatedProject == project.id))
+    const [toDos, setToDos] = React.useState<ToDo[]>( props.projectsManager.todoList.filter((todo) => todo.relatedProject === project.id))
     console.log("ProjectTodos2, toDos: ",toDos)
 
     // const [todo, setTodo] = React.useState<ToDo>()
     // props.projectsManager.onProjectUpdated = () => {setToDos([...project.todoList])}
-    props.projectsManager.onTodoCreated = () => {setToDos([...project.todoList])}
-    props.projectsManager.onTodoUpdated = () => {setToDos([...project.todoList])}
-    props.projectsManager.onTodoDeleted = () => {setToDos([...project.todoList])}
 
-    const [newIToDo, setNewTodo] = React.useState<IToDo>({
+    props.projectsManager.onTodoCreated = () => {setToDos([...props.projectsManager.todoList.filter((todo) => todo.relatedProject === project.id)])}
+    
+    // props.projectsManager.onTodoCreated = () => {setToDos([...project.todoList])}
+    // props.projectsManager.onTodoUpdated = () => {setToDos([...project.todoList])}
+    props.projectsManager.onTodoDeleted = () => {setToDos([...props.projectsManager.todoList.filter((todo) => todo.relatedProject === project.id)])}
+
+    const [newIToDo, setNewITodo] = React.useState<IToDo>({
         id: "",
         name: "New ToDo",
         description: "new ToDo",
         status: "pending",
         deadline: new Date(),
         relatedProject: project.id,
+        firebaseId: "",
         // todocardcolor: ""
     })
+
+    const newIToDo2 = {
+        id: "",
+        name: "New ToDo",
+        description: "new ToDo",
+        status: "pending",
+        deadline: new Date(),
+        relatedProject: project.id,
+        firebaseId: "",
+        // todocardcolor: ""
+    } as IToDo
+
+    // const [todoInForm, setTodoInForm] = React.useState<ToDo>(new ToDo(newIToDo))
+    console.warn("Generating todoInForm...")
+
+    const todoInForm = new ToDo(newIToDo2)
+    // let todoInForm = {} as ToDo
+
+    // const [showForm, setShowForm] = React.useState(false)
+
+
+    // const [todoInForm2, setTodoInForm] = React.useState<IToDo>({
+
 
     // const [showForm, setShowForm] = React.useState(false)
 
@@ -72,7 +100,7 @@ export function ProjectTodos2(props: Props) {
                 )
             })
 
-    const [todoInForm, setTodoInForm] = React.useState<ToDo>(new ToDo(newIToDo))
+    // const [todoInForm, setTodoInForm] = React.useState<ToDo>(new ToDo(newIToDo))
 
 
 // // ------------------------------------------------------------------------ on Form Cancel
@@ -84,17 +112,24 @@ export function ProjectTodos2(props: Props) {
 //     }
     // ------------------------------------------------------------------------- on New Todo Click
     const onNewToDoClick = (e: React.FormEvent) => {
-        e.preventDefault()
-        const newTodo = new ToDo({
-            id: "",
-            name: "New ToDo",
-            description: "new ToDo",
-            status: "pending",
-            deadline: new Date(),
-            relatedProject: project.id,
-        })
+        console.warn("Processing new ToDo click...")
+        // e.preventDefault()
+        // setShowForm(true)
+        // const newTodo = new ToDo({
+        //     id: "",
+        //     name: "New ToDo",
+        //     description: "new ToDo",
+        //     status: "pending",
+        //     deadline: new Date(),
+        //     relatedProject: project.id,
+        //     firebaseId: "",
+        // }
 
-        setTodoInForm(newTodo)
+        // setTodoInForm(new ToDo(newIToDo2))
+
+        // todoInForm = new ToDo(newIToDo)
+        // props.projectsManager.newToDoFromForm(todoInForm)
+        // todoInForm = new ToDo(newIToDo2)
 
         const modal = document.getElementById("todo-modal-"+todoInForm.id)
         if (!(modal && modal instanceof HTMLDialogElement)) {return}
@@ -108,7 +143,7 @@ export function ProjectTodos2(props: Props) {
     // ------------------------------------------------------------------------- return UI
     return (
         <div className="dashboard-card" id="project-todos2">
-            <dialog id={"todo-modal-"+todoInForm.id}>
+            <dialog hidden id={"todo-modal-"+todoInForm.id}>
                 {/* <p className="todo-card" style={{color: "white"}}>{"todo-modal-"+todoInForm.id}</p> */}
                 <TodoForm projectsManager={props.projectsManager} project={project} todo={todoInForm} key={"todo-form-"+todoInForm.id}/>
             </dialog>

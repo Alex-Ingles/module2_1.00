@@ -3,7 +3,7 @@ import { Project } from "../classes/Project"
 import { ToDo, IToDo, ToDoStatus } from "../classes/ToDo"
 import { TodoForm } from "./TodoForm"
 import { ProjectsManager } from "../classes/ProjectsManager"
-import { ProjectTodos } from "./ProjectTodos"
+import { ProjectTodos } from "./ProjectTodos_nv"
 
 interface Props {
     projectsManager: ProjectsManager;
@@ -17,7 +17,7 @@ export function TodoCard(props: Props) {
     // -------------------------------------------------------------- Todo UI click
     const onClickUI = () => {
         console.log("I listen onClickUI")
-        const modal = document.getElementById("todo-modal-"+todotoset.id)
+        const modal = document.getElementById("todo-card-modal-"+todotoset.id)
         if (!(modal && modal instanceof HTMLDialogElement)) {return}
         modal.showModal()
         // -------------------------------------------------------------
@@ -27,9 +27,9 @@ export function TodoCard(props: Props) {
     // ---------------------------------------------------------------- UI
     return (
         <div className="todo-card" onClick={ onClickUI } id={todotoset.id} key={todotoset.id+"-card"}>
-            <dialog id={"todo-modal-"+todotoset.id}>
+            <dialog hidden id={"todo-card-modal-"+todotoset.id}>
                 {/* <p className="todo-card" style={{color: "white"}}>{"todo-modal-"+todotoset.id}</p> */}
-                <TodoForm projectsManager={props.projectsManager} project={props.project} todo={ todotoset } key={"todo-form"+todotoset.id}/>
+                <TodoForm projectsManager={props.projectsManager} project={props.project} todo={ todotoset } key={"todo-card-form"+todotoset.id}/>
             </dialog>
             <p style={{fontSize: "8px"}}>{todotoset.relatedProject}</p>
             <p style={{fontSize: "8px"}}>{todotoset.id}</p>

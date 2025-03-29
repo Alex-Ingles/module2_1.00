@@ -10,6 +10,7 @@ export interface IToDo {
     deadline: Date
     id: string
     relatedProject: string
+    firebaseId: string
     // todocardcolor: string
 }
 
@@ -20,12 +21,13 @@ export class ToDo implements IToDo {
     status: "pending" | "on going" | "solved"
     deadline: Date
     relatedProject: string
-    todocardcolor: string
-
+    firebaseId: string
+    
     // Class internals
     // ui: HTMLDivElement
     id: string
     shortdeadline: string
+    todocardcolor: string
 
     constructor(data: IToDo) {
         console.warn("TD - ToDo constructor invoked")

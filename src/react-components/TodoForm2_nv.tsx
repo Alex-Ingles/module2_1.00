@@ -2,7 +2,8 @@ import * as React from "react"
 import { ToDo, IToDo, ToDoStatus } from "../classes/ToDo"
 import { Project, IProject } from "../classes/Project"
 import { ProjectsManager } from "../classes/ProjectsManager"
-import { ProjectTodos } from "./ProjectTodos"
+import { ProjectTodos } from "./ProjectTodos_nv"
+
 interface Props {
     projectsManager: ProjectsManager; // In order to invoke onToDoCreated, onToDoDeleted...
     project: Project;

@@ -2,7 +2,7 @@ import * as React from "react"
 import * as Router from "react-router-dom"
 
 import { ProjectsManager } from "../classes/ProjectsManager"
-import { ProjectTodos } from "./ProjectTodos"
+import { ProjectTodos } from "./ProjectTodos_nv"
 import { ProjectTodos2 } from "./ProjectTodos2"
 import { ProjectsPage } from "./ProjectsPage"
 
@@ -15,6 +15,7 @@ interface Props {
 }
 
 export function ProjectDetailsPage(props: Props) {
+    console.warn("Mounting ProjectDetailsPage component...")
 
     const routeParams = Router.useParams<{id: string}>()
     console.log("I`m the ID ma boys: ", routeParams.id)
@@ -147,10 +148,7 @@ export function ProjectDetailsPage(props: Props) {
                                     }}
                                     onClick={(e) => onEditProjectClick(e)}
                                 >
-                                    <p style={{ width: 40, fontSize: "small" }}
-                                    >
-                                        Edit
-                                    </p>
+                                    <p style={{ width: 40, fontSize: "small" }}>Edit</p>
                                 </button>
                                 <button 
                                     id="delete-project-btn2" 
@@ -233,9 +231,9 @@ export function ProjectDetailsPage(props: Props) {
                             </div>
                         </div>
                     </div>
-                    <div id="project-todos" className="dashboard-card">
-                        <ProjectTodos2 projectsManager = {props.projectsManager}/>
-                    </div>
+                    {/* <div id="project-todos" className="dashboard-card"> */}
+                    <ProjectTodos2 projectsManager = {props.projectsManager}/>
+                    {/* </div> */}
                 </div>
                 <div
                     id="viewer-container-section"

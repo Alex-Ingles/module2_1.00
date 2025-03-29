@@ -14,7 +14,7 @@ interface Props {
 }
 
 export function ProjectForm (props: Props) {
-    console.log("showing the new Form")
+    console.warn("Mounting ProjectForm...")
 
     const [newProject, setNewProject] = React.useState<Project>(props.project)
     // const modalNew = document.getElementById("new-project-modal")

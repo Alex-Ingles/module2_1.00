@@ -3,9 +3,9 @@ import * as Router from "react-router-dom";
 
 export function Sidebar() {
 
-const sidebarStyle: React.CSSProperties = [
+// const sidebarStyle: React.CSSProperties = [
 
-]
+// ]
 
     return (
         <aside id="sidebar" className="sidebar">
