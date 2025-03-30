@@ -122,7 +122,8 @@ export function ProjectDetailsPage(props: Props) {
                             }}>
                             <p data-project-info="initials" style={{
                                 fontSize: 12,
-                                backgroundColor: "#969696",
+                                backgroundColor: `${projectDetails.initialsColor}`,
+                                // backgroundColor: "#969696",
                                 // backgroundColor: `${projectDetails.initialsColor}`,
                                 width: 30,
                                 height: 30,
