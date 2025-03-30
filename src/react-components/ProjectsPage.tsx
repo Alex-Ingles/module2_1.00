@@ -16,7 +16,7 @@ interface Props {
 export function ProjectsPage(props: Props) {
 
     const [projects, setProjects] = React.useState<Project[]>(props.projectsManager.list)
-    
+
     props.projectsManager.onProjectCreated = () => {
         setProjects([...props.projectsManager.list])
         console.log("New Project Is Created")
@@ -103,7 +103,7 @@ export function ProjectsPage(props: Props) {
             for (const project of projects) {
                 const count = 0
                 try {
-                    props.projectsManager.newProjectFromForm(project)
+                    // props.projectsManager.newProjectFromForm(new Project(project))
                     console.log(count+1)
                 }
                 catch (error) {

@@ -7,6 +7,7 @@ import { TodoCard } from "./ToDoCard"
 import { ProjectDetailsPage } from "./ProjectDetailsPage"
 import { TodoForm } from "./TodoForm"
 import { TodoForm2 } from "./TodoForm2_nv"
+import { SearchBox } from "./SearchBox"
 
 
 interface Props {
@@ -33,7 +34,7 @@ export function ProjectTodos2(props: Props) {
     props.projectsManager.onTodoCreated = () => {setToDos([...props.projectsManager.todoList.filter((todo) => todo.relatedProject === project.id)])}
     
     // props.projectsManager.onTodoCreated = () => {setToDos([...project.todoList])}
-    // props.projectsManager.onTodoUpdated = () => {setToDos([...project.todoList])}
+    props.projectsManager.onTodoUpdated = () => {setToDos([...props.projectsManager.todoList.filter((todo) => todo.relatedProject === project.id)])}
     props.projectsManager.onTodoDeleted = () => {setToDos([...props.projectsManager.todoList.filter((todo) => todo.relatedProject === project.id)])}
 
     const [newIToDo, setNewITodo] = React.useState<IToDo>({
@@ -91,8 +92,10 @@ export function ProjectTodos2(props: Props) {
 
 // ------------------------------
 
-        const toDosCards =  // Creating an array iterator to get all the TodoCards from each Todo in the todolist.
+console.warn("Creating all ToDo cards...")
+        const toDosCards = // Creating an array iterator to get all the TodoCards from each Todo in the todolist.
             toDos.map((todo: ToDo) => {
+                console.warn("Creating ToDo card...")
                 console.log("toDos: ",toDos)
                 console.log("todo: ", todo)
                 return (
@@ -136,13 +139,21 @@ export function ProjectTodos2(props: Props) {
         modal.showModal()
     }
 
+    const onToDoSearch = (value: string) => {
+        // const filteredToDos = (props.projectsManager.filterToDos(value))
+        // const filteredToDos = (props.projectsManager.filterToDos(value))
+        setToDos([...(props.projectsManager.filterToDos(value)).filter((todo) => todo.relatedProject === project.id)])
+    }
+        // setToDos([...filteredToDos.filter((todo) => todo.relatedProject === project.id)])}
+
+
     // function setTodoForm(todo) {
     //     console.log("setTodoForm function called from TodoForm")
     // }
     // if (!todo) {return (<p>Todo doesn't exist</p>)}
     // ------------------------------------------------------------------------- return UI
     return (
-        <div className="dashboard-card" id="project-todos2">
+        <div className="dashboard-card" id="project-todos2" key="project-todos-2">
             <dialog hidden id={"todo-modal-"+todoInForm.id}>
                 {/* <p className="todo-card" style={{color: "white"}}>{"todo-modal-"+todoInForm.id}</p> */}
                 <TodoForm projectsManager={props.projectsManager} project={project} todo={todoInForm} key={"todo-form-"+todoInForm.id}/>
@@ -152,7 +163,9 @@ export function ProjectTodos2(props: Props) {
                 <div className="dashboard-card-buttons">
                     <h4 className="dashboard-card-title">To-Do List</h4>
                     <span className="material-icons-round">search</span>
-                    <input className="search-box" type="text" placeholder="Search by name"/>
+                    <SearchBox onChange={(value) => onToDoSearch(value)}/>
+
+                    {/* <input className="search-box" type="text" placeholder="Search by name"/> */}
                     <button onClick={(e) => {onNewToDoClick(e)}} id="new-todo-btn">
                         <span className="material-icons-round">add_circle_outline</span>
                     </button>

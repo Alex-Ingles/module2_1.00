@@ -12,7 +12,9 @@ interface Props {
 
 export function TodoForm (props: Props) {
     console.warn("Mounting ToDoForm component...")
-    const [newTodo, setNewTodo] = React.useState<ToDo>(new ToDo({...props.todo}))
+    // const [newTodo, setNewTodo] = React.useState<ToDo>(new ToDo({...props.todo}))
+    const [newTodo, setNewTodo] = React.useState<ToDo>(props.todo)
+
     // const modal = document.getElementById("todo-modal-"+newTodo.id);
     console.warn("newToDo id: ", newTodo.id)
     // const form = document.getElementById("new-todo-form")
@@ -26,13 +28,19 @@ export function TodoForm (props: Props) {
         console.log("something to change: ",name,": ", value)
         const todoWip = newTodo
         todoWip[name] = value
+
+        todoWip.deadline = new Date(todoWip.shortdeadline)
+        console.log("deadline: ", todoWip.deadline)
         setNewTodo(todoWip);
     };
     //-------------------------------------------------------------------------- on Form Submit
     const onFormSubmit = (e: React.FormEvent) => {
-        console.warn("Submitting Form...")
+        e.stopPropagation()
         e.preventDefault()
+        console.warn("Submitting Form...")
         const modal = document.getElementById("todo-modal-"+newTodo.id);
+        const modal2 = document.getElementById("todo-card-modal-"+newTodo.id)
+
 
         // console.log("I listen the submit click")
         // console.warn ("updatedTodo: ", newTodo)
@@ -50,19 +58,27 @@ export function TodoForm (props: Props) {
 
         // } 
         if (modal && modal instanceof HTMLDialogElement) { modal.close() }
-        props.projectsManager.newToDoFromForm(new ToDo({...newTodo}))
+        if (modal2 && modal2 instanceof HTMLDialogElement) { modal2.close() }
+
+        // props.projectsManager.newToDoFromForm(new ToDo({...newTodo}))
+        props.projectsManager.newToDoFromForm(newTodo)
+
         // props.projectsManager.newToDo2(newTodo)
     }
     //-------------------------------------------------------------------------- on Form Cancel
     const onCancel = (e: React.FormEvent) => {
-        console.warn("Cancelling Form...")
+        e.stopPropagation()
         e.preventDefault()
+        console.warn("Cancelling Form...")
         const modal = document.getElementById("todo-modal-"+newTodo.id);
+        const modal2 = document.getElementById("todo-card-modal-"+newTodo.id)
 
         // if (!(modal && modal instanceof HTMLDialogElement)) {
         //     console.warn("todo-modal-",newTodo.id,": doesn't exist")
         // } 
         if (modal && modal instanceof HTMLDialogElement) { modal.close() }
+        if (modal2 && modal2 instanceof HTMLDialogElement) { modal2.close() }
+
     }
     // ------------------------------------------------------------------------ on Form Delete
     const onFormDelete = (e) => {

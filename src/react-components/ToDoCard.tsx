@@ -12,6 +12,7 @@ interface Props {
 }
 
 export function TodoCard(props: Props) {
+    console.warn("Mounting ToDoCard component...")
     const [todotoset, SetTodo] = React.useState<ToDo>(props.todo)
     React.useEffect(()=>{SetTodo(props.todo)})
     // -------------------------------------------------------------- Todo UI click
@@ -31,8 +32,8 @@ export function TodoCard(props: Props) {
                 {/* <p className="todo-card" style={{color: "white"}}>{"todo-modal-"+todotoset.id}</p> */}
                 <TodoForm projectsManager={props.projectsManager} project={props.project} todo={ todotoset } key={"todo-card-form"+todotoset.id}/>
             </dialog>
-            <p style={{fontSize: "8px"}}>{todotoset.relatedProject}</p>
-            <p style={{fontSize: "8px"}}>{todotoset.id}</p>
+            {/* <p style={{fontSize: "8px"}}>{todotoset.relatedProject}</p>
+            <p style={{fontSize: "8px"}}>{todotoset.id}</p> */}
             <div className="todo-card" key={"todo-card-" + todotoset.id} style={{ backgroundColor: `${ todotoset.todocardcolor }`}}>
                 <button  id={ todotoset.id + "-btn" }><span className="material-icons-round">edit</span></button>
                 <span className="material-icons-round" 

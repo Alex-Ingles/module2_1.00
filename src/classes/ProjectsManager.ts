@@ -35,7 +35,9 @@ async getProjectsFromFirestore() {
             const data = doc.data()
             const project: IProject = {
                 ...data,
-                finishDate: (data.finishDate as unknown as Firestore.Timestamp).toDate()
+                finishDate: (data.finishDate as unknown as Firestore.Timestamp).toDate(),
+                status: (data.status as ProjectStatus),
+                userRole: (data.userRole as UserRole)
             }
             // console.log("doc.id: ",doc.id,"data.id: ",data.id)
 
@@ -69,7 +71,9 @@ async updateFirebaseId(id: string) {
                     console.warn("firebaseId: ",doc.id)
                     const project: IProject = {
                         ...data,
-                        finishDate: (data.finishDate as unknown as Firestore.Timestamp).toDate()
+                        finishDate: (data.finishDate as unknown as Firestore.Timestamp).toDate(),
+                        status: (data.status as ProjectStatus),
+                        userRole: (data.userRole as UserRole)
                     }
                     project.firebaseId = doc.id
                     try {
@@ -149,10 +153,20 @@ filterProjects(value: string) {
     return filteredProjects
 }
 // -----------------------------------------------------------------------------
+filterToDos(value: string) {
+    console.warn("Filtering todos by name...")
+    const filteredToDos = this.todoList.filter((todo) => {
+        return todo.name.includes(value)
+    })
+    return filteredToDos
+}
+
+// -----------------------------------------------------------------------------
 async newProjectFromForm(data: IProject) {
     console.warn("Processing Project From Form...")
     if (this.idInUse(data.id)) {
         console.log("id found in List -> updating project")
+        // data.finishDate= new Date (data.shortFinishDate)
         this.updateProjectInList(data)
         const updatedProject = new Project(data)
         await this.updateProjectInFirestore(updatedProject)
@@ -216,6 +230,8 @@ updateProjectInList(data: IProject) {
             // }
             for (const key in oldproject) {
                 oldproject[key] = data[key]
+                // finishDate: (data.shortFinishDate as unknown as Firestore.Timestamp).toDate()
+
             }
             // oldproject.todoList = newToDoList
             newList.push(oldproject)
@@ -369,7 +385,9 @@ async newToDoFromForm(data: ToDo) {
         console.warn("TodoFromForm id not found in todoList... Creating...")
         this.newToDoToList(data)
          this.newToDoToFirestore(data)
+
         await this.updateToDoFirebaseId(data.id)
+
         // this.todoList.push(data)
         // this.storeTodoInFirestore(data)
         // this.onTodoCreated(data)
@@ -383,13 +401,13 @@ async newToDoFromForm(data: ToDo) {
 }
 // Update ToDo -----------------------------------------------------------------------------
 newToDoToList(data: ToDo) {
+    console.warn("Creating ToDo in List...")
     const newToDoList = [...this.todoList, data]
     this.todoList = newToDoList
     this.onTodoCreated(data)
     console.warn("TODO LIST: ", this.todoList)
 
 
-    // console.warn("Creating ToDo in List...")
     // console.warn("This.ToDoList: ", this.todoList)
     // const newToDoList: ToDo[] = []
     // let newToDo = {} as ToDo
@@ -460,21 +478,27 @@ updateToDoInList(data: ToDo) {
             // pcount = pcount +1
             // console.log("pcount: ",pcount," tdcount: ",tdcount)
         } else {
+            newToDoList.push(new ToDo(data))
+
+            // const todoUpdated = new ToDo({...oldtodo})
+            // for (const key in todoUpdated) {
+            //     todoUpdated[key] = data[key]
+            //     newToDoList.push(todoUpdated)
+            // }
+
             // this.deleteTodoFromFirestore(oldtodo)
-            for (const key in oldtodo) {
-                oldtodo[key] = data[key]
-                newToDoList.push(oldtodo)
-            }
+            // for (const key in oldtodo) {
+            //     oldtodo[key] = data[key]
+            //     newToDoList.push(oldtodo)
+            // }
             // this.storeTodoInFirestore(oldtodo)
         }}
-    this.todoList = newToDoList
+    this.todoList = [...newToDoList]
     const todoUpdated = this.getToDo(data.id)
     if (todoUpdated) {
         this.onTodoUpdated(todoUpdated)
     }
 }
-
-
 
     //     const todosInOldproject = oldproject.todoList.map((item) => { return(item.id)})
     // for (const todo of this.todoList) {
@@ -522,27 +546,49 @@ async updateToDoFirebaseId(id: string) {
         const projectsCollection = Firestore.collection(firebaseDB, "/todos") as Firestore.CollectionReference<IToDo>
         const firebaseToDos = await Firestore.getDocs(projectsCollection)
         console.log("firebaseToDos: ",firebaseToDos)
-        for (const doc of firebaseToDos.docs) {
-            // if (doc.id === id) {
-                const data = doc.data()
-                if (data.id === id) {
-                    console.warn("ToDo firebaseId: ",doc.id)
-                    const todo: IToDo = {
-                        ...data,
-                        deadline: (data.deadline as unknown as Firestore.Timestamp).toDate()
+        const newToDoList = [] as ToDo[]
+        for (const existingTodo of this.todoList) {
+            if (existingTodo.id !== id) {
+                newToDoList.push(existingTodo)
+            } else {
+                let getFirebaseId = "" as string
+                for (const doc of firebaseToDos.docs) {
+                    // if (doc.id === id) {
+                        const data = doc.data()
+                        if (data.id === id) {
+                            getFirebaseId = doc.id
+                        }
                     }
-                    todo.firebaseId = doc.id
-                    try {
-                        this.updateToDoInList(new ToDo(todo))
-                    } catch (error) {
-                        console.log("Error creating ToDo From Firebase. project.id: ",todo.id," doc.id: ", doc.id)
-                        throw(error)
-                    }
-                    return
-                    // return doc.id
-                } else {
-                    console.error("ToDo with id: ", id, " not found in Firebase docs")
-                }
+                existingTodo.firebaseId = getFirebaseId
+                console.log("firebaseId: ",existingTodo.firebaseId)
+                newToDoList.push(existingTodo)
+            }
+        }
+        this.todoList = newToDoList
+
+        //                     console.warn("ToDo firebaseId: ",doc.id)
+        //                     const todo: IToDo = {
+        //                         ...data,
+        //                         deadline: (data.deadline as unknown as Firestore.Timestamp).toDate()
+        //                     }
+        //                     todo.firebaseId = doc.id
+        //                     try {
+        //                         this.updateToDoInList(new ToDo(todo))
+
+
+        //     }    
+        // }    
+    } catch (error) {
+        console.log("Something went wrong updating firebaseId")
+        // console.log("Error creating ToDo From Firebase. project.id: ",todo.id," doc.id: ", doc.id)
+        throw(error)
+    }
+}
+        // return
+        //             // return doc.id
+        //         } else {
+        //             console.error("ToDo with id: ", id, " not found in Firebase docs")
+        //         }
     //                 const project: IProject = {
     //                     ...data,
     //                     finishDate: (data.finishDate as unknown as Firestore.Timestamp).toDate(),
@@ -566,12 +612,12 @@ async updateToDoFirebaseId(id: string) {
     //     console.log("PM this.list: ", this.list)
     // } catch (error) {
     //     console.error("Error loading projects from Firestore: ", error)
-        }
-    } catch (error) {
-        console.warn("unable to reach ProjectsCollection")
-        console.log(error)
-    }
-}
+        // }
+//     } catch (error) {
+//         console.warn("unable to reach ProjectsCollection")
+//         console.log(error)
+//     }
+// }
 
 
 

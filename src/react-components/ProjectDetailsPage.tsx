@@ -111,10 +111,10 @@ export function ProjectDetailsPage(props: Props) {
                     flexDirection: "column",
                     rowGap: 10,
                     height: "100%"
-                }}>
+                    }}>
                 {/* dashboard card 1 ProjectDetails---------------------*/}
                     <div className="dashboard-card" id="project-information">
-                        <div style={{
+                        <div className="dashboard-header" style={{
                             display: "flex",
                             justifyContent: "space-between",
                             alignContent: "center",
@@ -138,7 +138,7 @@ export function ProjectDetailsPage(props: Props) {
                                 display: "none" }}>
                                 { projectDetails.id }
                             </p>
-                            <div>
+                            <div className="dashboard-card-buttons">
                                 <button 
                                     id="edit-project-btn" 
                                     type="button" 
@@ -148,18 +148,23 @@ export function ProjectDetailsPage(props: Props) {
                                     }}
                                     onClick={(e) => onEditProjectClick(e)}
                                 >
-                                    <p style={{ width: 40, fontSize: "small" }}>Edit</p>
+                                    <p style={{ width: 40, fontSize: "small" }}>
+                                        Edit
+                                        </p>
                                 </button>
                                 <button 
                                     id="delete-project-btn2" 
                                     className="btn-secondary" 
                                     onClick = {(e) => onDeleteProjectClick(e)}
                                     style={{
-                                        height: 30 
+                                        height: 30,
+                                        backgroundColor: "red"
                                     }}
                                 >
                                     <Router.Link to="/">
-                                        <p style={{ width: 40, fontSize: "small" }}>Delete</p>
+                                        <p style={{ width: 40, fontSize: "small", backgroundColor: "red" }}>
+                                            X
+                                            </p>
                                     </Router.Link>
                                 </button>
 
