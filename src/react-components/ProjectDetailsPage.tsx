@@ -229,7 +229,10 @@ export function ProjectDetailsPage(props: Props) {
                                 <div id="project-progress-bar" className="progress-bar-done" style={{
                                     backgroundColor: "rgb(158, 195, 158)",
                                     borderRadius: "10px 0 0 10px",
-                                    width: `${projectDetails.progress * 100}%"`,
+                                    // minWidth: 
+                                    // width: `${projectDetails.progress * 100}%`,
+                                    width: `${projectDetails.progress}%`,
+
                                 }}>
                                     <h5 data-project-info="progress">{ projectDetails.progress .valueOf() }%</h5>
                                 </div>

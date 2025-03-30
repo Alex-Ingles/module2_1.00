@@ -172,6 +172,18 @@ export function TodoForm (props: Props) {
                             </select>
                         </div>
                         <div className="form-field-container">
+                            <label htmlFor="priority"><span className="material-icons-round">apartment</span>Priority</label>
+                            <input 
+                                data-todo-info="priority" 
+                                name="priority" 
+                                type="number" 
+                                placeholder="Enter 1-10 priority" 
+                                defaultValue={ newTodo.priority }
+                                onChange={ onInputChange }
+                            />
+                        </div>
+
+                        <div className="form-field-container">
                             <label htmlFor="deadline">
                                 <span 
                                     className="material-icons-round">

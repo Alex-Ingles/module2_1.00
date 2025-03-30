@@ -34,6 +34,7 @@ export function ProjectTodos(props: Props) {
         deadline: new Date(),
         relatedProject: project.id,
         firebaseId: project.firebaseId,
+        priority: 1,
         // todocardcolor: ""
     })
 

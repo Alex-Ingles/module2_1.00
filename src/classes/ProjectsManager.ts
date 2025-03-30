@@ -459,6 +459,7 @@ async newToDoToFirestore(todo: ToDo): Promise<void> {
             relatedProject: todo.relatedProject as string,
             todoCardColor: todo.todocardcolor as string,
             shortdeadline: todo.shortdeadline as string,
+            priority: todo.priority as number,
         }
         await Firestore.addDoc(todosCollection, todoToFirestore)
         return
@@ -530,6 +531,7 @@ async updateToDoInFirestore(todo: ToDo): Promise<void> {
                 shortdeadline: todo.shortdeadline as string,
                 todocardcolor: todo.todocardcolor as string,
                 firebaseId: todo.firebaseId as string,
+                priority: todo.priority as number,
             }
             const docRef = doc(firebaseDB, "todos", todo.firebaseId)
             await Firestore.updateDoc(docRef, todoToFirestore)

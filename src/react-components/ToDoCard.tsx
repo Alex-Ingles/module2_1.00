@@ -34,7 +34,9 @@ export function TodoCard(props: Props) {
             </dialog>
             {/* <p style={{fontSize: "8px"}}>{todotoset.relatedProject}</p>
             <p style={{fontSize: "8px"}}>{todotoset.id}</p> */}
-            <div className="todo-card" key={"todo-card-" + todotoset.id} style={{ backgroundColor: `${ todotoset.todocardcolor }`}}>
+            <div className="todo-card" key={"todo-card-" + todotoset.id} 
+                // style={{ backgroundColor: `${ todotoset.todocardcolor }`}}
+                >
                 <button  id={ todotoset.id + "-btn" }><span className="material-icons-round">edit</span></button>
                 <span className="material-icons-round" 
                     style={{ 
@@ -46,7 +48,8 @@ export function TodoCard(props: Props) {
                 <div hidden={true}><h5 className="todo-id">{ todotoset.id }</h5></div>
                 <div style={{ width: "50%" }}>
                     <h5  className="todo-description">{ todotoset.description }</h5></div>
-                <div style={{width: "15%" }}><h5 className="todo-status">{ todotoset.status}</h5></div>
+                <div style={{width: "15%", backgroundColor: `${ todotoset.todocardcolor }` }}><h5 className="todo-status">{ todotoset.status}</h5></div>
+                <div style={{width: "15%", backgroundColor: `${ todotoset.prioritycardcolor }`  }}><h5 className="todo-priority">{ todotoset.priority }</h5></div>
                 <div hidden={true}><h5 className="todo-relatedProject">{ todotoset.relatedProject }</h5></div>
                 <div style={{display: "none"}}><h5 className="todo-deadline">{ todotoset.deadline.toString() }</h5></div>
                 <div><h5 className="todo-shortDeadline">{ todotoset.shortdeadline }</h5></div>
