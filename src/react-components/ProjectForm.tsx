@@ -17,18 +17,12 @@ export function ProjectForm (props: Props) {
     const [newProject, setNewProject] = React.useState<Project>(props.project)
     const [formError, setFormError] = React.useState<null | string>(null);
 
-    let projectWip: Project = {} as Project
-
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         let { name, value } = e.target;
         console.log("something to change: ",name,": ", value)
         const projectWip = newProject
         projectWip[name] = value
         projectWip.setShortFinishDate()
-        // if (name === "shortfinishDate") {
-        //     console.log("shortFinishDate: ",projectWip.shortFinishDate)
-        //     projectWip.finishDate = new Date(projectWip.shortFinishDate)
-        // }
         setNewProject(projectWip)
         console.log("newProject after change: ", newProject)
     }
@@ -112,10 +106,12 @@ export function ProjectForm (props: Props) {
                 id="new-new-project-form"
                 key={"new-new-project-form-"+newProject.id}
                 onSubmit={(e) =>  onProjectFormSubmit(e)}
-            >
+                >
                 {formError && (<ErrorModal message={formError} onClose={() => setFormError(null)}/>)}
 
-                <h2>New Project - ProjectForm</h2>
+                <h2>
+                    New Project - ProjectForm
+                </h2>
                 <div className="input-list">
                     <div className="form-field-container">
                     <input
@@ -124,10 +120,13 @@ export function ProjectForm (props: Props) {
                         // type="hidden"
                         placeholder="auto-id"
                         defaultValue= { newProject.id }
-                    />
+                        />
                     <div className="form-field-container">
                         <label>
-                        <span className="material-icons-round">apartment</span>Name
+                            <span className="material-icons-round">
+                                apartment
+                            </span>
+                                Name
                         </label>
                         <input
                             data-project-info="name"
@@ -136,7 +135,7 @@ export function ProjectForm (props: Props) {
                             placeholder="Enter your project name here"
                             defaultValue= { newProject.name }
                             onChange={ onInputChange }
-                        />
+                            />
                     </div>
                     <div className="form-field-container">
                         <label>
@@ -259,55 +258,3 @@ export function ProjectForm (props: Props) {
             </form>
     )
 }
-
-// import { ToDo } from "../classes/ToDo"
-// import { firebaseDB } from "../firebase"
-// import { Route } from "react-router-dom"
-// import ErrorBoundary from "./ErrorBoundary"
-
-
-    // const modalNew = document.getElementById("new-project-modal")
-
-    // const modalNew = document.getElementById("new-new-project-modal")
-    // const modalEdit = document.getElementById("edit-project-modal")
-
-    // const [newIProject, setNewIProject] = React.useState<IProject>({
-    //     name: "name",
-    //     description: "description",
-    //     status: "active",
-    //     userRole: "developer",
-    //     finishDate: new Date,
-    //     cost: 0,
-    //     initials: "",
-    //     progress: 0,
-    //     id: "",
-    //     todoList: [],
-    // })
-
-    // props.projectsManager.onError = () => {
-    //    return  (
-    //         <div>
-    //             <Error project={ newProject }/>
-    //         </div>
-    //    )
-    // }
-
-        // const onProjectFormSubmit = (e: React.FormEvent<FormData>) => {
-
-            // const FormSubmitBtn = () => {
-    //     // const projectCards = projects.map((project) => {
-    //         return (
-    //             <Router.Link to={`/project/${newProject.id}`} key={newProject.id}>
-    //                 <button
-    //                     id="new-project-form-submit-btn"
-    //                     type="submit"
-    //                     style={{ backgroundColor: "green" }}
-    //                     onClick={(e) => onProjectFormSubmit(e) }
-    //                 >
-    //                     Accept
-    //                 </button>
-    //             </Router.Link>
-    //         )
-    //     }
-    
-

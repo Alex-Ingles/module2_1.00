@@ -12,7 +12,6 @@ export interface IToDo {
     relatedProject: string
     firebaseId: string
     priority: number
-    // todocardcolor: string
 }
 
 export class ToDo implements IToDo {
@@ -26,7 +25,6 @@ export class ToDo implements IToDo {
     priority: number
     
     // Class internals
-    // ui: HTMLDivElement
     id: string
     shortdeadline: string
     todocardcolor: string
@@ -40,7 +38,6 @@ export class ToDo implements IToDo {
         console.log("data: ", data)
         console.log("this.id: ",this.id)
         this.setShortDeadline()
-        // this.setUI()
         this.setTodoCardColor()
         this.setPriorityCardColor()
         if (this.id == "") {
@@ -61,7 +58,7 @@ export class ToDo implements IToDo {
         if (this.status == "pending") {
         this.todocardcolor = 'var(--background-200)';
         }
-        }
+    }
    
     setPriorityCardColor() {
         if (this.priority == 10) {
@@ -77,8 +74,7 @@ export class ToDo implements IToDo {
         if (this.priority < 5) {
             this.prioritycardcolor = 'lightgrey';
         }
-
-        }
+    }
     
     setShortDeadline() {
         this.shortdeadline = new Date (this.deadline).toLocaleDateString("es-ES")

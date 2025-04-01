@@ -3,7 +3,6 @@ import { Project } from "../classes/Project"
 import { ToDo, IToDo, ToDoStatus } from "../classes/ToDo"
 import { TodoForm } from "./TodoForm"
 import { ProjectsManager } from "../classes/ProjectsManager"
-import { ProjectTodos } from "./ProjectTodos_nv"
 
 interface Props {
     projectsManager: ProjectsManager;
@@ -15,28 +14,22 @@ export function TodoCard(props: Props) {
     console.warn("Mounting ToDoCard component...")
     const [todotoset, SetTodo] = React.useState<ToDo>(props.todo)
     React.useEffect(()=>{SetTodo(props.todo)})
-    // -------------------------------------------------------------- Todo UI click
+
     const onClickUI = () => {
         console.log("I listen onClickUI")
         const modal = document.getElementById("todo-card-modal-"+todotoset.id)
         if (!(modal && modal instanceof HTMLDialogElement)) {return}
         modal.showModal()
-        // -------------------------------------------------------------
+
         console.warn("props.todo: ",props.todo, "todotoset: ",todotoset)
-        // -------------------------------------------------------------
     }
     // ---------------------------------------------------------------- UI
     return (
         <div className="todo-card" onClick={ onClickUI } id={todotoset.id} key={todotoset.id+"-card"}>
             <dialog hidden id={"todo-card-modal-"+todotoset.id}>
-                {/* <p className="todo-card" style={{color: "white"}}>{"todo-modal-"+todotoset.id}</p> */}
                 <TodoForm projectsManager={props.projectsManager} project={props.project} todo={ todotoset } key={"todo-card-form"+todotoset.id}/>
             </dialog>
-            {/* <p style={{fontSize: "8px"}}>{todotoset.relatedProject}</p>
-            <p style={{fontSize: "8px"}}>{todotoset.id}</p> */}
-            <div className="todo-card" key={"todo-card-" + todotoset.id} 
-                // style={{ backgroundColor: `${ todotoset.todocardcolor }`}}
-                >
+            <div className="todo-card" key={"todo-card-" + todotoset.id}>
                 <button  id={ todotoset.id + "-btn" }><span className="material-icons-round">edit</span></button>
                 <span className="material-icons-round" 
                     style={{ 

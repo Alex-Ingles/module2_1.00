@@ -1,7 +1,5 @@
 import * as React from "react"
 import { Project } from "../classes/Project"
-import { ToDo } from "../classes/ToDo"
-import { ProjectsManager } from "../classes/ProjectsManager"
 
 interface Props {
     project: Project
@@ -9,44 +7,36 @@ interface Props {
 
 export function ProjectCard(props: Props) {
 
-    // const [todos, setToDos] = React.useState<ToDo[]>(props.project.todoList)
-    // projectsManager.onToDoCreated = () => {setToDos([...props.project.todoList])}
-    // props.project.onToDoDeleted = () => {setToDos([...props.project.todoList])}
-
     return (
         <div className="project-card">
             <div className="card">
                 <div className="card-header">
                     <p
-                    data-project-info="initials"
-                    style={{
-                        // backgroundColor: "${this.initialsColor}",
-                        backgroundColor:`${ props.project.initialsColor }` ,
-                        padding: 10,
-                        borderRadius: 8,
-                        aspectRatio: 1
-                    }}
-                    >
-                        {props.project.initials}
+                        data-project-info="initials"
+                        style={{
+                            backgroundColor:`${ props.project.initialsColor }` ,
+                            padding: 10,
+                            borderRadius: 8,
+                            aspectRatio: 1
+                        }}
+                        >
+                        { props.project.initials }
                     </p>
                     <div>
-                        <h5
+                        <h4
                             data-project-info="name"
                             className="name"
-                        >                        
+                            >                        
                             { props.project.name } 
-                        </h5>
-                        {/* { props.project.name }  */}
-                        {/* <h5 data-project-info="name">{ props.project.name }</h5> */}
-                        {/* <input data-project-info="name">{ props.project.name }</input> */}
+                        </h4>
                         <h5 
                             data-project-info="description" 
                             className="description"
-                        >
-                                { props.project.description }
+                            >
+                            { props.project.description }
                         </h5>
                         <h6>
-                            {props.project.id}
+                            { props.project.id }
                         </h6>
                     </div>
                 </div>
@@ -67,7 +57,7 @@ export function ProjectCard(props: Props) {
                     </div>
                     <div className="card-property">
                         <p style={{ color: "#969696" }}>Cost</p>
-                        <p data-project-info="cost">{ props.project.cost ? `$${props.project.cost}` : "N/A" }</p>
+                        <p data-project-info="cost">{ props.project.cost ? `${props.project.cost}` : "N/A" }</p>
                     </div>
                     <div style={{ display: "none" }} className="card-property">
                         <p style={{ color: "#969696" }}>
