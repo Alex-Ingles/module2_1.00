@@ -16,6 +16,7 @@ export class ProjectsManager {
     onTodoCreated = (todo: ToDo) => {}
     onTodoUpdated = (todo: ToDo) => {}
     onTodoDeleted = () => {}
+    onError = () => {}
 
 // -----------------------------------------------------------------------------
 constructor() {
@@ -180,6 +181,10 @@ async newProjectFromForm(data: IProject) {
 }
 // -----------------------------------------------------------------------------
 newProjectToList(data: IProject) {
+    if (data.name.length < 6){
+        throw new Error(`Project name "${data.name}" must contain at least 6 characters`)
+    }
+
     console.warn("creating project in List...")
     const newProject = new Project(data)
     this.list.push(newProject)
@@ -217,8 +222,14 @@ async newProjectToFirestore(project: Project): Promise<void> {
 updateProjectInList(data: IProject) {
     console.warn("updating project from List...")
     if (data.name.length < 6){
+        // this.onError()
+        // const modal = document.getElementById("project-form-error")
+        // if (modal && modal instanceof HTMLDialogElement) { modal.show() }
         throw new Error(`Project name "${data.name}" must contain at least 6 characters`)
     }
+
+    
+
     const newList: Project[] = []
     // const newToDoList: ToDo[] = [] 
     for (const oldproject of this.list) {

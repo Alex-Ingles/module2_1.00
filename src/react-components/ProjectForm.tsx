@@ -2,11 +2,9 @@ import * as React from "react"
 import { useEffect } from "react"
 import * as Router from "react-router-dom"
 import { Project, IProject } from "../classes/Project"
-import { ToDo } from "../classes/ToDo"
 import { ProjectsManager } from "../classes/ProjectsManager"
-import { firebaseDB } from "../firebase"
-import { Route } from "react-router-dom"
 import { ProjectDetailsPage } from "./ProjectDetailsPage"
+import { ErrorModal } from "./ErrorModal"
 
 interface Props {
     project: Project
@@ -17,23 +15,8 @@ export function ProjectForm (props: Props) {
     console.warn("Mounting ProjectForm...")
 
     const [newProject, setNewProject] = React.useState<Project>(props.project)
-    // const modalNew = document.getElementById("new-project-modal")
+    const [formError, setFormError] = React.useState<null | string>(null);
 
-    // const modalNew = document.getElementById("new-new-project-modal")
-    // const modalEdit = document.getElementById("edit-project-modal")
-
-    // const [newIProject, setNewIProject] = React.useState<IProject>({
-    //     name: "name",
-    //     description: "description",
-    //     status: "active",
-    //     userRole: "developer",
-    //     finishDate: new Date,
-    //     cost: 0,
-    //     initials: "",
-    //     progress: 0,
-    //     id: "",
-    //     todoList: [],
-    // })
     let projectWip: Project = {} as Project
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -45,11 +28,19 @@ export function ProjectForm (props: Props) {
         console.log("newProject after change: ", newProject)
     }
 
-    // const onProjectFormSubmit = (e: React.FormEvent<FormData>) => {
-    const onProjectFormSubmit = (e: React.FormEvent) => {
+    const onProjectFormSubmit = async (e: React.FormEvent) => {
         console.warn("processing projectForm submit...")
         e.preventDefault()
-        props.projectsManager.newProjectFromForm(newProject)
+        if (newProject.name.length < 6 ){
+            setFormError("Something went wrong");
+            return
+        }
+        try {
+            await props.projectsManager.newProjectFromForm(newProject)
+        } catch (error) {
+            console.error("Error creando el proyecto", error);
+            setFormError(error.message || "Something went wrong");
+        }
 
         console.log("I listen the submit")
         console.log("newProjectFromForm is invoked: newProject: ",newProject,"newProject.id: ",newProject.id)
@@ -60,7 +51,6 @@ export function ProjectForm (props: Props) {
         if (modalNew && modalNew instanceof HTMLDialogElement) {
             console.log("I check this")
             modalNew.close()
-            // modalNew.close()
         }
 
         if (modalEdit && modalEdit instanceof HTMLDialogElement) {
@@ -74,25 +64,6 @@ export function ProjectForm (props: Props) {
             </Router.Link>
         )
     }
-
-
-    // const FormSubmitBtn = () => {
-    //     // const projectCards = projects.map((project) => {
-    //         return (
-    //             <Router.Link to={`/project/${newProject.id}`} key={newProject.id}>
-    //                 <button
-    //                     id="new-project-form-submit-btn"
-    //                     type="submit"
-    //                     style={{ backgroundColor: "green" }}
-    //                     onClick={(e) => onProjectFormSubmit(e) }
-    //                 >
-    //                     Accept
-    //                 </button>
-    //             </Router.Link>
-    //         )
-    //     }
-    
-
 
     const onProjectFormCancel = (e: React.FormEvent) => {
         e.preventDefault()
@@ -125,6 +96,8 @@ export function ProjectForm (props: Props) {
                 key={"new-new-project-form-"+newProject.id}
                 onSubmit={(e) =>  onProjectFormSubmit(e)}
             >
+                {formError && (<ErrorModal message={formError} onClose={() => setFormError(null)}/>)}
+
                 <h2>New Project - ProjectForm</h2>
                 <div className="input-list">
                     <div className="form-field-container">
@@ -264,9 +237,60 @@ export function ProjectForm (props: Props) {
                         >
                             Cancel
                         </button>
-
                     </div>
                 </div>
             </form>
     )
 }
+
+// import { ToDo } from "../classes/ToDo"
+// import { firebaseDB } from "../firebase"
+// import { Route } from "react-router-dom"
+// import ErrorBoundary from "./ErrorBoundary"
+
+
+    // const modalNew = document.getElementById("new-project-modal")
+
+    // const modalNew = document.getElementById("new-new-project-modal")
+    // const modalEdit = document.getElementById("edit-project-modal")
+
+    // const [newIProject, setNewIProject] = React.useState<IProject>({
+    //     name: "name",
+    //     description: "description",
+    //     status: "active",
+    //     userRole: "developer",
+    //     finishDate: new Date,
+    //     cost: 0,
+    //     initials: "",
+    //     progress: 0,
+    //     id: "",
+    //     todoList: [],
+    // })
+
+    // props.projectsManager.onError = () => {
+    //    return  (
+    //         <div>
+    //             <Error project={ newProject }/>
+    //         </div>
+    //    )
+    // }
+
+        // const onProjectFormSubmit = (e: React.FormEvent<FormData>) => {
+
+            // const FormSubmitBtn = () => {
+    //     // const projectCards = projects.map((project) => {
+    //         return (
+    //             <Router.Link to={`/project/${newProject.id}`} key={newProject.id}>
+    //                 <button
+    //                     id="new-project-form-submit-btn"
+    //                     type="submit"
+    //                     style={{ backgroundColor: "green" }}
+    //                     onClick={(e) => onProjectFormSubmit(e) }
+    //                 >
+    //                     Accept
+    //                 </button>
+    //             </Router.Link>
+    //         )
+    //     }
+    
+
