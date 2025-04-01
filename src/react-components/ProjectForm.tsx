@@ -35,6 +35,10 @@ export function ProjectForm (props: Props) {
             setFormError("Something went wrong");
             return
         }
+        if (props.projectsManager.nameInUse(newProject.name)) {
+            setFormError("Name is already in use")
+            return
+        }
         try {
             await props.projectsManager.newProjectFromForm(newProject)
         } catch (error) {

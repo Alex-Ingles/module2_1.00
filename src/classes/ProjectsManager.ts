@@ -181,9 +181,9 @@ async newProjectFromForm(data: IProject) {
 }
 // -----------------------------------------------------------------------------
 newProjectToList(data: IProject) {
-    if (data.name.length < 6){
-        throw new Error(`Project name "${data.name}" must contain at least 6 characters`)
-    }
+    // if (data.name.length < 6){
+    //     throw new Error(`Project name "${data.name}" must contain at least 6 characters`)
+    // }
 
     console.warn("creating project in List...")
     const newProject = new Project(data)
@@ -340,6 +340,21 @@ idInUse(id: string) {
         return false
     }
 }
+
+nameInUse(name: string) {
+    console.warn("PM - nameInUse invoked")
+    const projectNames = this.list.map((project) => {
+        return project.name
+    })
+    if (projectNames.includes(name)) {
+        console.warn("nameInUse: project name already exists")
+        return true
+    }
+    else {
+        return false
+    }
+}
+
 // Update ToDo -----------------------------------------------------------------------------
 newToDo(data: ToDo) {
     console.warn("PM - newToDo invoked, data: ", data)
