@@ -22,7 +22,7 @@ export function ProjectForm (props: Props) {
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         let { name, value } = e.target;
         console.log("something to change: ",name,": ", value)
-        projectWip = newProject
+        const projectWip = newProject
         projectWip[name] = value
         projectWip.setShortFinishDate()
         // if (name === "shortfinishDate") {

@@ -57,6 +57,7 @@ export function ProjectTodos2(props: Props) {
         deadline: new Date(),
         relatedProject: project.id,
         firebaseId: "",
+        priority: 1,
         // todocardcolor: ""
     } as IToDo
 

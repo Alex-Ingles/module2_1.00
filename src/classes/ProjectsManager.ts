@@ -435,6 +435,8 @@ newToDoToList(data: ToDo) {
 // -----------------------------------------------------------------------------
 async newToDoToFirestore(todo: ToDo): Promise<void> {
     console.warn("Storing ToDo in Firebase...")
+    const parsedDate = new Date(todo.deadline)
+
     try {
         const todosCollection = Firestore.collection(firebaseDB, "/todos") as Firestore.CollectionReference
         // const todosCollection = Firestore.collection(firebaseDB, "/todos") as Firestore.CollectionReference<IToDo>
@@ -443,7 +445,7 @@ async newToDoToFirestore(todo: ToDo): Promise<void> {
             name: todo.name as string,
             description: todo.description as string,
             status: todo.status as string,
-            deadline: Firestore.Timestamp.fromDate(todo.deadline) as Timestamp,
+            deadline: Firestore.Timestamp.fromDate(parsedDate) as Timestamp,
             relatedProject: todo.relatedProject as string,
             todoCardColor: todo.todocardcolor as string,
             shortdeadline: todo.shortdeadline as string,
@@ -506,6 +508,7 @@ updateToDoInList(data: ToDo) {
 // --------------------------------------------------------------------------
 async updateToDoInFirestore(todo: ToDo): Promise<void> {
         console.warn("Updating ToDo in Firestore...")
+        const parsedDate = new Date(todo.deadline)
         try {
             // const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference
             // const projectsCollection = Firestore.collection(firebaseDB, "/projects") as Firestore.CollectionReference<IProject>
@@ -514,7 +517,7 @@ async updateToDoInFirestore(todo: ToDo): Promise<void> {
                 name: todo.name as string,
                 description: todo.description as string,
                 status: todo.status as string,
-                deadline: Firestore.Timestamp.fromDate(todo.deadline) as Timestamp,
+                deadline: Firestore.Timestamp.fromDate(parsedDate) as Timestamp,
                 relatedProject: todo.relatedProject as string,
                 shortdeadline: todo.shortdeadline as string,
                 todocardcolor: todo.todocardcolor as string,

@@ -28,19 +28,33 @@ export function TodoForm (props: Props) {
         console.log("something to change: ",name,": ", value)
         const todoWip = newTodo
         todoWip[name] = value
+        todoWip.setShortDeadline()
 
-        todoWip.deadline = new Date(todoWip.shortdeadline)
+        // todoWip.deadline = new Date(todoWip.shortdeadline)
         console.log("deadline: ", todoWip.deadline)
         setNewTodo(todoWip);
     };
+
+    function getInputDateFormat(date: Date | string): string {
+        const d = new Date(date);
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
+
     //-------------------------------------------------------------------------- on Form Submit
-    const onFormSubmit = (e: React.FormEvent) => {
+    const onFormSubmit = async (e: React.FormEvent) => {
         e.stopPropagation()
         e.preventDefault()
         console.warn("Submitting Form...")
+        try {
+            await props.projectsManager.newToDoFromForm(newTodo)
+        } catch (error) {
+            console.error("Error creando el todo", error)
+        }
         const modal = document.getElementById("todo-modal-"+newTodo.id);
         const modal2 = document.getElementById("todo-card-modal-"+newTodo.id)
-
 
         // console.log("I listen the submit click")
         // console.warn ("updatedTodo: ", newTodo)
@@ -61,7 +75,6 @@ export function TodoForm (props: Props) {
         if (modal2 && modal2 instanceof HTMLDialogElement) { modal2.close() }
 
         // props.projectsManager.newToDoFromForm(new ToDo({...newTodo}))
-        props.projectsManager.newToDoFromForm(newTodo)
 
         // props.projectsManager.newToDo2(newTodo)
     }
@@ -193,9 +206,9 @@ export function TodoForm (props: Props) {
                             </label>
                             <input 
                                 data-todo-info="deadline" 
-                                name="shortdeadline" 
+                                name="deadline" 
                                 type="date"
-                                defaultValue={ newTodo.shortdeadline }
+                                defaultValue={ getInputDateFormat(newTodo.deadline) }
                                 onChange={ onInputChange }
                             />
                         </div>

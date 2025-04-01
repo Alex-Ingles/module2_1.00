@@ -51,7 +51,7 @@ export function TodoCard(props: Props) {
                 <div style={{width: "15%", backgroundColor: `${ todotoset.todocardcolor }` }}><h5 className="todo-status">{ todotoset.status}</h5></div>
                 <div style={{width: "15%", backgroundColor: `${ todotoset.prioritycardcolor }`  }}><h5 className="todo-priority">{ todotoset.priority }</h5></div>
                 <div hidden={true}><h5 className="todo-relatedProject">{ todotoset.relatedProject }</h5></div>
-                <div style={{display: "none"}}><h5 className="todo-deadline">{ todotoset.deadline.toString() }</h5></div>
+                <div style={{display: "none"}}><h5 className="todo-deadline">{ todotoset.shortdeadline }</h5></div>
                 <div><h5 className="todo-shortDeadline">{ todotoset.shortdeadline }</h5></div>
             </div>
         </div>
