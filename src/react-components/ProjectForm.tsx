@@ -24,9 +24,22 @@ export function ProjectForm (props: Props) {
         console.log("something to change: ",name,": ", value)
         projectWip = newProject
         projectWip[name] = value
+        projectWip.setShortFinishDate()
+        // if (name === "shortfinishDate") {
+        //     console.log("shortFinishDate: ",projectWip.shortFinishDate)
+        //     projectWip.finishDate = new Date(projectWip.shortFinishDate)
+        // }
         setNewProject(projectWip)
         console.log("newProject after change: ", newProject)
     }
+
+    function getInputDateFormat(date: Date | string): string {
+        const d = new Date(date);
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
 
     const onProjectFormSubmit = async (e: React.FormEvent) => {
         console.warn("processing projectForm submit...")
@@ -35,7 +48,7 @@ export function ProjectForm (props: Props) {
             setFormError("Something went wrong");
             return
         }
-        if (props.projectsManager.nameInUse(newProject.name)) {
+        if (props.projectsManager.nameInUse(newProject.name) && !props.projectsManager.idInUse(newProject.id)) {
             setFormError("Name is already in use")
             return
         }
@@ -210,7 +223,7 @@ export function ProjectForm (props: Props) {
                             data-project-info="finishDate"
                             name="finishDate"
                             type="date"
-                            defaultValue= {newProject.shortFinishDate }
+                            defaultValue= { getInputDateFormat(newProject.finishDate) }
                             onChange={ onInputChange }
                         />
                     </div>
