@@ -102,33 +102,34 @@ export function ProjectForm (props: Props) {
       }, [onProjectFormCancel]);
 
     return (
-            <form 
+            <form
                 id="new-new-project-form"
                 key={"new-new-project-form-"+newProject.id}
                 onSubmit={(e) =>  onProjectFormSubmit(e)}
-                >
+            >
                 {formError && (<ErrorModal message={formError} onClose={() => setFormError(null)}/>)}
 
                 <h2>
-                    New Project - ProjectForm
+                    Project
                 </h2>
                 <div className="input-list">
+                    <div style={{display:"none"}} className="form-field-container">
+                        <input
+                            data-project-info="id"
+                            name="id"
+                            // type="hidden"
+                            placeholder="auto-id"
+                            defaultValue= { newProject.id }
+                            />
+                    </div>
                     <div className="form-field-container">
-                    <input
-                        data-project-info="id"
-                        name="id"
-                        // type="hidden"
-                        placeholder="auto-id"
-                        defaultValue= { newProject.id }
-                        />
-                    <div className="form-field-container">
-                        <label>
+                        <label style={{ width: "30%" }}>
                             <span className="material-icons-round">
-                                apartment
+                                title
                             </span>
                                 Name
                         </label>
-                        <input
+                        <input style={{ width: "70%" }}
                             data-project-info="name"
                             name="name"
                             type="string"
@@ -138,7 +139,7 @@ export function ProjectForm (props: Props) {
                             />
                     </div>
                     <div className="form-field-container">
-                        <label>
+                        <label style={{ width: "30%" }}>
                         <span className="material-icons-round">notes</span>Description
                         </label>
                         <textarea 
@@ -156,78 +157,92 @@ export function ProjectForm (props: Props) {
                               }}
                         />
                     </div>
-                    <div className="form-field-container">
-                        <label>
-                        <span className="material-icons-round">euro</span>Cost
-                        </label>
-                        <input
-                            data-project-info="cost"
-                            name="cost"
-                            type="string"
-                            placeholder="Give the project cost here"
-                            defaultValue= { newProject.cost }
-                            onChange={ onInputChange }
-                        />
-                    </div>
-                    <div className="form-field-container">
-                        <label>
-                        <span className="material-icons-round">clock</span>Progress
-                        </label>
-                        <input
-                            data-project-info="progress"
-                            name="progress"
-                            type="string"
-                            placeholder="Give the progression %"
-                            defaultValue= { newProject.progress }
-                            onChange={ onInputChange }
-                        />
-                    </div>
-                    <div className="form-field-container">
-                        <label>
-                            <span className="material-icons-round">account_circle</span>Role
-                        </label>
-                        <select 
-                            data-project-info="userRole" 
-                            name="userRole"
-                            defaultValue= {newProject.userRole }
-                            onChange={ onInputChange }
-                        >
-                            <option>Architect</option>
-                            <option>Engineer</option>
-                            <option>Developer</option>
-                        </select>
-                    </div>
-                    <div className="form-field-container">
-                        <label>
-                            <span className="material-icons-round">not_listed_location</span>
-                            Status
-                        </label>
-                        <select 
-                            data-project-info="status" 
-                            name="status"
-                            defaultValue= { newProject.status }
-                            onChange={ onInputChange }
-                        >
-                            <option>Pending</option>
-                            <option>Active</option>
-                            <option>Finished</option>
-                        </select>
-                    </div>
-                    <div className="form-field-container">
-                        <label>
-                            <span className="material-icons-round">calendar_month</span>Finish
-                            Date
+                    {/* <div className="form-field-group"> */}
+                        <div className="form-field-container">
+                            <label>
+                            <span className="material-icons-round">euro</span>Cost
                             </label>
-                        <input
-                            data-project-info="finishDate"
-                            name="finishDate"
-                            type="date"
-                            defaultValue= { getInputDateFormat(newProject.finishDate) }
-                            onChange={ onInputChange }
-                        />
-                    </div>
+                            <input
+                                data-project-info="cost"
+                                name="cost"
+                                type="string"
+                                placeholder="Give the project cost here"
+                                defaultValue= { newProject.cost }
+                                onChange={ onInputChange }
+                            />
+                        </div>
+                        <div className="form-field-container">
+                            <label>
+                                <span className="material-icons-round">account_circle</span>Role
+                            </label>
+                            <select 
+                                data-project-info="userRole" 
+                                name="userRole"
+                                defaultValue= {newProject.userRole }
+                                onChange={ onInputChange }
+                            >
+                                <option>Architect</option>
+                                <option>Engineer</option>
+                                <option>Developer</option>
+                            </select>
+                        </div>
+                    {/* </div> */}
+                    {/* <div className="form-field-group"> */}
+                        <div className="form-field-container">
+                            <label>
+                                <span className="material-icons-round">
+                                    update
+                                </span>
+                                Progress
+                            </label>
+                            <input
+                                data-project-info="progress"
+                                name="progress"
+                                type="string"
+                                placeholder="Give the progression %"
+                                defaultValue= { newProject.progress }
+                                onChange={ onInputChange }
+                            />
+                            {/* <input
+                                type="range"
+                                defaultValue= { newProject.progress }
+                            /> */}
+                        </div>
+                        <div className="form-field-container">
+                            <label>
+                                <span className="material-icons-round">
+                                    view_timeline
+                                </span>
+                                Status
+                            </label>
+                            <select 
+                                data-project-info="status" 
+                                name="status"
+                                defaultValue= { newProject.status }
+                                onChange={ onInputChange }
+                            >
+                                <option>Pending</option>
+                                <option>Active</option>
+                                <option>Finished</option>
+                            </select>
+                        </div>
+                        <div className="form-field-container">
+                            <label>
+                                <span className="material-icons-round">calendar_month</span>
+                                Finish Date
+                            </label>
+                            <input
+                                data-project-info="finishDate"
+                                name="finishDate"
+                                type="date"
+                                defaultValue= { getInputDateFormat(newProject.finishDate) }
+                                onChange={ onInputChange }
+                            />
+                        </div>
+                    {/* </div> */}
                 </div>
-                <div className="submit-buttons">
+                <div className="form-footer">
+                    <div className="submit-buttons">
                         <button 
                             id="new-project-form-cancel-btn" 
                             type="button"
@@ -239,7 +254,7 @@ export function ProjectForm (props: Props) {
                             <button
                                 id="new-project-form-submit-btn"
                                 type="submit"
-                                style={{ backgroundColor: "green" }}
+                                style={{ backgroundColor: "cadetblue" }}
                                 onClick={(e) => onProjectFormSubmit(e) }
                             >
                                 Accept
@@ -248,10 +263,10 @@ export function ProjectForm (props: Props) {
                         <button
                             id="new-project-form-submit-btn"
                             type="submit"
-                            style={{ backgroundColor: "green" }}
+                            style={{ backgroundColor: "indianred" }}
                             onClick={(e) => onProjectFormCancel(e) }
                         >
-                            Cancel
+                            Delete
                         </button>
                     </div>
                 </div>

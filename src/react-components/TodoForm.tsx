@@ -13,8 +13,8 @@ export function TodoForm (props: Props) {
     console.warn("Mounting ToDoForm component...")
     const [newTodo, setNewTodo] = React.useState<ToDo>(props.todo)
 
-    const modal = document.getElementById("todo-modal-"+newTodo.id);
-    const modal2 = document.getElementById("todo-card-modal-"+newTodo.id)
+    // const modal = document.getElementById("todo-modal-"+newTodo.id);
+    // const modal2 = document.getElementById("todo-card-modal-"+newTodo.id)
 
     console.warn("newToDo id: ", newTodo.id)
 
@@ -48,6 +48,9 @@ export function TodoForm (props: Props) {
         } catch (error) {
             console.error("Error creando el todo", error)
         }
+        const modal = document.getElementById("todo-modal-"+newTodo.id);
+        const modal2 = document.getElementById("todo-card-modal-"+newTodo.id)
+    
         if (modal && modal instanceof HTMLDialogElement) { modal.close() }
         if (modal2 && modal2 instanceof HTMLDialogElement) { modal2.close() }
 
@@ -58,6 +61,9 @@ export function TodoForm (props: Props) {
         e.preventDefault()
         console.warn("Cancelling Form...")
 
+        const modal = document.getElementById("todo-modal-"+newTodo.id);
+        const modal2 = document.getElementById("todo-card-modal-"+newTodo.id)
+    
         if (modal && modal instanceof HTMLDialogElement) { modal.close() }
         if (modal2 && modal2 instanceof HTMLDialogElement) { modal2.close() }
     }
@@ -67,6 +73,9 @@ export function TodoForm (props: Props) {
         e.preventDefault()
         console.warn("Deleting in Form...")
 
+        const modal = document.getElementById("todo-modal-"+newTodo.id);
+        const modal2 = document.getElementById("todo-card-modal-"+newTodo.id)
+    
         if (modal && modal instanceof HTMLDialogElement) { modal.close() }
         if (modal2 && modal2 instanceof HTMLDialogElement) { modal2.close() }
 
@@ -174,10 +183,12 @@ export function TodoForm (props: Props) {
                         />
                     </div>
                 </div>
-                <div className="submit-buttons">
-                    <button type="button" onClick = {(e) => { onCancel(e) }} id="new-todo-form-cancel-btn">Cancel</button>
-                    <button type="submit" style={{ backgroundColor: "green" }} id="new-todo-form-submit-btn">Accept</button>
-                    <button type="button" onClick = {(e) => { onFormDelete(e) }} id="new-todo-form-delete-btn" style={{ backgroundColor: "red" }}>Delete</button>
+                <div className="form-footer">
+                    <div className="submit-buttons">
+                        <button type="button" onClick = {(e) => { onCancel(e) }} id="new-todo-form-cancel-btn">Cancel</button>
+                        <button type="submit" style={{ backgroundColor: "cadetblue" }} id="new-todo-form-submit-btn">Accept</button>
+                        <button type="button" onClick = {(e) => { onFormDelete(e) }} id="new-todo-form-delete-btn" style={{ backgroundColor: "indianred" }}>Delete</button>
+                    </div>
                 </div>
             </form>
         </div>

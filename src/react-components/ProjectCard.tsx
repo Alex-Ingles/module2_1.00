@@ -7,40 +7,51 @@ interface Props {
 
 export function ProjectCard(props: Props) {
 
+    // --background: #202124;
+    // --background-100: #26282b;
+    // --background-200: #3b3c3f;
+
+
+    const projectCardStyle = {
+        backgroundColor: "#26282b",
+        borderRadius: "8px",
+        cursor: "pointer",
+        width: "90%",
+        height: "90%",
+    }
+
     return (
-        <div className="project-card">
-            <div className="card">
-                <div className="card-header">
+        <div className="project-card" id={ `"project-card-"${props.project.id}` }>
+            {/* <div className="card"> */}
+                <div className="project-card-header">
                     <p
+                        className= "project-card-header-initials"
                         data-project-info="initials"
                         style={{
-                            backgroundColor:`${ props.project.initialsColor }` ,
-                            padding: 10,
-                            borderRadius: 8,
-                            aspectRatio: 1
-                        }}
+                            backgroundColor:`${ props.project.initialsColor }`
+                            }}
                         >
                         { props.project.initials }
                     </p>
-                    <div>
+                    <div className= "project-card-header-title">
                         <h4
                             data-project-info="name"
                             className="name"
                             >                        
                             { props.project.name } 
                         </h4>
-                        <h5 
+                        <h6 
                             data-project-info="description" 
                             className="description"
                             >
                             { props.project.description }
-                        </h5>
-                        <h6>
+                        </h6>
+                        <h6 hidden>
                             { props.project.id }
                         </h6>
                     </div>
                 </div>
-                <div className="card-content">
+                <div className="project-card-content">
                     <div style={{ display: "none" }} className="card-property">
                         <p style={{ color: "#969696" }}>Id</p>
                         <p data-project-info="id">
@@ -89,7 +100,7 @@ export function ProjectCard(props: Props) {
                         </p>
                     </div>
                 </div>
-            </div>
+            {/* </div> */}
         </div>
     )
 }

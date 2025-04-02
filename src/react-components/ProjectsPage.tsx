@@ -131,9 +131,13 @@ export function ProjectsPage(props: Props) {
                 id="projects-page-header"
                 style={{ height: "9%" }}
             >
-                <h2>Projects</h2>
-                <SearchBox onChange={(value) => onProjectSearch(value)}/>
-                <div className="page-header-buttons">
+                <div style={{width: "63.2%", display: "flex", justifyContent: "flex-start", alignItems: "center"}}>
+                    <h2 style={{width: "31%", minWidth: "160px"}}>Projects</h2>
+                    <div className="page-header-searchbox" style={{width: "65.55%"}}>
+                        <SearchBox onChange={(value) => onProjectSearch(value)}/>
+                    </div>
+                </div>
+                <div className="page-header-buttons" style={{width: "20.4%", minWidth: "180px"}}>
                     <button id="upload-projects-btn">
                         <span onClick= { onExportClick } className="material-icons-round action-icon">cloud_upload</span>
                     </button>
@@ -147,29 +151,19 @@ export function ProjectsPage(props: Props) {
                         <span onClick= { onImportClick } className="material-icons-round action-icon">file_upload</span>
                     </button>
                     <button onClick= { onNewProjectClick } id="new-project-btn">
-                        <span className="material-icons-round">add_circle_outline</span>New
-                        Project
+                        <span className="material-icons-round">add_circle_outline</span>
                     </button>
                 </div>
             </header>
             {/* projectS list -------------------------------------------------------*/}
                 {projects.length > 0? 
-                    <div
-                        id="projects-list"
-                        style={{
-                        padding: "15px 20px",
-                        alignItems: "center",
-                        justifyItems: "center",
-                        overflowY: "auto",
-                        maxHeight: "95vh"
-                        }}
-                    >
+                    <div className="projects-grid" id="projects-grid">
                         {/* New Project Card HIDDEN --------------------------------------------*/}
                         <div hidden>
                             <div className= "project-card-place">
                                 <div className="project-card">
                                     <div className="card">
-                                        <div className="card-header">
+                                        <div className="project-card-header">
                                             <p
                                             data-project-info="initials"
                                             style={{

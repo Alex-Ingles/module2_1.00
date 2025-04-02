@@ -19,7 +19,7 @@ export function Sidebar() {
                 <Router.Link to="/project">
                     <li id="nav-users-btn"><span className="material-icons-round">account_circle</span>Users</li>
                 </Router.Link>
-                <a href="#">
+                {/* <a href="#">
                     <li>
                         <span 
                             className="material-icons-round">account_circle
@@ -34,7 +34,7 @@ export function Sidebar() {
                         </span>
                         Section 2
                     </li> 
-                </a>
+                </a> */}
             </ul>
         </aside>
 

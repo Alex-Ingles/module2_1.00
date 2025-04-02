@@ -25,28 +25,72 @@ export function TodoCard(props: Props) {
     }
     // ---------------------------------------------------------------- UI
     return (
-        <div className="todo-card" onClick={ onClickUI } id={todotoset.id} key={todotoset.id+"-card"}>
+        <div className="todo-card" title="Edit ToDo" onClick={ onClickUI } id={todotoset.id} key={todotoset.id+"-card"}>
             <dialog hidden id={"todo-card-modal-"+todotoset.id}>
                 <TodoForm projectsManager={props.projectsManager} project={props.project} todo={ todotoset } key={"todo-card-form"+todotoset.id}/>
             </dialog>
-            <div className="todo-card" key={"todo-card-" + todotoset.id}>
-                <button  id={ todotoset.id + "-btn" }><span className="material-icons-round">edit</span></button>
-                <span className="material-icons-round" 
-                    style={{ 
-                        width: "30px", 
-                        height:"30px",
-                    }}>
-                    check_circle_outline
-                </span>
+            {/* <div className="todo-card" key={"todo-card-" + todotoset.id}> */}
+                {/* <button  id={ todotoset.id + "-btn" }><span className="material-icons-round">edit</span></button> */}
+                <div style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyItems: "center",
+                    justifyContent: "center",
+                    placeItems: "center",
+                    minWidth: 15,
+                }}>
+                    <span className="material-icons-round" 
+                        style={{
+                            placeContent: "center",
+                            minWidth: "15px", 
+                            height:"30px",
+                            color: `${ todotoset.todocardcolor }`,
+                        }}>
+                        check_circle_outline
+                    </span>
+                </div>
                 <div hidden={true}><h5 className="todo-id">{ todotoset.id }</h5></div>
-                <div style={{ width: "50%" }}>
-                    <h5  className="todo-description">{ todotoset.description }</h5></div>
-                <div style={{width: "15%", backgroundColor: `${ todotoset.todocardcolor }` }}><h5 className="todo-status">{ todotoset.status}</h5></div>
-                <div style={{width: "15%", backgroundColor: `${ todotoset.prioritycardcolor }`  }}><h5 className="todo-priority">{ todotoset.priority }</h5></div>
+                <div 
+                    style={{
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "row",
+                        overflowY: "visible",
+                    }}>
+                    <h5  className="todo-description" style={{width: "100%"}}>{ todotoset.description }</h5></div>
+                <div 
+                    style={{
+                        minWidth: 70,
+                        backgroundColor: `${ todotoset.todocardcolor }`,
+                        borderRadius: 5,
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                    }}
+                >
+                    <h5 className="todo-status" style={{placeContent: "center"}}>
+                        { todotoset.status}
+                    </h5>
+                </div>
+                <div 
+                    style={{
+                        width: 20, 
+                        backgroundColor: `${ todotoset.prioritycardcolor }`,
+                        borderRadius: 5,
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        color: "black",
+
+                    }}
+                >
+                    <h5 className="todo-priority">{ todotoset.priority }</h5>
+                </div>
                 <div hidden={true}><h5 className="todo-relatedProject">{ todotoset.relatedProject }</h5></div>
                 <div style={{display: "none"}}><h5 className="todo-deadline">{ todotoset.shortdeadline }</h5></div>
                 <div><h5 className="todo-shortDeadline">{ todotoset.shortdeadline }</h5></div>
-            </div>
+            {/* </div> */}
         </div>
     )
 }

@@ -96,23 +96,29 @@ export function ProjectDetailsPage(props: Props) {
                     height: "100%"
                     }}>
                 {/* dashboard card 1 ProjectDetails---------------------*/}
-                    <div className="dashboard-card" id="project-information">
-                        <div className="dashboard-header" style={{
+                    <div className="dashboard-card" id="project-information" style={{height: "30%"}}>
+                        <div className="dashboard-card-header" style={{
                             display: "flex",
                             justifyContent: "space-between",
                             alignContent: "center",
-                            height: 30
+                            height: "30%",
                             }}>
-                            <p data-project-info="initials" style={{
-                                fontSize: 12,
-                                backgroundColor: `${projectDetails.initialsColor}`,
-                                width: 30,
-                                height: 30,
-                                borderRadius: 15,
-                                padding: 7
+                            <div 
+                                className="dashboard-card-header-initials"
+                                style={{
+                                    backgroundColor: `${projectDetails.initialsColor}`,
+                                    width: 40,
+                                    height: 40,
+                                    aspectRatio: 1,
+                                    borderRadius: 5,
                                 }}>
-                                { projectDetails.initials }
-                            </p>
+                                <p data-project-info="initials" style={{
+                                    fontSize: "1.5em",
+                                    padding: 7,
+                                    }}>
+                                    { projectDetails.initials }
+                                </p>
+                            </div>
                             <p data-project-info="id"  style={{
                                 fontSize: 8, 
                                 width: 200, 
@@ -140,11 +146,11 @@ export function ProjectDetailsPage(props: Props) {
                                     onClick = {(e) => onDeleteProjectClick(e)}
                                     style={{
                                         height: 30,
-                                        backgroundColor: "red"
+                                        backgroundColor: "indianred"
                                     }}
                                 >
                                     <Router.Link to="/">
-                                        <p style={{ width: 40, fontSize: "small", backgroundColor: "red" }}>
+                                        <p title="Delete Project" style={{ width: 40, fontSize: "small" }}>
                                             X
                                             </p>
                                     </Router.Link>
@@ -219,7 +225,9 @@ export function ProjectDetailsPage(props: Props) {
                             </div>
                         </div>
                     </div>
-                    <ProjectTodos2 projectsManager = {props.projectsManager}/>
+                    <div className="dashboard-card" id="todo-list" style={{height: "75%"}}>
+                        <ProjectTodos2 projectsManager = {props.projectsManager}/>
+                    </div>
                 </div>
                 <div
                     id="viewer-container-section"

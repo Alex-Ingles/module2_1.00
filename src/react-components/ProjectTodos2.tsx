@@ -78,17 +78,19 @@ export function ProjectTodos2(props: Props) {
     }
     // ------------------------------------------------------------------------- 
     return (
-        <div className="dashboard-card" id="project-todos2" key="project-todos-2">
+        <div className="todo-list" id="project-todos2" key="project-todos-2">
             <dialog hidden id={"todo-modal-"+todoInForm.id}>
                 <TodoForm projectsManager={props.projectsManager} project={project} todo={todoInForm} key={"todo-form-"+todoInForm.id}/>
             </dialog>
             <div className="dashboard-card-header">
-                <div className="dashboard-card-buttons">
-                    <h4 className="dashboard-card-title">To-Do List</h4>
-                    <span className="material-icons-round">search</span>
+                <h3 className="dashboard-card-header-title">To-Do List</h3>
+                <div className="dashboard-card-header-searchbox" style={{width: "65%"}}>
+                    <span className="material-icons-round" style={{width: "10%"}}>search</span>
                     <SearchBox onChange={(value) => onToDoSearch(value)}/>
-                    <button onClick={(e) => {onNewToDoClick(e)}} id="new-todo-btn">
-                        <span className="material-icons-round">add_circle_outline</span>
+                </div>
+                <div className="dashboard-card-header-buttons" style={{width: "10%"}}>
+                    <button onClick={(e) => {onNewToDoClick(e)}} style={{width: "100%"}} id="new-todo-btn">
+                        <span className="material-icons-round">add</span>
                     </button>
                 </div>
             </div>
