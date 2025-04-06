@@ -16,9 +16,10 @@ export function Sidebar() {
                 <Router.Link to="/">
                     <li id="nav-projects-btn"><span className="material-icons-round">apartment</span>Projects</li>
                 </Router.Link>
-                <Router.Link to="/project">
+                <Router.Link to="/users">
                     <li id="nav-users-btn"><span className="material-icons-round">account_circle</span>Users</li>
                 </Router.Link>
+                
                 {/* <a href="#">
                     <li>
                         <span 
