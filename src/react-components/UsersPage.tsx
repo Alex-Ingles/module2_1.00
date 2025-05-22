@@ -1,60 +1,22 @@
 import React from "react"
 import * as BUI from "@thatopen/ui"
-import "iconify-icon"
+import "iconify-icon" // Not in Juan page...
 
-declare global {
-    namespace JSX {
-        interface IntrinsicElements {
-            "bim-grid": any;
-            "bim-panel": any;
-            "bim-button": any;
-            "bim-table": any;
-            "bim-panel-section": any;
-        }
-    }
-}
 
 export function UsersPage() {
 
     const userTable = BUI.Component.create<BUI.Table>(() => {
-
-    const onTableCreated = (element?: Element) => {
-        const table = element as BUI.Table
-
-        table.data = [
-            {
-                data: {
-                    Name: "John Doe",
-                    Task: "Create Work Orders",
-                    Role: "Engineer",
-                },
-            },
-            {
-                data: {
-                    Name: "Antonio",
-                    Task: "Review PRs",
-                    Role: "Developer",
-                },
-            },
-            {
-                data: {
-                    Name: "Juan",
-                    Task: "Create PRs",
-                    Role: "Engineer",
-                },
-            },
-            {
-                data: {
-                    Name: "Wishwajeet",
-                    Task: "Content",
-                    Role: "Developer",
-                },
-            },
-        ]
-    }
-
+        const onTableCreated = (element?: Element) => {
+            const table = element as BUI.Table
+            table.data = [
+                { data: { Name: "John Doe", Task: "Create Work Orders", Role: "Engineer",}},
+                { data: { Name: "Antonio", Task: "Review PRs", Role: "Developer",}},
+                { data: { Name: "Juan", Task: "Create PRs", Role: "Engineer",}},
+                { data: { Name: "Wishwajeet", Task: "Content", Role: "Developer",}}
+            ]
+        }
         return BUI.html `
-            <bim-table> ${BUI.ref(onTableCreated)} </bim-table>
+            <bim-table ${BUI.ref(onTableCreated)}></bim-table>
         `
     })
 
@@ -81,9 +43,31 @@ export function UsersPage() {
                         console.log(userTable.value)
                     }}
                 ></bim-button>
+                <bim-button
+                    style = ${BUI.styleMap(buttonStyles)}
+                    icon = "mdi:file"
+                    @click = ${() => {
+                        const csvData = userTable.csv
+                        const blob = new Blob([csvData], { type: "text/csv" })
+                        const url = URL.createObjectURL(blob)
+                        const a = document.createElement("a")
+                        a.href = url
+                        a.download = "users.csv"
+                        a.click()
+                        console.log(userTable.value)
+                    }}
+                ></bim-button>
             </div>
             `;
         })
+
+    const footer = BUI.Component.create<BUI.Component>(() => {
+        return BUI.html `
+            <div style="display: flex; justify-content: center;">
+                <bim-label>"Copyright of That Open Company"</bim-label>
+            </div>
+        `;
+    })    
 
     const gridLayout: BUI.Layouts = {
         primary: {
@@ -95,23 +79,27 @@ export function UsersPage() {
             `,
             elements: {
                 header: (() => {
-                    const header = document.createElement("div")
-                    header.style.backgroundColor = "#641b1b66"
-                    return header
+                    const inputBox = BUI.Component.create<BUI.TextInput>(() => {
+                        return BUI.html `
+                        <bim-text-input style="padding: 8px" placeholder="Search Users">
+                        </bim-text-input> 
+                        `;
+                    })
+
+                    inputBox.addEventListener("input", () => {
+                        userTable.queryString = inputBox.value
+                    })
+
+                    return inputBox
                 })(),
                 sidebar,
                 content,
-                footer: (() => {
-                    const footer = document.createElement("div")
-                    footer.style.backgroundColor = "#ff440066"
-                    return footer
-                })(),
+                footer,
             }
         }
     }
 
     React.useEffect (() => {
-        BUI.Manager.init()
         const grid  = document.getElementById("bimGrid") as BUI.Grid
         grid.layouts = gridLayout
         grid.layout = "primary"

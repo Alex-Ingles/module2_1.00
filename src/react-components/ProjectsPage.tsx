@@ -5,6 +5,8 @@ import { ProjectsManager } from "../classes/ProjectsManager"
 import { ProjectCard } from "./ProjectCard"
 import { ProjectForm } from "./ProjectForm"
 import { SearchBox } from "./SearchBox"
+import { UsersPage } from "./UsersPage"
+// import * as BUI from "@thatopen/ui"
 
 interface Props {
     projectsManager: ProjectsManager
@@ -120,6 +122,9 @@ export function ProjectsPage(props: Props) {
     const onProjectSearch = (value: string) => {
         setProjects(props.projectsManager.filterProjects(value))
     }
+
+
+    
     // ----------------------------------------------------------------
     return (
         <div className="page" id="projects-page" style={{ display: "block" }}>
@@ -132,27 +137,31 @@ export function ProjectsPage(props: Props) {
                 style={{ height: "9%" }}
             >
                 <div style={{width: "63.2%", display: "flex", justifyContent: "flex-start", alignItems: "center"}}>
-                    <h2 style={{width: "31%", minWidth: "160px"}}>Projects</h2>
+                    <bim-label style={{width: "31%", minWidth: "160px"}}>Projects</bim-label>
                     <div className="page-header-searchbox" style={{width: "65.55%"}}>
                         <SearchBox onChange={(value) => onProjectSearch(value)}/>
                     </div>
                 </div>
                 <div className="page-header-buttons" style={{width: "20.4%", minWidth: "180px"}}>
-                    <button id="upload-projects-btn">
-                        <span onClick= { onExportClick } className="material-icons-round action-icon">cloud_upload</span>
-                    </button>
-                    <button id="download-projects-btn">
-                        <span onClick= { onExportClick } className="material-icons-round action-icon">cloud_download</span>
-                    </button>
-                    <button id="export-projects-btn">
-                        <span onClick= { onExportClick } className="material-icons-round action-icon">file_download</span>
-                    </button>
-                    <button id="import-projects-btn">
-                        <span onClick= { onImportClick } className="material-icons-round action-icon">file_upload</span>
-                    </button>
-                    <button onClick= { onNewProjectClick } id="new-project-btn">
-                        <span className="material-icons-round">add_circle_outline</span>
-                    </button>
+                    <bim-button 
+                        id="upload-projects-btn"
+                        icon="iconoir:import">
+                        {/* <span onClick= { onExportClick } className="material-icons-round action-icon">cloud_upload</span> */}
+                    </bim-button>
+                    <bim-button id="download-projects-btn" icon="iconoir:save-action-floppy">
+                        {/* <span onClick= { onExportClick } className="material-icons-round action-icon">cloud_download</span> */}
+                    </bim-button>
+                    <bim-button id="export-projects-btn" icon="iconoir:cloud-download">
+                        {/* <span onClick= { onExportClick } className="material-icons-round action-icon">file_download</span> */}
+                    </bim-button>
+                    <bim-button id="import-projects-btn" icon="iconoir:cloud-upload" onClick= { onImportClick }>
+                        {/* <span onClick= { onImportClick } className="material-icons-round action-icon">file_upload</span> */}
+                    </bim-button>
+                    <bim-button onClick= { onNewProjectClick } id="new-project-btn"
+                    label="New Project"
+                    icon="fluent:add-20-regular">
+                        {/* <span className="material-icons-round">add_circle_outline</span> */}
+                    </bim-button>
                 </div>
             </header>
             {/* projectS list -------------------------------------------------------*/}
@@ -185,9 +194,9 @@ export function ProjectsPage(props: Props) {
                                             </div>
                                         </div>
                                         <div className="card-content-center">
-                                            <button id="new-project-btn">
+                                            <bim-button id="new-project-btn">
                                                 <span  onClick= { onNewProjectClick } className="material-icons-round action-icon">add</span>
-                                            </button>
+                                            </bim-button>
                                             <h5
                                                 data-project-info="initials"
                                                 style={{

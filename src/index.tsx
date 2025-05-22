@@ -4,11 +4,27 @@ import * as Router from "react-router-dom"
 import { Sidebar } from "./react-components/Sidebar"
 import { ProjectsPage } from "./react-components/ProjectsPage"
 import { ProjectDetailsPage } from "./react-components/ProjectDetailsPage"
+import { ProjectDetailsPage2 } from "./react-components/ProjectDetailsPage2"
 import { UsersPage } from "./react-components/UsersPage"
 
 import { ProjectsManager } from "./classes/ProjectsManager"
+import * as BUI from "@thatopen/ui"
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            "bim-grid": any;
+            "bim-label": any;
+            "bim-button": any;
+            "bim-text-input": any;
+            "bim-table": any;
+        }
+    }
+}
+
 
 console.warn("Starting...")
+BUI.Manager.init()
 console.warn("Creating ProjectsManager...")
 const projectsManager = new ProjectsManager()
 
@@ -20,7 +36,7 @@ appRoot.render(
             <Sidebar />
             <Router.Routes>
                 <Router.Route path="/" element={<ProjectsPage projectsManager={projectsManager}/>} />
-                <Router.Route path="/project/:id" element={<ProjectDetailsPage projectsManager={projectsManager}/>} />
+                <Router.Route path="/project/:id" element={<ProjectDetailsPage2 projectsManager={projectsManager}/>} />
                 <Router.Route path="/users" element={<UsersPage/>} />
             </Router.Routes>
         </Router.BrowserRouter>

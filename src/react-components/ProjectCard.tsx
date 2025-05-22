@@ -24,7 +24,7 @@ export function ProjectCard(props: Props) {
         <div className="project-card" id={ `"project-card-"${props.project.id}` }>
             {/* <div className="card"> */}
                 <div className="project-card-header">
-                    <p
+                    <bim-label
                         className= "project-card-header-initials"
                         data-project-info="initials"
                         style={{
@@ -32,72 +32,59 @@ export function ProjectCard(props: Props) {
                             }}
                         >
                         { props.project.initials }
-                    </p>
+                    </bim-label>
                     <div className= "project-card-header-title">
-                        <h4
-                            data-project-info="name"
-                            className="name"
-                            >                        
+                        <bim-label
+                            style={{ 
+                                fontSize: "16px", 
+                                color: "#fff", 
+                                fontWeight: "bold" 
+                            }}> 
                             { props.project.name } 
-                        </h4>
-                        <h6 
-                            data-project-info="description" 
-                            className="description"
-                            >
-                            { props.project.description }
-                        </h6>
-                        <h6 hidden>
-                            { props.project.id }
-                        </h6>
+                        </bim-label>
+                        <bim-label style={{ color: "#fff" }}>{ props.project.description }</bim-label>
                     </div>
                 </div>
                 <div className="project-card-content">
                     <div style={{ display: "none" }} className="card-property">
-                        <p style={{ color: "#969696" }}>Id</p>
-                        <p data-project-info="id">
-                            { props.project.id }
-                        </p>
+                        <bim-label>Id</bim-label>
+                        <bim-label style={{ color: "#fff" }}> { props.project.id } </bim-label>
                     </div>
                     <div className="card-property">
-                        <p style={{ color: "#969696" }}>Status</p>
-                        <p data-project-info="status">{ props.project.status || "N/A"}</p>
+                        <bim-label>Status</bim-label>
+                        <bim-label style={{ color: "#fff" }}> { props.project.status || "N/A" } </bim-label>
                     </div>
                     <div className="card-property">
-                        <p style={{ color: "#969696" }}>Role</p>
-                        <p data-project-info="userRole">{ props.project.userRole || "N/A" }</p>
+                        <bim-label>Role</bim-label>
+                        <bim-label style={{ color: "#fff" }}>{ props.project.userRole || "N/A" }</bim-label>
                     </div>
                     <div className="card-property">
-                        <p style={{ color: "#969696" }}>Cost</p>
-                        <p data-project-info="cost">{ props.project.cost ? `${props.project.cost}` : "N/A" }</p>
+                        <bim-label>Cost</bim-label>
+                        <bim-label style={{ color: "#fff" }}>{ props.project.cost ? `${props.project.cost}` : "N/A" }</bim-label>
                     </div>
                     <div style={{ display: "none" }} className="card-property">
-                        <p style={{ color: "#969696" }}>
+                        <bim-label>
                             Finish Date
-                        </p>
-                        <p data-project-info="finishDate">
-                            { props.project.shortFinishDate || "N/A"}
-                        </p>
+                        </bim-label>
+                        <bim-label style={{ color: "#fff" }}> { props.project.shortFinishDate || "N/A"} </bim-label>
                     </div>
                     <div className="card-property">
-                        <p style={{ color: "#969696" }}>Finish Date</p>
-                        <p data-project-info="shortFinishDate">
+                        <bim-label>Finish Date</bim-label>
+                        <bim-label style={{ color: "#fff" }}>
                             { props.project.shortFinishDate || "N/A" }
-                        </p>
+                        </bim-label>
                     </div>
                     <div className="card-property">
-                        <p style={{ color: "#969696" }}>Estimated Progress</p>
-                        <p data-project-info="progress">
+                        <bim-label>Estimated Progress</bim-label>
+                        <bim-label style={{ color: "#fff" }}>
                             { props.project.progress !== undefined ? `${props.project.progress}` : "N/A" }%
-                        </p>
+                        </bim-label>
                     </div>
                     <div className="card-property">
-                        <p style={{ color: "#969696" }}>Initials</p>
-                        <p 
-                            data-project-info="initials" 
-                            style={{ textTransform: "uppercase" }}
-                        >
+                        <bim-label>Initials</bim-label>
+                        <bim-label style={{ color: "#fff" }}>
                             { props.project.initials || "N/A" }
-                        </p>
+                        </bim-label>
                     </div>
                 </div>
             {/* </div> */}

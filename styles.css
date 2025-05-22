@@ -6,7 +6,7 @@
 /* ORIGINAL FROM MODULE 3 (REACT) COMPLETION
 /* ------------------------------------------------------------------------- */
 
-:root {
+/* :root {
     --primary: #029ae0;
     --primary-100: #073044;
     --primary-200: #415a66;
@@ -26,7 +26,7 @@
     --font-xl: 18px;
     --font-2xl: 20px;
     --font-3xl: 22px;
-}
+} */
 /* ------------------------------------------------------------------------- */
 /* FROM BIM UI STYLES PACKAGES/CORE/SRC/CORE/MANAGER/SRC/STYLES.TS */
 /* ------------------------------------------------------------------------- */
@@ -71,8 +71,30 @@
     --bim-ui_size-9xl: 2.25rem;
     } */
 
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
     :root {
+
+        --primary: #029ae0;
+        --primary-100: #073044;
+        --primary-200: #415a66;
+        --primary-300: #017cb3;
+        --primary-400: #50b6e6;
+        --background: #202124;
+        --background-100: #26282b;
+        --background-200: #3b3c3f;
+        --background-300:#464646;
+        --large: 24px;
+        --medium: 16px;
+        --small: 8px;
+        --font-xs: 8px;
+        --font-sm: 10px;
+        --font-base: 12px;
+        --font-lg: 16px;
+        --font-xl: 18px;
+        --font-2xl: 20px;
+        --font-3xl: 22px;
+
+
         --bim-ui_bg-base: var(--bim-ui_gray-0);
         --bim-ui_bg-contrast-10: var(--bim-ui_gray-1);
         --bim-ui_bg-contrast-20: var(--bim-ui_gray-2);
@@ -82,10 +104,32 @@
         --bim-ui_bg-contrast-80: var(--bim-ui_gray-8);
         --bim-ui_bg-contrast-100: var(--bim-ui_gray-10);
     }
-    } */
+}
     
-    /* @media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: light) {
     :root {
+
+        --primary: #029ae0;
+        --primary-100: #073044;
+        --primary-200: #415a66;
+        --primary-300: #017cb3;
+        --primary-400: #50b6e6;
+        --background: #202124;
+        --background-100: #26282b;
+        --background-200: #3b3c3f;
+        --background-300:#464646;
+        --large: 24px;
+        --medium: 16px;
+        --small: 8px;
+        --font-xs: 8px;
+        --font-sm: 10px;
+        --font-base: 12px;
+        --font-lg: 16px;
+        --font-xl: 18px;
+        --font-2xl: 20px;
+        --font-3xl: 22px;
+
+
         --bim-ui_bg-base: var(--bim-ui_gray-10);
         --bim-ui_bg-contrast-10: var(--bim-ui_gray-9);
         --bim-ui_bg-contrast-20: var(--bim-ui_gray-8);
@@ -96,7 +140,7 @@
         --bim-ui_bg-contrast-100: var(--bim-ui_gray-0);
         --bim-ui_accent-base: #6528d7;
     }
-    } */
+}
     
     /* html.bim-ui-dark {
     --bim-ui_bg-base: var(--bim-ui_gray-0);
@@ -193,7 +237,8 @@ body {
     grid-template-columns: 150px 1fr;
     grid-template-areas: "sidebar content";
     height: 100vh;
-    background-color: var(--background);
+    background-color: var(--bim-ui_bg-base);
+    /* background-color: var(--background); */
     /* --------------- */
     color: #fff;
     /* color: #040404; */

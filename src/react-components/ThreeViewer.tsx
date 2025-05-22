@@ -5,6 +5,7 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js"
 import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader.js"
 import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader.js"
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader.js"
+import * as BUI from "@thatopen/ui"
 
 
 export function ThreeViewer() {
@@ -26,6 +27,7 @@ export function ThreeViewer() {
     const setViewer = () => {
         scene = new THREE.Scene
         const viewerContainer = document.getElementById("viewer-container") as HTMLElement
+        // const viewerContainer = document.getElementById("viewer-container") as BUI.Viewport
         console.log(viewerContainer)
         const containerDimensions = viewerContainer.getBoundingClientRect()
         const aspectRatio = containerDimensions.width / containerDimensions.height
